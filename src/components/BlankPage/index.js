@@ -1,34 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { Creators as DataActions } from '../../store/ducks/data';
 import Wrapper from './Wrapper';
 import SideBar from './SideBar';
 import MainPanel from './MainPanel';
 import TopNavBar from './TopNavBar';
 // import Lancamento from '../Lancamento';
 
-export default function Painel({ children }) {
+const BlankPage = ({ children, fetchDataRequest, data }) => {
+  const [page, setPage] = useState('');
+
+  useEffect(() => {
+    if (!localStorage.getItem('@Ondazul: data')) {
+      fetchDataRequest();
+    }
+  }, [fetchDataRequest]);
+
   return (
     <>
       <Wrapper>
-        <SideBar />
+        <SideBar setPage={setPage} />
         <MainPanel>
-          <TopNavBar />
+          <TopNavBar page={page} />
           <div className="content">
             <div className="container-fluid">
-              {children}
-              {/* <Lancamento data={data} /> */}
+              {data.loading ? (
+                <>
+                  <i className="fa fa-spinner fa-pulse" />
+                  <h2>Loading Data</h2>
+                </>
+              ) : (
+                <>
+                  {children}
+                  {/* <Lancamento data={data} /> */}
+                </>
+              )}
             </div>
           </div>
         </MainPanel>
       </Wrapper>
     </>
   );
-}
-
-Painel.propTypes = {
-  children: PropTypes.node,
 };
 
-Painel.defaultProps = {
+BlankPage.propTypes = {
+  children: PropTypes.node,
+  fetchDataRequest: PropTypes.func.isRequired,
+};
+
+BlankPage.defaultProps = {
   children: '',
 };
+
+const mapStateToProps = state => ({
+  data: state.data,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(DataActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BlankPage);

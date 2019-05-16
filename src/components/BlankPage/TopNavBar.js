@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import { Creators as UserActions } from '../../store/ducks/user';
 
-const TopNavbar = ({ logout, history }) => {
+const TopNavbar = ({ logout, history, page }) => {
   const handleLogout = () => {
     localStorage.clear();
     logout();
@@ -28,7 +29,7 @@ const TopNavbar = ({ logout, history }) => {
             </button>
           </div>
           <a className="navbar-brand" href="/painel">
-            Página
+            {page}
           </a>
         </div>
         <button
@@ -73,6 +74,11 @@ const TopNavbar = ({ logout, history }) => {
       </div>
     </nav>
   );
+};
+
+TopNavbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({});

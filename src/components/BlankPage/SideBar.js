@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import SideBarContent from './SideBarContent';
 
-const Sidebar = ({ user }) => (
+const Sidebar = ({ user, setPage }) => (
   <div className="sidebar" data-color="green" data-background-color="black">
     <div className="logo">
       <a href="/painel" className="simple-text logo-mini">
@@ -25,12 +25,13 @@ const Sidebar = ({ user }) => (
       </div>
     </div>
 
-    <SideBarContent />
+    <SideBarContent setPage={setPage} />
   </div>
 );
 
 Sidebar.propTypes = {
   user: PropTypes.shape().isRequired,
+  setPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

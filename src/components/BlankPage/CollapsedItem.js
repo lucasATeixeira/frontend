@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function CollapsedItem({
-  icon, title, idColapse, itens,
+  icon, title, idColapse, itens, setPage,
 }) {
   const [active, setActive] = useState('');
   return (
@@ -23,6 +23,7 @@ export default function CollapsedItem({
           {itens.map((item) => {
             if (window.location.pathname === item.href && active === '') {
               setActive('active');
+              setPage(item.title);
             }
             return (
               <li
@@ -46,6 +47,7 @@ export default function CollapsedItem({
 }
 
 CollapsedItem.propTypes = {
+  setPage: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   idColapse: PropTypes.string.isRequired,
