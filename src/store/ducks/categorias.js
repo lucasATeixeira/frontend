@@ -10,11 +10,12 @@ export const Types = {
 
 const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
   categorias: {
-    categorias: [{}],
+    categorias: [],
     gastosOrcados: 0,
     gastosRealizados: 0,
     recebimentosOrcados: 0,
     recebimentosRealizados: 0,
+    periodo: 1,
   },
 };
 

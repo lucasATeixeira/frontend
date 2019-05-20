@@ -4,7 +4,12 @@ import api from '../../services/api';
 
 export function* addCategoriaRequest(action) {
   try {
-    const { data } = yield call(api.post, 'api/categoria', action.payload.categoria);
+    let { data } = yield call(api.post, 'api/categoria', action.payload.categoria);
+    data = {
+      ...data,
+      realizado: 0,
+      orcado: 0,
+    };
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
     local.categorias.categorias.push(data);
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
