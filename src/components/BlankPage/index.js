@@ -7,7 +7,7 @@ import Wrapper from './Wrapper';
 import SideBar from './SideBar';
 import MainPanel from './MainPanel';
 import TopNavBar from './TopNavBar';
-// import Lancamento from '../Lancamento';
+import Lancamento from '../Lancamento';
 
 const BlankPage = ({ children, fetchDataRequest, data }) => {
   const [page, setPage] = useState('');
@@ -34,7 +34,7 @@ const BlankPage = ({ children, fetchDataRequest, data }) => {
               ) : (
                 <>
                   {children}
-                  {/* <Lancamento data={data} /> */}
+                  <Lancamento />
                 </>
               )}
             </div>
@@ -48,6 +48,11 @@ const BlankPage = ({ children, fetchDataRequest, data }) => {
 BlankPage.propTypes = {
   children: PropTypes.node,
   fetchDataRequest: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    err: PropTypes.bool,
+    loading: PropTypes.bool,
+    success: PropTypes.bool,
+  }).isRequired,
 };
 
 BlankPage.defaultProps = {
