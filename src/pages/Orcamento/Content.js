@@ -21,30 +21,23 @@ const Component = ({
   };
   return (
     <>
-      {color !== 'danger' && (
-        <div className="row">
-          <div className="col-md-12">
-            <button
-              type="button"
-              onClick={() => setAddCategoria(true)}
-              className={`btn btn-round btn-sm pull-right btn-${color}`}
-            >
-              <strong>Criar uma nova categoria</strong>
-            </button>
-          </div>
+      <div className="row">
+        <div className="col-md-12">
+          <button
+            type="button"
+            onClick={() => setAddCategoria(true)}
+            className={`btn btn-round btn-sm pull-right btn-${color}`}
+          >
+            <strong>Criar uma nova categoria</strong>
+          </button>
         </div>
-      )}
+      </div>
 
       {categorias.map(c => (
         <div key={c._id} className="row">
           <div className="col-md-12">
-            <TableCard
-              categoria={c}
-              color={color}
-              options={color !== 'danger'}
-              materialIcon={materialIcon}
-            >
-              <Title title={c.nome} pencil={color !== 'danger'} />
+            <TableCard categoria={c} color={color} options materialIcon={materialIcon}>
+              <Title title={c.nome} pencil />
               <Table idCategoria={c._id} itens={c.itens} color={color} />
             </TableCard>
           </div>

@@ -13,7 +13,14 @@ export default function Card({
   type,
 }) {
   return (
-    <div style={{ cursor: 'pointer' }} onClick={() => setActive(type)} className="card card-stats">
+    <div
+      style={{ cursor: 'pointer' }}
+      onClick={() => setActive(type)}
+      onKeyPress={() => setActive(type)}
+      role="button"
+      tabIndex="0"
+      className="card card-stats"
+    >
       <div className={`card-header card-header-icon card-header-${color}`}>
         <div className="card-icon">
           <i className={`fa ${faIcon}`} />

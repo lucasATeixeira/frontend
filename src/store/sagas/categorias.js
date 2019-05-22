@@ -37,14 +37,7 @@ export function* removeCategoriaRequest(action) {
       categorias: local.categorias.categorias.filter(c => c._id !== action.payload.categoria),
     };
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
-    yield put(
-      CategoriasActions.removeCategoriaSuccess(
-        action.payload.categoria,
-        action.payload.orcado,
-        action.payload.realizado,
-        action.payload.tipo,
-      ),
-    );
+    yield put(CategoriasActions.removeCategoriaSuccess(local.categorias));
   } catch (err) {
     yield put(CategoriasActions.removeCategoriaFailure(err));
   }
@@ -79,15 +72,7 @@ export function* removeItemRequest(action) {
       }),
     };
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
-    yield put(
-      CategoriasActions.removeItemSuccess(
-        action.payload.item,
-        action.payload.mensal,
-        action.payload.realizado,
-        action.payload.tipo,
-        action.payload.categoria,
-      ),
-    );
+    yield put(CategoriasActions.removeItemSuccess(local.categorias));
   } catch (err) {
     yield put(CategoriasActions.removeItemFailure(err));
   }
@@ -116,7 +101,7 @@ export function* addItemRequest(action) {
       }),
     };
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
-    yield put(CategoriasActions.addItemSuccess(data));
+    yield put(CategoriasActions.addItemSuccess(local.categorias));
   } catch (err) {
     yield put(CategoriasActions.addItemFailure(err));
   }

@@ -54,25 +54,7 @@ export default function categorias(state = INITIAL_STATE, action) {
         loading: false,
         success: true,
         err: false,
-        gastosOrcados:
-          state.gastosOrcados - (action.payload.tipo === 'gasto' ? action.payload.mensal : 0),
-        gastosRealizados:
-          state.gastosRealizados - (action.payload.tipo === 'gasto' ? action.payload.realizado : 0),
-        recebimentosOrcados:
-          state.recebimentosOrcados
-          - (action.payload.tipo === 'recebimento' ? action.payload.mensal : 0),
-        recebimentosRealizados:
-          state.recebimentosRealizados
-          - (action.payload.tipo === 'recebimento' ? action.payload.realizado : 0),
-        categorias: state.categorias.map((c) => {
-          if (action.payload.categoria !== c._id) return c;
-          return {
-            ...c,
-            orcado: c.orcado - action.payload.mensal,
-            realizado: c.realizado - action.payload.realizado,
-            itens: c.itens.filter(i => i._id !== action.payload.item),
-          };
-        }),
+        ...action.payload.categoria,
       };
     case Types.ADD_ITEM_REQUEST:
       return {
@@ -94,20 +76,7 @@ export default function categorias(state = INITIAL_STATE, action) {
         loading: false,
         success: true,
         err: false,
-        gastosOrcados:
-          state.gastosOrcados
-          + (action.payload.item.tipo === 'gasto' ? action.payload.item.mensal : 0),
-        recebimentosOrcados:
-          state.recebimentosOrcados
-          + (action.payload.item.tipo === 'recebimento' ? action.payload.item.mensal : 0),
-        categorias: state.categorias.map((c) => {
-          if (action.payload.item.categoria !== c._id) return c;
-          return {
-            ...c,
-            orcado: c.orcado + action.payload.item.mensal,
-            itens: [...c.itens, action.payload.item],
-          };
-        }),
+        ...action.payload.categoria,
       };
     case Types.REMOVE_CATEGORIA_SUCCESS:
       return {
@@ -115,17 +84,7 @@ export default function categorias(state = INITIAL_STATE, action) {
         loading: false,
         err: false,
         success: true,
-        gastosOrcados:
-          state.gastosOrcados - (action.payload.tipo === 'gasto' ? action.payload.orcado : 0),
-        recebimentosOrcados:
-          state.recebimentosOrcados
-          - (action.payload.tipo === 'recebimento' ? action.payload.orcado : 0),
-        gastosRealizados:
-          state.gastosRealizados - (action.payload.tipo === 'gasto' ? action.payload.realizado : 0),
-        recebimentosRealizados:
-          state.recebimentosRealizados
-          - (action.payload.tipo === 'recebimento' ? action.payload.realizado : 0),
-        categorias: state.categorias.filter(c => c._id !== action.payload.categoria),
+        ...action.payload.categoria,
       };
     case Types.REMOVE_CATEGORIA_FAILURE:
       return {
@@ -192,13 +151,9 @@ export const Creators = {
     payload: { err },
   }),
 
-  removeItemSuccess: (item, mensal, realizado, tipo, categoria) => ({
+  removeItemSuccess: categoria => ({
     type: Types.REMOVE_ITEM_SUCCESS,
     payload: {
-      item,
-      mensal,
-      realizado,
-      tipo,
       categoria,
     },
   }),
@@ -212,9 +167,9 @@ export const Creators = {
     payloadg: { err },
   }),
 
-  addItemSuccess: item => ({
+  addItemSuccess: categoria => ({
     type: Types.ADD_ITEM_SUCCESS,
-    payload: { item },
+    payload: { categoria },
   }),
 
   removeCategoriaRequest: (categoria, orcado, realizado, tipo) => ({
@@ -232,13 +187,10 @@ export const Creators = {
     payload: { err },
   }),
 
-  removeCategoriaSuccess: (categoria, orcado, realizado, tipo) => ({
+  removeCategoriaSuccess: categoria => ({
     type: Types.REMOVE_CATEGORIA_SUCCESS,
     payload: {
       categoria,
-      orcado,
-      realizado,
-      tipo,
     },
   }),
 

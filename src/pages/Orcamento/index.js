@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import BlankPage from '../../components/BlankPage';
 import Card from './Card';
 import Content from './Content';
+import ContentDividas from './ContentDividas';
 
 const Orcamento = ({ categorias }) => {
   const [active, setActive] = useState(2);
@@ -66,9 +68,27 @@ const Orcamento = ({ categorias }) => {
           materialIcon="shopping_cart"
         />
       )}
-      {active === 3 && <Content color="danger" materialIcon="file_copy" />}
+      {active === 3 && <ContentDividas color="danger" materialIcon="file_copy" />}
     </BlankPage>
   );
+};
+
+Orcamento.propTypes = {
+  categorias: PropTypes.shape({
+    categorias: PropTypes.arrayOf(
+      PropTypes.shape({
+        tipo: PropTypes.string,
+      }),
+    ),
+    err: PropTypes.bool,
+    gastosOrcados: PropTypes.number,
+    gastosRealizados: PropTypes.number,
+    loading: PropTypes.bool,
+    periodo: PropTypes.number,
+    recebimentosOrcados: PropTypes.number,
+    recebimentosRealizados: PropTypes.number,
+    success: PropTypes.bool,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({
