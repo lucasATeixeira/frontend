@@ -39,13 +39,13 @@ const Component = ({
         <div key={c._id} className="row">
           <div className="col-md-12">
             <TableCard
-              id={c._id}
+              categoria={c}
               color={color}
               options={color !== 'danger'}
               materialIcon={materialIcon}
             >
               <Title title={c.nome} pencil={color !== 'danger'} />
-              <Table itens={c.itens} color={color} />
+              <Table idCategoria={c._id} itens={c.itens} color={color} />
             </TableCard>
           </div>
         </div>
@@ -88,11 +88,23 @@ const Component = ({
 Component.propTypes = {
   color: PropTypes.string,
   materialIcon: PropTypes.string,
+  addCategoriaRequest: PropTypes.func.isRequired,
+  categorias: PropTypes.arrayOf(
+    PropTypes.shape({
+      itens: PropTypes.arrayOf(PropTypes.shape()),
+      nome: PropTypes.string,
+      orcado: PropTypes.number,
+      realizado: PropTypes.number,
+      tipo: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+  ),
 };
 
 Component.defaultProps = {
   color: 'info',
   materialIcon: 'materialIcon',
+  categorias: [],
 };
 
 const mapStateToProps = () => ({});

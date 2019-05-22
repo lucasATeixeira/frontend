@@ -5,10 +5,20 @@ import { bindActionCreators } from 'redux';
 import { Creators as CategoriasActions } from '../../store/ducks/categorias';
 
 const TableCard = ({
-  children, materialIcon, color, options, id, removeCategoriaRequest,
+  children,
+  materialIcon,
+  color,
+  options,
+  categoria,
+  removeCategoriaRequest,
 }) => {
   const handleDelete = () => {
-    removeCategoriaRequest(id);
+    if (
+      !window.confirm(
+        'Esta categoria pode conter itens e lancamnentos atrelados a ela, tem certeza que deseja excluir?',
+      )
+    ) return;
+    removeCategoriaRequest(categoria._id, categoria.orcado, categoria.realizado, categoria.tipo);
   };
   return (
     <>
@@ -42,6 +52,12 @@ TableCard.propTypes = {
   materialIcon: PropTypes.string,
   color: PropTypes.string,
   options: PropTypes.bool,
+  removeCategoriaRequest: PropTypes.func.isRequired,
+  categoria: PropTypes.shape({
+    _id: PropTypes.string,
+    orcado: PropTypes.number,
+    realizado: PropTypes.number,
+  }),
 };
 
 TableCard.defaultProps = {
@@ -49,6 +65,7 @@ TableCard.defaultProps = {
   materialIcon: 'attach_money',
   color: 'grafit',
   options: true,
+  categoria: {},
 };
 
 const mapStateToProps = () => ({});

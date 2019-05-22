@@ -1,19 +1,37 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as CategoriaActions } from '../../store/ducks/categorias';
 
-const Table = ({ color, itens }) => {
+const Table = ({
+  color, itens, addItemRequest, idCategoria, removeItemRequest,
+}) => {
   const [newItem, setNewItem] = useState(false);
   const [nome, setNome] = useState('');
   const [valor, setValor] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
   const [classificacao, setClassificacao] = useState('Flexível');
-
+  const handleDelete = (item, mensal, realizado, tipo) => {
+    if (
+      !window.confirm('Este item pode conter lançamentos feitos, tem certeza que deseja excluir?')
+    ) return;
+    removeItemRequest(item, mensal, realizado, tipo, idCategoria);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!nome) return alert('Preencha o nome');
     if (recorrencia <= 0) return alert('Recorrência deve ser maior que zero');
+    addItemRequest({
+      tipo: color === 'info' ? 'gasto' : 'recebimento',
+      nome,
+      classificacao,
+      orcado: valor,
+      recorrencia,
+      idCategoria,
+    });
+    return setNewItem(false);
   };
   return (
     <div className="row">
@@ -25,7 +43,7 @@ const Table = ({ color, itens }) => {
                 <tr>
                   <th>Nome</th>
                   <th>Classificação</th>
-                  <th>Valor</th>
+                  <th>Orçado</th>
                   <th>Recorrência</th>
                   <th>Valor Mensal</th>
                   <th className="text-right">Actions</th>
@@ -41,22 +59,25 @@ const Table = ({ color, itens }) => {
                     </td>
                     <td>{i.recorrencia}</td>
                     <td>
-                      {i.classificacao !== 'Eventual'
-                        ? (i.orcado * i.recorrencia).toLocaleString('pt-br', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })
-                        : (i.orcado / i.recorrencia).toLocaleString('pt-br', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                      {i.mensal.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
                     </td>
                     <td className="td-actions text-right">
                       <button
                         type="button"
                         className="btn btn-danger btn-link btn-just-icon btn-sm"
                       >
-                        <i className="material-icons">close</i>
+                        <i
+                          onClick={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo)}
+                          onKeyPress={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo)}
+                          className="material-icons"
+                          role="button"
+                          tabIndex="0"
+                        >
+                          close
+                        </i>
                       </button>
                     </td>
                   </tr>
@@ -161,13 +182,35 @@ Adicionar item
 };
 
 Table.propTypes = {
+  removeItemRequest: PropTypes.func.isRequired,
   color: PropTypes.string,
-  itens: PropTypes.array,
+  addItemRequest: PropTypes.func.isRequired,
+  idCategoria: PropTypes.string,
+  itens: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      categoria: PropTypes.string,
+      classificacao: PropTypes.string,
+      mensal: PropTypes.number,
+      nome: PropTypes.string,
+      orcado: PropTypes.number,
+      recorrencia: PropTypes.number,
+      tipo: PropTypes.string,
+    }),
+  ),
 };
 
 Table.defaultProps = {
   color: 'info',
   itens: [],
+  idCategoria: '',
 };
 
-export default Table;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => bindActionCreators(CategoriaActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Table);
