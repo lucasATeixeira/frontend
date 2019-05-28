@@ -1,19 +1,23 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 import CurrencyInput from 'react-currency-input';
 import { ToastContainer, toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import { Creators as CategoriasActions } from '../../store/ducks/categorias';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('ptBR', ptBR);
 
-const Content = ({ active, categorias }) => {
+const Content = ({
+  active, categorias, lancamentoRequest, success, err,
+}) => {
   const [idCategoria, setIdCategoria] = useState('categoria');
-  const [categoria, setCategoria] = useState(undefined);
   const [idItem, setIdItem] = useState('item');
   const [formaPagamento, setFormaPagamento] = useState('À Vista');
   const [vezes, setVezes] = useState(1);
@@ -25,27 +29,63 @@ const Content = ({ active, categorias }) => {
     setFormaPagamento('À Vista');
     setVezes(1);
     setValor(0);
-    toast.success('Lançamento Realizado com Sucesso', { containerId: 'A' });
-    // toast.error('Ocorreu um erro com o Lançamento: ', { containerId: 'B' });
-  }, [categoria, idItem]);
+  }, [idCategoria, idItem]);
+
+  useEffect(() => {
+    if (success) toast.success('Lançamento Realizado');
+    if (err) toast.error('Ocorreu um erro com o lançamento');
+  }, [success, err]);
 
   useEffect(() => {
     setIdCategoria('categoria');
     setIdItem('item');
-    setCategoria(undefined);
     setFormaPagamento('À Vista');
     setVezes(1);
     setValor(0);
     setDescricao('');
   }, [active]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (idCategoria === 'categoria') {
+      return toast.error('Escolha uma categoria');
+    }
+    if (idItem === 'item') {
+      return toast.error('Escolha um item');
+    }
+    if (!descricao) {
+      return toast.error('Coloque uma descrição');
+    }
+    if (valor <= 0) {
+      return toast.error('Coloque um valor do Lançamento');
+    }
+    if (vezes <= 0) {
+      return toast.error('A quantidade de vezes deve ser superior a zero');
+    }
+    const dataFinal = moment(dataLancamento)
+      .add(Number(vezes) - 1, 'month')
+      .format();
+
+    return lancamentoRequest({
+      tipo: active,
+      idCategoria,
+      idItem,
+      data: dataLancamento,
+      descricao,
+      valor,
+      formaPagamento,
+      vezes,
+      dataFinal,
+    });
+  };
+
   return (
     <>
-      <div className="modal-body">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="card-body">
-              <form>
+      <form onSubmit={handleSubmit}>
+        <div className="modal-body">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="card-body">
                 <span className="bmd-form-group">
                   <select
                     onChange={e => setIdCategoria(e.target.value)}
@@ -157,29 +197,28 @@ const Content = ({ active, categorias }) => {
                     </div>
                   </span>
                 )}
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="modal-footer">
-        <div className="modal-footer justify-content-center">
-          <button
-            type="button"
-            className="btn btn-primary btn-link btn-wd btn-lg"
-            data-dismiss="modal"
-            aria-hidden
-          >
-            Fechar
-          </button>
-          <button type="button" className="btn btn-primary btn-link btn-wd btn-lg">
-            Lançar
-          </button>
+        <div className="modal-footer">
+          <div className="modal-footer justify-content-center">
+            <button
+              type="button"
+              className="btn btn-primary btn-link btn-wd btn-lg"
+              data-dismiss="modal"
+              aria-hidden
+            >
+              Fechar
+            </button>
+            <button type="submit" className="btn btn-primary btn-link btn-wd btn-lg">
+              Lançar
+            </button>
+          </div>
         </div>
-      </div>
-      <ToastContainer enableMultiContainer containerId="A" autoClose={2000} />
-      <ToastContainer enableMultiContainer containerId="B" autoClose={2000} />
+        <ToastContainer autoClose={2000} />
+      </form>
     </>
   );
 };
@@ -187,6 +226,9 @@ const Content = ({ active, categorias }) => {
 Content.propTypes = {
   active: PropTypes.string.isRequired,
   categorias: PropTypes.arrayOf(PropTypes.shape()),
+  err: PropTypes.bool.isRequired,
+  success: PropTypes.bool.isRequired,
+  lancamentoRequest: PropTypes.func.isRequired,
 };
 
 Content.defaultProps = {
@@ -195,6 +237,13 @@ Content.defaultProps = {
 
 const mapStateToProps = state => ({
   categorias: state.categorias.categorias,
+  success: state.categorias.success,
+  err: state.categorias.err,
 });
 
-export default connect(mapStateToProps)(Content);
+const mapDispatchToProps = dispatch => bindActionCreators(CategoriasActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Content);

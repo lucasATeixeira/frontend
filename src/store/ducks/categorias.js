@@ -12,6 +12,12 @@ export const Types = {
   REMOVE_CATEGORIA_REQUEST: 'categorias/REMOVE_CATEGORIA_REQUEST',
   REMOVE_CATEGORIA_SUCCESS: 'categorias/REMOVE_CATEGORIA_SUCCESS',
   REMOVE_CATEGORIA_FAILURE: 'categorias/REMOVE_CATEGORIA_FAILURE',
+  LANCAMENTO_REQUEST: 'categorias/LANCAMENTO_REQUEST',
+  LANCAMENTO_SUCCESS: 'categorias/LANCAMENTO_SUCCESS',
+  LANCAMENTO_FAILURE: 'categorias/LANCAMENTO_FAILURE',
+  REMOVE_LANCAMENTO_REQUEST: 'categorias/REMOVE_LANCAMENTO_REQUEST',
+  REMOVE_LANCAMENTO_SUCCESS: 'categorias/REMOVE_LANCAMENTO_SUCCESS',
+  REMOVE_LANCAMENTO_FAILURE: 'categorias/REMOVE_LANCAMENTO_FAILURE',
 };
 
 const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
@@ -21,6 +27,8 @@ const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
     gastosRealizados: 0,
     recebimentosOrcados: 0,
     recebimentosRealizados: 0,
+    start: new Date(),
+    end: new Date(),
     periodo: 1,
   },
 };
@@ -34,6 +42,50 @@ const INITIAL_STATE = {
 
 export default function categorias(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.REMOVE_LANCAMENTO_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        err: false,
+      };
+    case Types.REMOVE_LANCAMENTO_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        err: action.payload.err,
+      };
+    case Types.REMOVE_LANCAMENTO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        err: false,
+        ...action.payload.categoria,
+      };
+    case Types.LANCAMENTO_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        err: false,
+      };
+    case Types.LANCAMENTO_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        err: action.payload.err,
+      };
+    case Types.LANCAMENTO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        err: false,
+        ...action.payload.categoria,
+      };
     case Types.REMOVE_ITEM_REQUEST:
       return {
         ...state,
@@ -135,6 +187,36 @@ export default function categorias(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  removeLancamentoRequest: lancamento => ({
+    type: Types.REMOVE_LANCAMENTO_REQUEST,
+    payload: { lancamento },
+  }),
+
+  removeLancamentoFailure: err => ({
+    type: Types.REMOVE_LANCAMENTO_FAILURE,
+    payload: { err },
+  }),
+
+  removeLancamentoSuccess: categoria => ({
+    type: Types.REMOVE_LANCAMENTO_SUCCESS,
+    payload: { categoria },
+  }),
+
+  lancamentoRequest: lancamento => ({
+    type: Types.LANCAMENTO_REQUEST,
+    payload: { lancamento },
+  }),
+
+  lancamentoFailure: err => ({
+    type: Types.LANCAMENTO_FAILURE,
+    payload: { err },
+  }),
+
+  lancamentoSuccess: categoria => ({
+    type: Types.LANCAMENTO_SUCCESS,
+    payload: { categoria },
+  }),
+
   removeItemRequest: (item, mensal, realizado, tipo, categoria) => ({
     type: Types.REMOVE_ITEM_REQUEST,
     payload: {

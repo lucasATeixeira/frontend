@@ -1,6 +1,52 @@
 import { call, put } from 'redux-saga/effects';
+import moment from 'moment';
 import { Creators as CategoriasActions } from '../ducks/categorias';
 import api from '../../services/api';
+
+export function* removeLancamentoRequest(action) {
+  try {
+    yield call(api.delete, `api/lancamento/${action.payload.lancamento._id}`);
+    const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
+    const start = moment(action.payload.lancamento.data).isBetween(
+      local.categorias.start,
+      local.categorias.end,
+    );
+    const end = moment(action.payload.lancamento.dataFinal).isBetween(
+      local.categorias.start,
+      local.categorias.end,
+    );
+    if (start || end) {
+      local.categorias = {
+        ...local.categorias,
+        gastosRealizados:
+          local.categorias.gastosRealizados
+          - (action.payload.lancamento.tipo === 'gasto' ? action.payload.lancamento.mensal : 0),
+        recebimentosRealizados:
+          local.categorias.recebimentosRealizados
+          - (action.payload.lancamento.tipo === 'recebimento' ? action.payload.lancamento.mensal : 0),
+        categorias: local.categorias.categorias.map((c) => {
+          if (c._id !== action.payload.lancamento.categoria) return c;
+          return {
+            ...c,
+            realizado: c.realizado - action.payload.lancamento.mensal,
+            itens: c.itens.map((i) => {
+              if (i._id !== action.payload.lancamento.item) return i;
+              return {
+                ...i,
+                realizado: i.realizado - action.payload.lancamento.mensal,
+                lancamentos: i.lancamentos.filter(l => l._id !== action.payload.lancamento._id),
+              };
+            }),
+          };
+        }),
+      };
+    }
+    localStorage.setItem('@Ondazul: data', JSON.stringify(local));
+    yield put(CategoriasActions.removeLancamentoSuccess(local.categorias));
+  } catch (err) {
+    yield put(CategoriasActions.removeLancamentoFailure(err));
+  }
+}
 
 export function* addCategoriaRequest(action) {
   try {
@@ -104,5 +150,43 @@ export function* addItemRequest(action) {
     yield put(CategoriasActions.addItemSuccess(local.categorias));
   } catch (err) {
     yield put(CategoriasActions.addItemFailure(err));
+  }
+}
+
+export function* lancamentoRequest(action) {
+  try {
+    const { data } = yield call(api.post, 'api/lancamento', action.payload.lancamento);
+    const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
+    const start = moment(data.data).isBetween(local.categorias.start, local.categorias.end);
+    const end = moment(data.dataFinal).isBetween(local.categorias.start, local.categorias.end);
+    data.mensal = data.formaPagamento === 'Parcelado' ? data.valor / data.vezes : data.valor;
+    if (start || end) {
+      local.categorias = {
+        ...local.categorias,
+        gastosRealizados:
+          local.categorias.gastosRealizados + (data.tipo === 'gasto' ? data.mensal : 0),
+        recebimentosRealizados:
+          local.categorias.recebimentosRealizados + (data.tipo === 'recebimento' ? data.mensal : 0),
+        categorias: local.categorias.categorias.map((c) => {
+          if (data.categoria !== c._id) return c;
+          return {
+            ...c,
+            realizado: c.realizado + data.mensal,
+            itens: c.itens.map((i) => {
+              if (data.item !== i._id) return i;
+              return {
+                ...i,
+                realizado: i.realizado + data.mensal,
+                lancamentos: [...i.lancamentos, data],
+              };
+            }),
+          };
+        }),
+      };
+    }
+    localStorage.setItem('@Ondazul: data', JSON.stringify(local));
+    yield put(CategoriasActions.lancamentoSuccess(local.categorias));
+  } catch (err) {
+    yield put(CategoriasActions.lancamentoFailure(err));
   }
 }

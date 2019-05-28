@@ -36,8 +36,9 @@ export default function data(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
-  fetchDataRequest: () => ({
+  fetchDataRequest: (start = new Date(), end = new Date()) => ({
     type: Types.FETCH_DATA_REQUEST,
+    payload: { start, end },
   }),
 
   fetchDataSuccess: () => ({
