@@ -127,11 +127,11 @@ export function* removeItemRequest(action) {
 export function* addItemRequest(action) {
   try {
     const { data } = yield call(api.post, 'api/item', action.payload.item);
-    data.mensal = data.classificacao === 'Eventual'
-      ? data.orcado / data.recorrencia
-      : data.orcado * data.recorrencia;
-    data.realizado = 0;
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
+    data.mensal = data.classificacao === 'Eventual'
+      ? (data.orcado * local.categorias.periodo) / data.recorrencia
+      : data.orcado * local.categorias.periodo * data.recorrencia;
+    data.realizado = 0;
     local.categorias = {
       ...local.categorias,
       gastosOrcados: local.categorias.gastosOrcados + (data.tipo === 'gasto' ? data.mensal : 0),

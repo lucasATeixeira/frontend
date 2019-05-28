@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as CategoriaActions } from '../../store/ducks/categorias';
 
 const Table = ({
-  color, itens, addItemRequest, idCategoria, removeItemRequest,
+  color, itens, addItemRequest, idCategoria, removeItemRequest, periodo,
 }) => {
   const [newItem, setNewItem] = useState(false);
   const [nome, setNome] = useState('');
@@ -45,7 +45,7 @@ const Table = ({
                   <th>Classificação</th>
                   <th>Orçado</th>
                   <th>Recorrência</th>
-                  <th>Valor Mensal</th>
+                  <th>Valor Período</th>
                   <th className="text-right">Actions</th>
                 </tr>
               </thead>
@@ -142,11 +142,11 @@ const Table = ({
                       {valor === 0
                         ? '--'
                         : classificacao === 'Eventual'
-                          ? (valor / recorrencia).toLocaleString('pt-br', {
+                          ? ((valor * periodo) / recorrencia).toLocaleString('pt-br', {
                             style: 'currency',
                             currency: 'BRL',
                           })
-                          : (valor * recorrencia).toLocaleString('pt-br', {
+                          : (valor * periodo * recorrencia).toLocaleString('pt-br', {
                             style: 'currency',
                             currency: 'BRL',
                           })}
@@ -182,6 +182,7 @@ Adicionar item
 };
 
 Table.propTypes = {
+  periodo: PropTypes.number.isRequired,
   removeItemRequest: PropTypes.func.isRequired,
   color: PropTypes.string,
   addItemRequest: PropTypes.func.isRequired,
@@ -206,7 +207,9 @@ Table.defaultProps = {
   idCategoria: '',
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  periodo: state.categorias.periodo,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(CategoriaActions, dispatch);
 
