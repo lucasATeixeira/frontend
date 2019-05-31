@@ -2,8 +2,10 @@ import { all, takeLatest } from 'redux-saga/effects';
 import { Types as UserTypes } from '../ducks/user';
 import { Types as DataTypes } from '../ducks/data';
 import { Types as CategoriasTypes } from '../ducks/categorias';
+import { Types as PatrimoniosTypes } from '../ducks/patrimonios';
 import { authUser } from './user';
 import { fetchDataRequest } from './data';
+import { addPatrimonioRequest } from './patrimonios';
 import {
   addCategoriaRequest,
   addItemRequest,
@@ -23,5 +25,6 @@ export default function* rootSaga() {
     takeLatest(CategoriasTypes.REMOVE_CATEGORIA_REQUEST, removeCategoriaRequest),
     takeLatest(CategoriasTypes.LANCAMENTO_REQUEST, lancamentoRequest),
     takeLatest(CategoriasTypes.REMOVE_LANCAMENTO_REQUEST, removeLancamentoRequest),
+    takeLatest(PatrimoniosTypes.ADD_PATRIMONIO_REQUEST, addPatrimonioRequest),
   ]);
 }
