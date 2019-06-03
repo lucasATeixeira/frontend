@@ -31,11 +31,7 @@ export default function CollapsedItem({
                 className={`nav-item ${window.location.pathname === item.href ? 'active' : ''}`}
               >
                 <Link to={item.href} className="nav-link">
-                  <span className="sidebar-mini">{item.mini}</span>
-                  <span className="sidebar-normal">
-                    {' '}
-                    {item.title}
-                  </span>
+                  <span className="sidebar-normal"> {item.title}</span>
                 </Link>
               </li>
             );

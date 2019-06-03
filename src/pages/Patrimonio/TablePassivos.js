@@ -8,7 +8,9 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Creators as PatrimoniosActions } from '../../store/ducks/patrimonios';
 
-const TablePassivos = ({ list, addPatrimonioRequest, classificacao }) => {
+const TablePassivos = ({
+  list, addPatrimonioRequest, removePatrimonioRequest, classificacao,
+}) => {
   const [newPassivo, setNewPassivo] = useState(false);
   const [nomePassivo, setNomePassivo] = useState('');
   const [instituicao, setInstituicao] = useState('');
@@ -16,6 +18,11 @@ const TablePassivos = ({ list, addPatrimonioRequest, classificacao }) => {
   const [pmt, setPmt] = useState(0);
   const [taxa, setTaxa] = useState(0);
   const [aVista, setAVista] = useState(0);
+
+  const handleDelete = (patrimonio) => {
+    if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;
+    removePatrimonioRequest(patrimonio);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,6 +107,7 @@ const TablePassivos = ({ list, addPatrimonioRequest, classificacao }) => {
                       <td>{((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')}%</td>
                       <td className="td-actions text-right">
                         <button
+                          onClick={() => handleDelete(p)}
                           type="button"
                           className="btn btn-danger btn-link btn-just-icon btn-sm"
                         >
@@ -228,6 +236,7 @@ const TablePassivos = ({ list, addPatrimonioRequest, classificacao }) => {
 TablePassivos.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape()),
   addPatrimonioRequest: PropTypes.func.isRequired,
+  removePatrimonioRequest: PropTypes.func.isRequired,
   classificacao: PropTypes.string.isRequired,
 };
 

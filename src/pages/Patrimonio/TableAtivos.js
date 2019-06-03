@@ -6,11 +6,18 @@ import { bindActionCreators } from 'redux';
 import CurrencyInput from 'react-currency-input';
 import { Creators as PatrimoniosActions } from '../../store/ducks/patrimonios';
 
-const TableAtivos = ({ list, addPatrimonioRequest, classificacao }) => {
+const TableAtivos = ({
+  list, addPatrimonioRequest, removePatrimonioRequest, classificacao,
+}) => {
   const [nomeAtivo, setNomeAtivo] = useState('');
   const [tipo, setTipo] = useState('Moradia');
   const [valor, setValor] = useState(0);
   const [newAtivo, setNewAtivo] = useState(false);
+
+  const handleDelete = (patrimonio) => {
+    if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;
+    removePatrimonioRequest(patrimonio);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,6 +66,7 @@ const TableAtivos = ({ list, addPatrimonioRequest, classificacao }) => {
                       </td>
                       <td className="td-actions text-right">
                         <button
+                          onClick={() => handleDelete(a)}
                           type="button"
                           className="btn btn-danger btn-link btn-just-icon btn-sm"
                         >
@@ -148,6 +156,7 @@ const TableAtivos = ({ list, addPatrimonioRequest, classificacao }) => {
 TableAtivos.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape()),
   addPatrimonioRequest: PropTypes.func.isRequired,
+  removePatrimonioRequest: PropTypes.func.isRequired,
   classificacao: PropTypes.string.isRequired,
 };
 

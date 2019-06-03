@@ -5,7 +5,7 @@ import { Types as CategoriasTypes } from '../ducks/categorias';
 import { Types as PatrimoniosTypes } from '../ducks/patrimonios';
 import { authUser } from './user';
 import { fetchDataRequest } from './data';
-import { addPatrimonioRequest } from './patrimonios';
+import { addPatrimonioRequest, removePatrimonioRequest } from './patrimonios';
 import {
   addCategoriaRequest,
   addItemRequest,
@@ -26,5 +26,6 @@ export default function* rootSaga() {
     takeLatest(CategoriasTypes.LANCAMENTO_REQUEST, lancamentoRequest),
     takeLatest(CategoriasTypes.REMOVE_LANCAMENTO_REQUEST, removeLancamentoRequest),
     takeLatest(PatrimoniosTypes.ADD_PATRIMONIO_REQUEST, addPatrimonioRequest),
+    takeLatest(PatrimoniosTypes.REMOVE_PATRIMONIO_REQUEST, removePatrimonioRequest),
   ]);
 }

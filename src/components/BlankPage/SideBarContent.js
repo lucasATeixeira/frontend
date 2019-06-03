@@ -33,7 +33,13 @@ export default function SideBarContent({ setPage }) {
         title="Planejar"
         icon="trending_up"
         idColapse="planejar"
-        itens={[]}
+        itens={[
+          {
+            href: '/pq5+1',
+            mini: 'PQ',
+            title: 'PQ5+1',
+          },
+        ]}
         setPage={setPage}
       />
       <CollapsedItem

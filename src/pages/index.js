@@ -6,6 +6,7 @@ import Painel from './Painel';
 import Orcamento from './Orcamento';
 import Extrato from './Extrato';
 import Patrimonio from './Patrimonio';
+import Pq5 from './Pq5+1';
 
 const Pages = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const Pages = () => (
       <PrivateRoute exact path="/orcamento" component={Orcamento} />
       <PrivateRoute exact path="/extrato" component={Extrato} />
       <PrivateRoute exact path="/patrimonio" component={Patrimonio} />
+      <PrivateRoute exact path="/pq5+1" component={Pq5} />
       <Route component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
