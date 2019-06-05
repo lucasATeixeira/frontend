@@ -48,6 +48,11 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         currentSimulation: {
           stage: 1,
           type: action.payload.type,
+          itens: [],
+          itensRemovidos: [],
+          patrimonios: [],
+          patrimoniosRemovidos: [],
+          saldo: 0,
         },
       };
     case Types.FETCH_DATA_REQUEST:
