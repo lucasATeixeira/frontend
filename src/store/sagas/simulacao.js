@@ -10,3 +10,12 @@ export function* fetchSimulacaoRequest() {
     yield put(SimulacaoActions.fetchDataFailure(err));
   }
 }
+
+export function* submitSimulationRequest(action) {
+  try {
+    const { data } = yield call(api.post, 'api/simulacao', action.payload.currentSimulation);
+    console.log(data);
+  } catch (err) {
+    yield put(SimulacaoActions.submitSimulationFailure(err));
+  }
+}

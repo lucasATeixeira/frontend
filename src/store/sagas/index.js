@@ -7,7 +7,7 @@ import { Types as SimulacaoTypes } from '../ducks/simulacao';
 import { authUser } from './user';
 import { fetchDataRequest } from './data';
 import { addPatrimonioRequest, removePatrimonioRequest } from './patrimonios';
-import { fetchSimulacaoRequest } from './simulacao';
+import { fetchSimulacaoRequest, submitSimulationRequest } from './simulacao';
 import {
   addCategoriaRequest,
   addItemRequest,
@@ -30,5 +30,6 @@ export default function* rootSaga() {
     takeLatest(PatrimoniosTypes.ADD_PATRIMONIO_REQUEST, addPatrimonioRequest),
     takeLatest(PatrimoniosTypes.REMOVE_PATRIMONIO_REQUEST, removePatrimonioRequest),
     takeLatest(SimulacaoTypes.FETCH_DATA_REQUEST, fetchSimulacaoRequest),
+    takeLatest(SimulacaoTypes.SUBMIT_SIMULATION_REQUEST, submitSimulationRequest)
   ]);
 }

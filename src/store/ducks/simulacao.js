@@ -5,6 +5,9 @@ export const Types = {
   START_SIMULATION: 'simulacao/START_SIMULATION',
   END_SIMULATION: 'simulacao/END_SIMULATION',
   SAVE_SIMULATION: 'simulacao/SAVE_SIMULATION',
+  SUBMIT_SIMULATION_REQUEST: 'simulacao/SUBMIT_SIMULATION_REQUEST',
+  SUBMIT_SIMULATION_FAILURE: 'simulacao/SUBMIT_SIMULATION_FAILURE',
+  SUBMIT_SIMULATION_SUCCESS: 'simulacao/SUBMIT_SIMULATION_SUCCESS',
 };
 
 const INITIAL_VALUE = {
@@ -28,6 +31,30 @@ const INITIAL_VALUE = {
 
 export default function simulacao(state = INITIAL_VALUE, action) {
   switch (action.type) {
+    case Types.SUBMIT_SIMULATION_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        currentSimulation: {},
+        simulating: false,
+        err: false,
+        success: false,
+      };
+    case Types.SUBMIT_SIMULATION_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        err: action.payload.err,
+        success: false,
+      };
+    case Types.SUBMIT_SIMULATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        err: false,
+        success: true,
+        ...action.payload.response,
+      };
     case Types.SAVE_SIMULATION:
       return {
         ...state,
@@ -53,6 +80,9 @@ export default function simulacao(state = INITIAL_VALUE, action) {
           patrimonios: [],
           patrimoniosRemovidos: [],
           saldo: 0,
+          orcamento: 0,
+          checked: undefined,
+          estrategia: undefined,
         },
       };
     case Types.FETCH_DATA_REQUEST:
@@ -84,6 +114,21 @@ export default function simulacao(state = INITIAL_VALUE, action) {
 }
 
 export const Creators = {
+  submitSimulationRequest: currentSimulation => ({
+    type: Types.SUBMIT_SIMULATION_REQUEST,
+    payload: { currentSimulation },
+  }),
+
+  submitSimulationFailure: err => ({
+    type: Types.SUBMIT_SIMULATION_FAILURE,
+    payload: { err },
+  }),
+
+  submitSimulationSuccess: currentSimulation => ({
+    type: Types.SUBMIT_SIMULATION_SUCCESS,
+    payload: { currentSimulation },
+  }),
+
   startSimulation: type => ({
     type: Types.START_SIMULATION,
     payload: { type },

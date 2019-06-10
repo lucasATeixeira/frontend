@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input } from '@rocketseat/unform';
+import { Form, Input, Select } from '@rocketseat/unform';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as CategoriasActions } from '../../store/ducks/categorias';
@@ -14,10 +14,11 @@ const Component = ({
 }) => {
   const [addCategoria, setAddCategoria] = useState(false);
   const handleSubmit = (data) => {
-    const { nome } = data;
+    const { nome, classificacao } = data;
     const tipo = color === 'info' ? 'gasto' : 'recebimento';
-    addCategoriaRequest({ nome, tipo });
-    setAddCategoria(false);
+    if (!classificacao) return alert('Indique a classificação da categoria');
+    addCategoriaRequest({ nome, tipo, classificacao });
+    return setAddCategoria(false);
   };
   return (
     <>
@@ -50,14 +51,31 @@ const Component = ({
             <TableCard options={false} color={color}>
               <br />
               <Form onSubmit={handleSubmit}>
-                <span className="bmd-form-group">
-                  <Input
-                    name="nome"
-                    type="text"
-                    placeholder="Nome da Categoria"
-                    className="form-control"
-                  />
-                </span>
+                <div className="row">
+                  <div className="col-md-7">
+                    <span className="bmd-form-group">
+                      <Input
+                        name="nome"
+                        type="text"
+                        placeholder="Nome da Categoria"
+                        className="form-control"
+                      />
+                    </span>
+                  </div>
+                  <div className="col-md-5">
+                    <span className="bmd-form-group">
+                      <Select
+                        className="form-control"
+                        name="classificacao"
+                        options={[
+                          { id: 'moradia', title: 'Moradia' },
+                          { id: 'transporte', title: 'Transporte' },
+                          { id: 'outros', title: 'Outros' },
+                        ]}
+                      />
+                    </span>
+                  </div>
+                </div>
                 <br />
                 <button type="submit" className={`btn btn-${color} btn-sm`}>
                   <strong>Criar</strong>

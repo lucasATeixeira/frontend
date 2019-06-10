@@ -101,10 +101,10 @@ const TableAtivos = ({
                               data-size="7"
                               data-live-search="true"
                             >
-                              <option value="Moradia">Moradia</option>
-                              <option value="Veículo">Veículo</option>
-                              <option value="Bens Não Utilizados">Bens Não Utilizados</option>
-                              <option value="Outros Bens">Outros Bens</option>
+                              <option value="moradia">Moradia</option>
+                              <option value="veículo">Transporte</option>
+                              <option value="bens nao utilizados">Bens Não Utilizados</option>
+                              <option value="outros bens">Outros Bens</option>
                             </select>
                           </div>
                         </span>
