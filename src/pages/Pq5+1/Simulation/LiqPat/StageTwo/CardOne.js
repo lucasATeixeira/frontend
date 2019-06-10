@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -14,11 +14,23 @@ const CardOne = ({ simulacao, saveSimulation }) => {
   const [bem, setBem] = useState(0);
   const [carro, setCarro] = useState(0);
 
+  useEffect(() => {
+    setAluguel(0);
+    setMoradia(0);
+    setUber(0);
+    setAssinatura(0);
+    setBem(0);
+    setCarro(0);
+  }, [currentSimulation.estrategia]);
+
   const handleChange = (fv, type, name) => {
     if (type === 'item') {
       if (!currentSimulation.itens.find(e => e.nome === name)) {
         saveSimulation({
           ...currentSimulation,
+          patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+            p => p._id === currentSimulation.checked._id,
+          ),
           itens: [
             ...currentSimulation.itens,
             {
@@ -35,6 +47,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
       }
       saveSimulation({
         ...currentSimulation,
+        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+          p => p._id === currentSimulation.checked._id,
+        ),
         itens: currentSimulation.itens.map((e) => {
           if (e.nome !== name) return e;
           return {
@@ -52,11 +67,19 @@ const CardOne = ({ simulacao, saveSimulation }) => {
             ...currentSimulation.patrimonios,
             { nome: name, valor: fv, id: Math.random() },
           ],
+          saldo: simulacao.ativos - simulacao.passivos + currentSimulation.checked.valor - fv,
+          patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+            p => p._id === currentSimulation.checked._id,
+          ),
         });
         return;
       }
       saveSimulation({
         ...currentSimulation,
+        saldo: simulacao.ativos - simulacao.passivos + currentSimulation.checked.valor - fv,
+        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+          p => p._id === currentSimulation.checked._id,
+        ),
         patrimonios: currentSimulation.patrimonios.map((e) => {
           if (e.nome !== name) return e;
           return {

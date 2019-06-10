@@ -5,7 +5,28 @@ import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 
 const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
-  const handleChange = (p) => {};
+  const { currentSimulation } = simulacao;
+  const handleChange = (p, checked) => {
+    if (checked) {
+      saveSimulation({
+        ...currentSimulation,
+        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(pr => pr._id !== p._id),
+        saldo: currentSimulation.saldo + p.total,
+      });
+      return;
+    }
+    if (!checked) {
+      if (currentSimulation.saldo < p.total) {
+        alert('Você não tem saldo suficente para quitar esta dívida');
+        return;
+      }
+      saveSimulation({
+        ...currentSimulation,
+        patrimoniosRemovidos: [...currentSimulation.patrimoniosRemovidos, p],
+        saldo: currentSimulation.saldo - p.total,
+      });
+    }
+  };
   return (
     <div className="card">
       <div className="card-header card-header-text card-header-danger">
@@ -67,7 +88,11 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                                 checked={simulacao.currentSimulation.patrimoniosRemovidos.includes(
                                   p,
                                 )}
-                                onChange={() => handleChange(p)}
+                                onChange={() => handleChange(
+                                  p,
+                                  simulacao.currentSimulation.patrimoniosRemovidos.includes(p),
+                                )
+                                }
                               />
                               <span className="form-check-sign">
                                 <span className="check" />

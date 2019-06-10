@@ -13,7 +13,23 @@ export function* fetchSimulacaoRequest() {
 
 export function* submitSimulationRequest(action) {
   try {
-    const { data } = yield call(api.post, 'api/simulacao', action.payload.currentSimulation);
+    let { currentSimulation } = action.payload;
+    currentSimulation = {
+      estrategia: currentSimulation.estrategia,
+      itens: currentSimulation.itens.map(i => ({
+        ...i,
+        _id: null,
+      })),
+      patrimonios: currentSimulation.patrimonios.map(p => ({
+        ...p,
+        _id: null,
+      })),
+      type: currentSimulation.type,
+      itensRemovidos: currentSimulation.itensRemovidos,
+      patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos,
+    };
+    console.log(currentSimulation);
+    const { data } = yield call(api.post, 'api/simulacao', currentSimulation);
     console.log(data);
   } catch (err) {
     yield put(SimulacaoActions.submitSimulationFailure(err));

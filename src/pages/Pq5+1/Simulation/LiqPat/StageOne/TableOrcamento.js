@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 
-const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {
+const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {  
   const handleChange = (i, checked) => {
     if (checked) {
       saveSimulation({

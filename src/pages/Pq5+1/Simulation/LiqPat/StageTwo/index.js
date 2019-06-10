@@ -11,7 +11,7 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
   const { currentSimulation } = simulacao;
   const handleClick = () => {
     if (!currentSimulation.estrategia) return alert('Escolha uma Estratégia');
-    submitSimulationRequest(currentSimulation);
+    return submitSimulationRequest(currentSimulation);
   };
   const moradia = [
     { id: 'aluguel', title: 'Morar de Aluguel' },
@@ -31,6 +31,10 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
         p => p._id === currentSimulation.checked._id,
       ),
       itens: [],
+      saldo: simulacao.ativos - simulacao.passivos + currentSimulation.checked.valor,
+      patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+        p => p._id === currentSimulation.checked._id,
+      ),
     });
   };
   return (

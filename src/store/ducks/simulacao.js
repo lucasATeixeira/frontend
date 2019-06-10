@@ -79,7 +79,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
           itensRemovidos: [],
           patrimonios: [],
           patrimoniosRemovidos: [],
-          saldo: 0,
+          saldo: state.ativos - state.passivos,
           orcamento: 0,
           checked: undefined,
           estrategia: undefined,

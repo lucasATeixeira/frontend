@@ -102,7 +102,7 @@ const TableAtivos = ({
                               data-live-search="true"
                             >
                               <option value="moradia">Moradia</option>
-                              <option value="veículo">Transporte</option>
+                              <option value="transporte">Transporte</option>
                               <option value="bens nao utilizados">Bens Não Utilizados</option>
                               <option value="outros bens">Outros Bens</option>
                             </select>
