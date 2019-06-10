@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -17,7 +18,9 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     }
     if (!checked) {
       if (currentSimulation.saldo < p.total) {
-        alert('Você não tem saldo suficente para quitar esta dívida');
+        alert(
+          'Você não tem saldo suficente para quitar esta dívida, mas fique tranquilo, salve esta estratégia para que o saldo fique salvo!',
+        );
         return;
       }
       saveSimulation({

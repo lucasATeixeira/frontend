@@ -28,9 +28,6 @@ const CardOne = ({ simulacao, saveSimulation }) => {
       if (!currentSimulation.itens.find(e => e.nome === name)) {
         saveSimulation({
           ...currentSimulation,
-          patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
-            p => p._id === currentSimulation.checked._id,
-          ),
           itens: [
             ...currentSimulation.itens,
             {
@@ -47,9 +44,6 @@ const CardOne = ({ simulacao, saveSimulation }) => {
       }
       saveSimulation({
         ...currentSimulation,
-        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
-          p => p._id === currentSimulation.checked._id,
-        ),
         itens: currentSimulation.itens.map((e) => {
           if (e.nome !== name) return e;
           return {
