@@ -53,7 +53,22 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         loading: false,
         err: false,
         success: true,
-        ...action.payload.response,
+        simulacoes: [...state.simulacoes, action.payload.currentSimulation],
+        patrimonios: [...state.patrimonios, ...action.payload.currentSimulation.patrimonios],
+        patrimoniosRemovidos: [
+          ...state.patrimoniosRemovidos,
+          ...action.payload.currentSimulation.patrimoniosRemovidos,
+        ],
+        itens: [...state.itens, ...action.payload.currentSimulation.itens],
+        itensRemovidos: [
+          ...state.itensRemovidos,
+          ...action.payload.currentSimulation.itensRemovidos,
+        ],
+        recebimentos: state.recebimentos + action.payload.currentSimulation.recebimentos,
+        gastos: state.gastos + action.payload.currentSimulation.gastos,
+        ativos: state.ativos + action.payload.currentSimulation.ativos,
+        passivos: state.passivos + action.payload.currentSimulation.passivos,
+        pmt: state.pmt + action.payload.currentSimulation.pmt,
       };
     case Types.SAVE_SIMULATION:
       return {

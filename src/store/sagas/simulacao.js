@@ -28,9 +28,97 @@ export function* submitSimulationRequest(action) {
       itensRemovidos: currentSimulation.itensRemovidos,
       patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos,
     };
-    console.log(currentSimulation);
     const { data } = yield call(api.post, 'api/simulacao', currentSimulation);
-    console.log(data);
+    const response = {
+      _id: data._id,
+      ...currentSimulation,
+      recebimentos:
+        (currentSimulation.itensRemovidos[0]
+          ? currentSimulation.itensRemovidos
+            .map((r) => {
+              if (r.tipo === 'recebimento') return r.mensal;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0)
+        - (currentSimulation.itens[0]
+          ? currentSimulation.itens
+            .map((r) => {
+              if (r.tipo === 'recebimento') return r.mensal;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0),
+      gastos:
+        (currentSimulation.itensRemovidos[0]
+          ? currentSimulation.itensRemovidos
+            .map((r) => {
+              if (r.tipo === 'gasto') return r.mensal;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0)
+        - (currentSimulation.itens[0]
+          ? currentSimulation.itens
+            .map((r) => {
+              if (r.tipo === 'gasto') return r.mensal;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0),
+      ativos:
+        (currentSimulation.patrimoniosRemovidos[0]
+          ? currentSimulation.patrimoniosRemovidos
+            .map((a) => {
+              if (a.tipo === 'ativo') return a.valor;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0)
+        - (currentSimulation.patrimonios[0]
+          ? currentSimulation.patrimonios
+            .map((a) => {
+              if (a.tipo === 'ativo') return a.valor;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0),
+      passivos:
+        (currentSimulation.patrimoniosRemovidos[0]
+          ? currentSimulation.patrimoniosRemovidos
+            .map((a) => {
+              if (a.tipo === 'passivo') return a.total;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0)
+        - (currentSimulation.patrimonios[0]
+          ? currentSimulation.patrimonios
+            .map((a) => {
+              if (a.tipo === 'passivo') return a.total;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0),
+      pmt:
+        (currentSimulation.patrimoniosRemovidos[0]
+          ? currentSimulation.patrimoniosRemovidos
+            .map((a) => {
+              if (a.tipo === 'passivo') return a.pmt;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0)
+        - (currentSimulation.patrimonios[0]
+          ? currentSimulation.patrimonios
+            .map((a) => {
+              if (a.tipo === 'passivo') return a.pmt;
+              return 0;
+            })
+            .reduce((a, b) => a + b)
+          : 0),
+    };
+    yield put(SimulacaoActions.submitSimulationSuccess(response));
   } catch (err) {
     yield put(SimulacaoActions.submitSimulationFailure(err));
   }

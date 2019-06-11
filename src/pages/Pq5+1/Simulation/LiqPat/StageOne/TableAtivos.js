@@ -6,6 +6,7 @@ import CurrencyInput from 'react-currency-input';
 import { Creators as SimulacaoAction } from '../../../../../store/ducks/simulacao';
 
 const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
+  const { currentSimulation } = simulacao;
   const [newVenda, setNewVenda] = useState(false);
   const [nomeAtivo, setNomeAtivo] = useState('');
   const [valor, setValor] = useState(0);
@@ -82,9 +83,7 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                                     id={a._id}
                                     className="form-check-input"
                                     type="checkbox"
-                                    checked={simulacao.currentSimulation.patrimoniosRemovidos.includes(
-                                      a,
-                                    )}
+                                    checked={currentSimulation.patrimoniosRemovidos.includes(a)}
                                     onChange={() => handleChange('removidos', a)}
                                   />
                                   <span className="form-check-sign">

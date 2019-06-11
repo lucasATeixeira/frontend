@@ -14,47 +14,47 @@ TELAS planos
 
 => Liq. patrimonial
 
-- Escolher pat para vender
+  - Escolher pat para vender
 
-- Sugerir algo no lugar (que gastos ele iria excluir e qual iria colocar)
+  - Sugerir algo no lugar (que gastos ele iria excluir e qual iria colocar)
 
-- Mostrar Saldo
+  - Mostrar Saldo
 
-- Selar / quitar dívidas
+  - Selar / quitar dívidas
 
 => Recebimento extra
 
-- Pegar recebimentos eventuais
+  - Pegar recebimentos eventuais
 
-- Inputar novas possibilidades de renda extra
+  - Inputar novas possibilidades de renda extra
 
-- Mostrar Saldo das rendas
+  - Mostrar Saldo das rendas
 
-- Selar / quitar dívidas
+  - Selar / quitar dívidas
 
 => Consolidação de dívidas
 
-- Mostras as dívidas
+  - Mostras as dívidas
 
-- Seleciona qual excluir
+  - Seleciona qual excluir
 
-- Criar uma nova dívida consolidada
+  - Criar uma nova dívida consolidada
 
 
 => Empréstimo entre amigos
 
-- Escolher dívidas para quitar
+  - Escolher dívidas para quitar
 
-- Mostra o saldo para pegar emprestado
+  - Mostra o saldo para pegar emprestado
 
-- Criar os parÂmetros de taxa, data etc...
+  - Criar os parÂmetros de taxa, data etc...
 
-- Criar uma dívida do empréstimo com amigo
+  - Criar uma dívida do empréstimo com amigo
 
 => Enxugar gastos
 
-- Dado como é hoje na realeasy
+  - Dado como é hoje na realeasy
 
 => Decretar falência
 
-- MArcar reunião com assitente
+  - MArcar reunião com assitente

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 
-const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {  
+const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {
   const handleChange = (i, checked) => {
     if (checked) {
       saveSimulation({
@@ -58,45 +58,46 @@ const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {
                           .filter(a => simulacao.currentSimulation.checked.categoria.includes(
                             a.classificacao,
                           ))
-                          .filter(
-                            ab => !simulacao.itensRemovidos.map(i => i.categoria).includes(ab._id),
-                          )
-                          .map(c => c.itens.map(i => (
-                            <tr key={i._id}>
-                              <td>{c.nome}</td>
-                              <td>{i.nome}</td>
-                              <td>
-                                {i.mensal.toLocaleString('pt-br', {
-                                  style: 'currency',
-                                  currency: 'BRL',
-                                })}
-                              </td>
-                              <td className="td-actions text-right">
-                                <div className="form-check">
-                                  <label htmlFor={i._id} className="form-check-label">
-                                    <input
-                                      id={i._id}
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      checked={simulacao.currentSimulation.itensRemovidos.includes(
-                                        i,
-                                      )}
-                                      onChange={() => handleChange(
-                                        i,
-                                        simulacao.currentSimulation.itensRemovidos.includes(
+                          .map(c => c.itens
+                            .filter(
+                              i => !simulacao.itensRemovidos.map(ir => ir._id).includes(i._id),
+                            )
+                            .map(i => (
+                              <tr key={i._id}>
+                                <td>{c.nome}</td>
+                                <td>{i.nome}</td>
+                                <td>
+                                  {i.mensal.toLocaleString('pt-br', {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                  })}
+                                </td>
+                                <td className="td-actions text-right">
+                                  <div className="form-check">
+                                    <label htmlFor={i._id} className="form-check-label">
+                                      <input
+                                        id={i._id}
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={simulacao.currentSimulation.itensRemovidos.includes(
                                           i,
-                                        ),
-                                      )
-                                          }
-                                    />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </label>
-                                </div>
-                              </td>
-                            </tr>
-                          )))
+                                        )}
+                                        onChange={() => handleChange(
+                                          i,
+                                          simulacao.currentSimulation.itensRemovidos.includes(
+                                            i,
+                                          ),
+                                        )
+                                            }
+                                      />
+                                      <span className="form-check-sign">
+                                        <span className="check" />
+                                      </span>
+                                    </label>
+                                  </div>
+                                </td>
+                              </tr>
+                            )))
                         : categorias.map(c => c.itens.map(i => (
                           <tr key={i._id}>
                             <td>{c.nome}</td>
