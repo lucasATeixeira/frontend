@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 import CardOne from './CardOne';
-import CardTwo from './CardTwo';
+import DividasTable from '../../DividasTable';
 
 const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
   const { currentSimulation } = simulacao;
@@ -87,7 +87,7 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
           <CardOne />
         </div>
         <div className="col-md-6">
-          <CardTwo />
+          <DividasTable />
         </div>
       </div>
       <div className="row">

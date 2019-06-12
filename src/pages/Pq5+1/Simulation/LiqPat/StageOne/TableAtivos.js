@@ -26,8 +26,12 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
     saveSimulation({
       ...simulacao.currentSimulation,
       patrimoniosRemovidos: [],
-      patrimonios: [{ nome: nomeAtivo, valor, _id: id }],
-      checked: { nome: nomeAtivo, valor, _id: id },
+      patrimonios: [{
+        nome: nomeAtivo, valor, _id: id, tipo: 'ativo', classificacao: 'simulacao',
+      }],
+      checked: {
+        nome: nomeAtivo, valor, _id: id, tipo: 'ativo', classificacao: 'simulacao',
+      },
       itensRemovidos: [],
       saldo: simulacao.ativos - simulacao.passivos + valor,
     });

@@ -15,7 +15,7 @@ const Main = ({ simulacao }) => {
           currency: 'BRL',
         })}
       </h2>
-      {simulacao.simulacoes.map(s => (
+      {simulacao.simulacoes.reverse().map(s => (
         <PlanCard key={s._id} content={s} />
       ))}
 

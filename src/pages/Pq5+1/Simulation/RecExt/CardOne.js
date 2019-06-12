@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,6 +19,9 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
     saveSimulation({
       ...currentSimulation,
       itensRemovidos: [],
+      patrimonios: [{
+        nome: `Saldo do Recebimento Extra: ${nome}`, valor: -1 * orcado, _id: id, tipo: 'ativo', classificacao: 'simulacao',
+      }],
       itens: [
         {
           nome,
@@ -45,6 +49,9 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       ...simulacao.currentSimulation,
       itensRemovidos: type === 'removidos' ? [i] : [],
       itens: type === 'add' ? [i] : [],
+      patrimonios: [{
+        nome: `Saldo do Recebimento Extra: ${nome}`, valor: -1 * i.orcado, _id: i._id, tipo: 'ativo', classificacao: 'simulacao',
+      }],
       checked: i,
       saldo: simulacao.ativos - simulacao.passivos + i.orcado,
     });

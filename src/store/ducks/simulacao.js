@@ -53,7 +53,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         loading: false,
         err: false,
         success: true,
-        simulacoes: [...state.simulacoes, action.payload.currentSimulation],
+        simulacoes: [action.payload.currentSimulation, ...state.simulacoes],
         patrimonios: [...state.patrimonios, ...action.payload.currentSimulation.patrimonios],
         patrimoniosRemovidos: [
           ...state.patrimoniosRemovidos,
