@@ -22,6 +22,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       patrimonios: [{
         nome: `Saldo do Recebimento Extra: ${nome}`, valor: -1 * orcado, _id: id, tipo: 'ativo', classificacao: 'simulacao',
       }],
+      patrimoniosRemovidos: [],
       itens: [
         {
           nome,
@@ -53,6 +54,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
         nome: `Saldo do Recebimento Extra: ${nome}`, valor: -1 * i.orcado, _id: i._id, tipo: 'ativo', classificacao: 'simulacao',
       }],
       checked: i,
+      patrimoniosRemovidos: [],
       saldo: simulacao.ativos - simulacao.passivos + i.orcado,
     });
   };

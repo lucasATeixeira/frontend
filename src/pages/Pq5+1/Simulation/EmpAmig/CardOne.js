@@ -1,11 +1,13 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import CurrencyInput from 'react-currency-input';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import CurrencyInput from 'react-currency-input';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
+
+// CARENCIA E PAGAMENTO UNICO, SE FOR PAGAMENTO ÚNICO MOSTRA O VALOR QUE ELE VAI PAGAR E QUANDO
 
 const CardOne = ({ simulacao, saveSimulation }) => {
   const { currentSimulation } = simulacao;
@@ -15,7 +17,6 @@ const CardOne = ({ simulacao, saveSimulation }) => {
   const [parcelas, setParcelas] = useState(0);
   const [pmt, setPmt] = useState(0);
   const [taxa, setTaxa] = useState(0);
-
   useEffect(() => {
     if (!currentSimulation.patrimonios.length) setNewFinanciamento(true);
     if (currentSimulation.patrimonios.length) setNewFinanciamento(false);
@@ -60,14 +61,13 @@ const CardOne = ({ simulacao, saveSimulation }) => {
       ],
     });
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <div className="card">
         <div className="card-header card-header-text card-header-success">
           <div className="card-text">
             <h4 className="card-title">
-              <strong>Consolidação</strong>
+              <strong>Empréstimo</strong>
             </h4>
           </div>
         </div>
