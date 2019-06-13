@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-mixed-operators */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
@@ -7,20 +9,48 @@ import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
 
-// CARENCIA E PAGAMENTO UNICO, SE FOR PAGAMENTO ÚNICO MOSTRA O VALOR QUE ELE VAI PAGAR E QUANDO
-
 const CardOne = ({ simulacao, saveSimulation }) => {
   const { currentSimulation } = simulacao;
+  const [necessario, setNecessario] = useState(0);
   const [newFinanciamento, setNewFinanciamento] = useState(true);
-  const [nomePassivo, setNomePassivo] = useState('');
   const [instituicao, setInstituicao] = useState('');
-  const [parcelas, setParcelas] = useState(0);
-  const [pmt, setPmt] = useState(0);
+  const [parcelas, setParcelas] = useState(1);
   const [taxa, setTaxa] = useState(0);
+  const [carencia, setCarencia] = useState(0);
+  const [isValorUnico, setIsValorUnico] = useState(false);
+  const [pmt, setPmt] = useState(0);
+
+  useEffect(() => {
+    setPmt(
+      isNaN(
+        (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
+          / (1 - (1 + taxa / 100) ** -parcelas),
+      )
+        ? isFinite(necessario / parcelas)
+          ? necessario / parcelas
+          : 0
+        : isFinite(
+          (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
+              / (1 - (1 + taxa / 100) ** -parcelas),
+        )
+          ? (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
+          / (1 - (1 + taxa / 100) ** -parcelas)
+          : 0,
+    );
+  }, [necessario, taxa, parcelas, carencia]);
+
   useEffect(() => {
     if (!currentSimulation.patrimonios.length) setNewFinanciamento(true);
     if (currentSimulation.patrimonios.length) setNewFinanciamento(false);
   }, [currentSimulation.patrimonios]);
+
+  useEffect(() => {
+    setInstituicao('');
+    setParcelas(1);
+    setTaxa(0);
+    setNecessario(0);
+    setCarencia(0);
+  }, [isValorUnico]);
 
   const handleDelete = () => saveSimulation({
     ...currentSimulation,
@@ -32,26 +62,22 @@ const CardOne = ({ simulacao, saveSimulation }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (parcelas <= 0) return alert('Parcelas deve ser maior que zero');
-    if (!nomePassivo) return alert('Coloque um nome');
-    if (!instituicao) return alert('Coloque uma Instituição');
+    if (!instituicao) return alert('Coloque um Nome');
     const id = Math.random();
-    setNomePassivo('');
-    setInstituicao('');
-    setParcelas(0);
-    setPmt(0);
-    setTaxa(0);
-    return saveSimulation({
+    saveSimulation({
       ...currentSimulation,
-      saldo: simulacao.ativos - simulacao.passivos + pmt * parcelas,
+      saldo: simulacao.ativos - simulacao.passivos + necessario,
       patrimoniosRemovidos: [],
       patrimonios: [
         {
           _id: id,
-          nome: nomePassivo,
+          nome: 'Empréstimo Entre Amigos',
           tipo: 'passivo',
           classificacao: 'financeiro',
           instituicao,
           pmt,
+          carencia,
+          necessario,
           parcelas,
           data: moment(),
           dataFinal: moment().add(parcelas - 1, 'month'),
@@ -60,6 +86,11 @@ const CardOne = ({ simulacao, saveSimulation }) => {
         },
       ],
     });
+    setInstituicao('');
+    setParcelas(1);
+    setTaxa(0);
+    setNecessario(0);
+    return setCarencia(0);
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -79,14 +110,14 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th className="text-success">
-                        <strong>Passivo</strong>
+                      <th className="text-success ">
+                        <strong>Valor Único?</strong>
                       </th>
                       <th className="text-success">
-                        <strong>Instituição</strong>
+                        <strong>Nome</strong>
                       </th>
                       <th className="text-success">
-                        <strong>PMT</strong>
+                        <strong>Necessário</strong>
                       </th>
                       <th className="text-success">
                         <strong>Parcelas</strong>
@@ -95,9 +126,14 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                         <strong>Taxa</strong>
                       </th>
                       <th className="text-success">
-                        <strong>Saldo Total</strong>
+                        <strong>Carência</strong>
                       </th>
-
+                      <th className="text-success">
+                        <strong>PMT</strong>
+                      </th>
+                      <th className="text-success">
+                        <strong>Total com Juros</strong>
+                      </th>
                       <th className="text-right text-success">
                         <strong>Actions</strong>
                       </th>
@@ -106,16 +142,27 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                   <tbody>
                     {currentSimulation.patrimonios.map(c => (
                       <tr key={c._id}>
-                        <td>{c.nome}</td>
+                        <td>{c.parcelas === 1 ? 'Sim' : 'Não'}</td>
                         <td>{c.instituicao}</td>
                         <td>
-                          {c.pmt.toLocaleString('pt-br', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          })}
+                          {c.parcelas === 1
+                            ? '-'
+                            : c.necessario.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
                         </td>
-                        <td>{c.parcelas}</td>
+                        <td>{c.parcelas === 1 ? '-' : c.parcelas}</td>
                         <td>{c.taxa}%</td>
+                        <td>{c.carencia}</td>
+                        <td>
+                          {c.parcelas === 1
+                            ? '-'
+                            : c.pmt.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
+                        </td>
                         <td>
                           {c.total.toLocaleString('pt-br', {
                             style: 'currency',
@@ -135,11 +182,27 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                     ))}
                     {newFinanciamento && (
                       <tr>
+                        <td className="td-actions ">
+                          <div className="form-check">
+                            <label htmlFor="isValorUnico" className="form-check-label">
+                              <input
+                                id="isValorUnico"
+                                className="form-check-input"
+                                type="checkbox"
+                                checked={isValorUnico}
+                                onChange={() => setIsValorUnico(!isValorUnico)}
+                              />
+                              <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                            </label>
+                          </div>
+                        </td>
                         <td>
                           <span className="bmd-form-group">
                             <input
-                              value={nomePassivo}
-                              onChange={e => setNomePassivo(e.target.value)}
+                              value={instituicao}
+                              onChange={e => setInstituicao(e.target.value)}
                               type="text"
                               placeholder="Nome"
                               className="form-control"
@@ -148,20 +211,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                         </td>
                         <td>
                           <span className="bmd-form-group">
-                            <input
-                              value={instituicao}
-                              onChange={e => setInstituicao(e.target.value)}
-                              type="text"
-                              placeholder="Instituição"
-                              className="form-control"
-                            />
-                          </span>
-                        </td>
-                        <td>
-                          <span className="bmd-form-group">
                             <CurrencyInput
-                              value={pmt}
-                              onChangeEvent={(e, mv, fv) => setPmt(fv)}
+                              value={necessario}
+                              onChangeEvent={(e, mv, fv) => setNecessario(fv)}
                               className="form-control"
                               decimalSeparator=","
                               thousandSeparator="."
@@ -171,15 +223,19 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           </span>
                         </td>
                         <td>
-                          <span className="bmd-form-group">
-                            <input
-                              value={parcelas}
-                              onChange={e => setParcelas(e.target.value)}
-                              type="number"
-                              placeholder="P. Restantes"
-                              className="form-control"
-                            />
-                          </span>
+                          {isValorUnico ? (
+                            '-'
+                          ) : (
+                            <span className="bmd-form-group">
+                              <input
+                                value={parcelas}
+                                onChange={e => setParcelas(e.target.value)}
+                                type="number"
+                                placeholder="P. Restantes"
+                                className="form-control"
+                              />
+                            </span>
+                          )}
                         </td>
                         <td>
                           <span className="bmd-form-group">
@@ -194,8 +250,28 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                             />
                           </span>
                         </td>
-                        <td className="text-center">
-                          {(parcelas * pmt).toLocaleString('pt-br', {
+                        <td>
+                          <span className="bmd-form-group">
+                            <input
+                              value={carencia}
+                              onChange={e => setCarencia(e.target.value)}
+                              type="number"
+                              placeholder="Carência"
+                              className="form-control"
+                            />
+                          </span>
+                        </td>
+
+                        <td>
+                          {isValorUnico
+                            ? '-'
+                            : pmt.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
+                        </td>
+                        <td>
+                          {(pmt * parcelas).toLocaleString('pt-br', {
                             style: 'currency',
                             currency: 'BRL',
                           })}

@@ -8,6 +8,9 @@ export const Types = {
   SUBMIT_SIMULATION_REQUEST: 'simulacao/SUBMIT_SIMULATION_REQUEST',
   SUBMIT_SIMULATION_FAILURE: 'simulacao/SUBMIT_SIMULATION_FAILURE',
   SUBMIT_SIMULATION_SUCCESS: 'simulacao/SUBMIT_SIMULATION_SUCCESS',
+  REMOVE_SIMULATION_REQUEST: 'simulacao/REMOVE_SIMULATION_REQUEST',
+  REMOVE_SIMULATION_SUCCESS: 'simlacao/REMOVE_SIMULATION_SUCCESS',
+  REMOVE_SIMULATION_FAILURE: 'simulacao/REMOVE_SIMULATION_FAILURE',
 };
 
 const INITIAL_VALUE = {
@@ -31,6 +34,27 @@ const INITIAL_VALUE = {
 
 export default function simulacao(state = INITIAL_VALUE, action) {
   switch (action.type) {
+    case Types.REMOVE_SIMULATION_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        err: false,
+        success: false,
+      };
+    case Types.REMOVE_SIMULATION_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        err: action.payload.err,
+        success: false,
+      };
+    case Types.REMOVE_SIMULATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        err: false,
+        success: true,
+      };
     case Types.SUBMIT_SIMULATION_REQUEST:
       return {
         ...state,
@@ -129,6 +153,21 @@ export default function simulacao(state = INITIAL_VALUE, action) {
 }
 
 export const Creators = {
+  removeSimulationRequest: simulation => ({
+    type: Types.REMOVE_SIMULATION_REQUEST,
+    payload: { simulation },
+  }),
+
+  removeSimulationFailure: err => ({
+    type: Types.REMOVE_SIMULATION_FAILURE,
+    payload: { err },
+  }),
+
+  removeSimulationSuccess: simulation => ({
+    type: Types.REMOVE_SIMULATION_SUCCESS,
+    payload: { simulation },
+  }),
+
   submitSimulationRequest: currentSimulation => ({
     type: Types.SUBMIT_SIMULATION_REQUEST,
     payload: { currentSimulation },

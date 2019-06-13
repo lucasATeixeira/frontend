@@ -11,6 +11,15 @@ export function* fetchSimulacaoRequest() {
   }
 }
 
+export function* removeSimulationRequest(action) {
+  const { simulation } = action.payload;
+  try {
+    yield call(api.delete, `api/delete/${simulation._id}`);
+  } catch (err) {
+    yield put(SimulacaoActions.removeSimulationFailure(err));
+  }
+}
+
 export function* submitSimulationRequest(action) {
   try {
     let { currentSimulation } = action.payload;
