@@ -30,6 +30,7 @@ const INITIAL_VALUE = {
   ativos: 0,
   passivos: 0,
   pmt: 0,
+  saldo: 0,
 };
 
 export default function simulacao(state = INITIAL_VALUE, action) {
@@ -54,6 +55,25 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         loading: false,
         err: false,
         success: true,
+        simulacoes: state.simulacoes.filter(s => s._id !== action.payload.simulation._id),
+        patrimonios: state.patrimonios.filter(
+          p => !action.payload.simulation.patrimonios.map(s => s._id).includes(p._id),
+        ),
+        patrimoniosRemovidos: state.patrimoniosRemovidos.filter(
+          p => !action.payload.simulation.patrimoniosRemovidos.map(s => s._id).includes(p._id),
+        ),
+        itens: state.itens.filter(
+          i => !action.payload.simulation.itens.map(s => s._id).includes(i._id),
+        ),
+        itensRemovidos: state.itensRemovidos.filter(
+          i => !action.payload.simulation.itensRemovidos.map(s => s._id).includes(i._id),
+        ),
+        recebimentos: state.recebimentos - action.payload.simulation.recebimentos,
+        gastos: state.gastos - action.payload.simulation.gastos,
+        ativos: state.ativos - action.payload.simulation.ativos,
+        passivos: state.passivos - action.payload.simulation.passivos,
+        pmt: state.pmt - action.payload.simulation.pmt,
+        saldo: state.saldo - action.payload.simulation.saldo,
       };
     case Types.SUBMIT_SIMULATION_REQUEST:
       return {
@@ -77,7 +97,13 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         loading: false,
         err: false,
         success: true,
-        simulacoes: [action.payload.currentSimulation, ...state.simulacoes],
+        simulacoes: [
+          {
+            ...action.payload.currentSimulation,
+            saldo: action.payload.currentSimulation.saldo - state.saldo,
+          },
+          ...state.simulacoes,
+        ],
         patrimonios: [...state.patrimonios, ...action.payload.currentSimulation.patrimonios],
         patrimoniosRemovidos: [
           ...state.patrimoniosRemovidos,
@@ -93,6 +119,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         ativos: state.ativos + action.payload.currentSimulation.ativos,
         passivos: state.passivos + action.payload.currentSimulation.passivos,
         pmt: state.pmt + action.payload.currentSimulation.pmt,
+        saldo: action.payload.currentSimulation.saldo,
       };
     case Types.SAVE_SIMULATION:
       return {
@@ -118,7 +145,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
           itensRemovidos: [],
           patrimonios: [],
           patrimoniosRemovidos: [],
-          saldo: state.ativos - state.passivos,
+          saldo: state.saldo,
           orcamento: 0,
           checked: undefined,
           estrategia: undefined,

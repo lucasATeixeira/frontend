@@ -90,9 +90,10 @@ const CardOne = ({ simulacao, saveSimulation }) => {
               valor: fv,
               id: Math.random(),
               tipo: 'ativo',
+              classificacao: 'patrimonial',
             },
           ],
-          saldo: simulacao.ativos - simulacao.passivos + currentSimulation.checked.valor - fv,
+          saldo: simulacao.saldo + currentSimulation.checked.valor - fv,
           patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
             p => p._id === currentSimulation.checked._id,
           ),
@@ -101,7 +102,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
       }
       saveSimulation({
         ...currentSimulation,
-        saldo: simulacao.ativos - simulacao.passivos + currentSimulation.checked.valor - fv,
+        saldo: simulacao.saldo + currentSimulation.checked.valor - fv,
         patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
           p => p._id === currentSimulation.checked._id,
         ),

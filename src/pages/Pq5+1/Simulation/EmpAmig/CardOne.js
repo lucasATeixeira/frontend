@@ -56,7 +56,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
     ...currentSimulation,
     patrimonios: [],
     patrimoniosRemovidos: [],
-    saldo: simulacao.ativos - simulacao.passivos,
+    saldo: simulacao.saldo,
   });
 
   const handleSubmit = (e) => {
@@ -66,7 +66,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
     const id = Math.random();
     saveSimulation({
       ...currentSimulation,
-      saldo: simulacao.ativos - simulacao.passivos + necessario,
+      saldo: simulacao.saldo + necessario,
       patrimoniosRemovidos: [],
       patrimonios: [
         {

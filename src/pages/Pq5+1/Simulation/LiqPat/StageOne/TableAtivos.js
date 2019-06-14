@@ -17,7 +17,7 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
       patrimonios: type === 'add' ? [p] : [],
       itensRemovidos: [],
       checked: p,
-      saldo: simulacao.ativos - simulacao.passivos + p.valor,
+      saldo: simulacao.saldo + p.valor,
     });
   };
   const handleSubmit = (e) => {
@@ -26,14 +26,24 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
     saveSimulation({
       ...simulacao.currentSimulation,
       patrimoniosRemovidos: [],
-      patrimonios: [{
-        nome: nomeAtivo, valor, _id: id, tipo: 'ativo', classificacao: 'simulacao',
-      }],
+      patrimonios: [
+        {
+          nome: nomeAtivo,
+          valor,
+          _id: id,
+          tipo: 'ativo',
+          classificacao: 'patrimonial',
+        },
+      ],
       checked: {
-        nome: nomeAtivo, valor, _id: id, tipo: 'ativo', classificacao: 'simulacao',
+        nome: nomeAtivo,
+        valor,
+        _id: id,
+        tipo: 'ativo',
+        classificacao: 'patrimonial',
       },
       itensRemovidos: [],
-      saldo: simulacao.ativos - simulacao.passivos + valor,
+      saldo: simulacao.saldo + valor,
     });
     setNewVenda(false);
   };

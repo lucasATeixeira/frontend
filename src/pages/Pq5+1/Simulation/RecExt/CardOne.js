@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
+import moment from 'moment';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
 
-const CardOne = ({ simulacao, categorias, saveSimulation }) => {
+
+const CardOne = ({ simulacao, categorias, saveSimulation }) => {  
   const { currentSimulation } = simulacao;
   const [newRecebimento, setNewRecebimento] = useState(false);
   const [nome, setNome] = useState('');
@@ -20,7 +22,19 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       ...currentSimulation,
       itensRemovidos: [],
       patrimonios: [{
-        nome: `Saldo do Recebimento Extra: ${nome}`, valor: -1 * orcado, _id: id, tipo: 'ativo', classificacao: 'simulacao',
+        _id: id,
+        nome: `Saldo do Recebimento Extra: ${nome}`,
+        tipo: 'passivo',
+        classificacao: 'financeiro',
+        instituicao: 'recebimentos',
+        pmt: 0,
+        carencia: 0,
+        necessario: orcado,
+        parcelas: 1,
+        data: moment(),
+        dataFinal: moment(),
+        taxa: 0,
+        total: 0,
       }],
       patrimoniosRemovidos: [],
       itens: [
@@ -41,7 +55,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
         mensal: orcado / recorrencia,
         _id: id,
       },
-      saldo: simulacao.ativos - simulacao.passivos + orcado,
+      saldo: simulacao.saldo + orcado,
     });
     return setNewRecebimento(false);
   };
@@ -51,11 +65,23 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       itensRemovidos: type === 'removidos' ? [i] : [],
       itens: type === 'add' ? [i] : [],
       patrimonios: [{
-        nome: `Saldo do Recebimento Extra: ${nome}`, valor: -1 * i.orcado, _id: i._id, tipo: 'ativo', classificacao: 'simulacao',
+        _id: i._id,
+        nome: `Saldo do Recebimento Extra: ${i.nome}`,
+        tipo: 'passivo',
+        classificacao: 'financeiro',
+        instituicao: 'recebimentos',
+        pmt: 0,
+        carencia: 0,
+        necessario: i.orcado,
+        parcelas: 1,
+        data: moment(),
+        dataFinal: moment(),
+        taxa: 0,
+        total: 0,
       }],
       checked: i,
       patrimoniosRemovidos: [],
-      saldo: simulacao.ativos - simulacao.passivos + i.orcado,
+      saldo: simulacao.saldo + i.orcado,
     });
   };
   return (

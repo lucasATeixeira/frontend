@@ -2,23 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Info = ({ content }) => (
-  <div className="col-md-3">
-    <h5>
-      Saldo:{' '}
-      {(content.ativos - content.passivos).toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL',
-      })}
-    </h5>
-    <h5>PMT: {content.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</h5>
-    <h5>
-      Gastos: {content.gastos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-    </h5>
-    <h5>
-      Recebimentos:{' '}
-      {content.recebimentos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-    </h5>
-  </div>
+  <>
+    <div className="col-md-3">
+      <h3 className="text-center">Plano</h3>
+    </div>
+    <div className="col-md-3">
+      <h3 className="text-center text-info">Orçamento</h3>
+    </div>
+    <div className="col-md-3">
+      <h3 className="text-center text-success">Patrimônio</h3>
+    </div>
+  </>
 );
 
 Info.propTypes = {

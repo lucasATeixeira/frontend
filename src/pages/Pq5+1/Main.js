@@ -10,7 +10,7 @@ const Main = ({ simulacao }) => {
     <>
       <h2>
         Saldo:{' '}
-        {(simulacao.ativos - simulacao.passivos).toLocaleString('pt-br', {
+        {simulacao.saldo.toLocaleString('pt-br', {
           style: 'currency',
           currency: 'BRL',
         })}

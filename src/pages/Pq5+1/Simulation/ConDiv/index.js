@@ -19,10 +19,12 @@ const ConDiv = ({ simulacao, submitSimulationRequest }) => {
         <h2>Consolidação de Dívidas</h2>
         <TopInfo />
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <CardOne />
           </div>
-          <div className="col-md-6">
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             <DividasTable />
           </div>
         </div>

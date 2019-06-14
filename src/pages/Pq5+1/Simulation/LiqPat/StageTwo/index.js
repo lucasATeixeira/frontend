@@ -31,7 +31,7 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
         p => p._id === currentSimulation.checked._id,
       ),
       itens: [],
-      saldo: simulacao.ativos - simulacao.passivos + currentSimulation.checked.valor,
+      saldo: simulacao.saldo + currentSimulation.checked.valor,
       patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
         p => p._id === currentSimulation.checked._id,
       ),
