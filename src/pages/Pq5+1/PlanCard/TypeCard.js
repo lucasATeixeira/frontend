@@ -1,29 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as SimulacaoActions } from '../../../store/ducks/simulacao';
 
-const TypeCard = ({ content }) => {
+const TypeCard = ({ content, startDetails }) => {
   let title = '';
   let icon = '';
-  let description = '';
   if (content.type === 'lp') {
     title = 'Liquidação Patrimonial';
     icon = 'business';
-    description = 'descrição aqui';
   }
   if (content.type === 'ea') {
     title = 'Empréstimo entre Amigos';
     icon = 'group';
-    description = 'descrição aqui';
   }
   if (content.type === 're') {
     title = 'Recebimentos Extras';
     icon = 'attach_money';
-    description = 'descrição aqui';
   }
   if (content.type === 'cd') {
     title = 'Consolidação de dívidas';
     icon = 'file_copy';
-    description = 'descrição aqui';
   }
   return (
     <div className="col-md-3">
@@ -35,7 +33,13 @@ const TypeCard = ({ content }) => {
           <h3 className="card-title">
             <strong>{title}</strong>
           </h3>
-          <p className="card-description">{description}</p>
+          <button
+            onClick={() => startDetails(content)}
+            type="button"
+            className="btn btn-white btn-round btn-sm"
+          >
+            <strong>Detalhes</strong>
+          </button>
         </div>
       </div>
     </div>
@@ -44,6 +48,14 @@ const TypeCard = ({ content }) => {
 
 TypeCard.propTypes = {
   content: PropTypes.shape().isRequired,
+  startDetails: PropTypes.func.isRequired,
 };
 
-export default TypeCard;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TypeCard);

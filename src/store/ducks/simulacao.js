@@ -11,11 +11,15 @@ export const Types = {
   REMOVE_SIMULATION_REQUEST: 'simulacao/REMOVE_SIMULATION_REQUEST',
   REMOVE_SIMULATION_SUCCESS: 'simlacao/REMOVE_SIMULATION_SUCCESS',
   REMOVE_SIMULATION_FAILURE: 'simulacao/REMOVE_SIMULATION_FAILURE',
+  START_DETAILS: 'simulacao/START_DETAILS',
+  END_DETAILS: 'simulacao/END_DETAILS',
 };
 
 const INITIAL_VALUE = {
   fetched: false,
   simulating: false,
+  details: false,
+  currentDetail: {},
   currentSimulation: {},
   loading: false,
   err: false,
@@ -35,6 +39,20 @@ const INITIAL_VALUE = {
 
 export default function simulacao(state = INITIAL_VALUE, action) {
   switch (action.type) {
+    case Types.START_DETAILS:
+      return {
+        ...state,
+        details: true,
+        currentDetail: {
+          ...action.payload.content,
+        },
+      };
+    case Types.END_DETAILS:
+      return {
+        ...state,
+        details: false,
+        currentDetail: {},
+      };
     case Types.REMOVE_SIMULATION_REQUEST:
       return {
         ...state,
@@ -180,6 +198,15 @@ export default function simulacao(state = INITIAL_VALUE, action) {
 }
 
 export const Creators = {
+  startDetails: content => ({
+    type: Types.START_DETAILS,
+    payload: { content },
+  }),
+
+  endDetails: () => ({
+    type: Types.END_DETAILS,
+  }),
+
   removeSimulationRequest: simulation => ({
     type: Types.REMOVE_SIMULATION_REQUEST,
     payload: { simulation },

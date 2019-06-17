@@ -23,7 +23,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       itensRemovidos: [],
       patrimonios: [{
         _id: id,
-        nome: `Saldo do Recebimento Extra: ${nome}`,
+        nome,
         tipo: 'passivo',
         classificacao: 'financeiro',
         instituicao: 'recebimentos',
@@ -66,7 +66,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       itens: type === 'add' ? [i] : [],
       patrimonios: [{
         _id: i._id,
-        nome: `Saldo do Recebimento Extra: ${i.nome}`,
+        nome: i.nome,
         tipo: 'passivo',
         classificacao: 'financeiro',
         instituicao: 'recebimentos',

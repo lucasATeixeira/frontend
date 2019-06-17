@@ -175,7 +175,7 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                     </tbody>
                   </table>
                 </div>
-                <br />
+                {/* <br />
                 <button
                   onClick={() => setNewVenda(true)}
                   type="button"
@@ -184,7 +184,7 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                   <strong>
                     <i className="material-icons">add_circle_outline</i> Adicionar Ativo
                   </strong>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
