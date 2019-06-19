@@ -25,6 +25,15 @@ export function* submitSimulationRequest(action) {
   try {
     let { currentSimulation } = action.payload;
     currentSimulation = {
+      enxugar: currentSimulation.enxugar.map(e => ({
+        tipo: e.tipo,
+        nomeCategoria: e.nomeCategoria,
+        nome: e.nome,
+        classificacao: e.classificacao,
+        orcado: e.orcado,
+        recorrencia: e.recorrencia,
+        valorEnxugado: e.valorEnxugado,
+      })),
       estrategia: currentSimulation.estrategia,
       itens: currentSimulation.itens.map(i => ({
         ...i,

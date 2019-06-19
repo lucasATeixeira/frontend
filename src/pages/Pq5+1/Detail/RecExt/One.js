@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 const One = ({ content }) => (
   <>
     <div className="card">
-      <div className="card-header card-header-text card-header-success">
+      <div className="card-header card-header-text card-header-grafit">
         <div className="card-text">
           <h4 className="card-title">
-            <strong>Patrimônio Vendido</strong>
+            <strong>Recebimentos Extras</strong>
           </h4>
         </div>
       </div>
@@ -18,28 +18,26 @@ const One = ({ content }) => (
               <table className="table">
                 <thead>
                   <tr>
-                    <th className="text-success">
-                      <strong>Ativo</strong>
+                    <th className="text-grafit">
+                      <strong>Recebimento</strong>
                     </th>
-                    <th className="text-success">
+                    <th className="text-grafit">
                       <strong>Valor</strong>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {content.patrimoniosRemovidos
-                    .filter(p => p.tipo === 'ativo')
-                    .map(p => (
-                      <tr key={p._id}>
-                        <td>{p.nome}</td>
-                        <td>
-                          {p.valor.toLocaleString('pt-br', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          })}
-                        </td>
-                      </tr>
-                    ))}
+                  {content.patrimonios.map(p => (
+                    <tr key={p._id}>
+                      <td>{p.nome}</td>
+                      <td>
+                        {p.necessario.toLocaleString('pt-br', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

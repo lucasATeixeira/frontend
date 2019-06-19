@@ -23,6 +23,11 @@ const TypeCard = ({ content, startDetails }) => {
     title = 'Consolidação de dívidas';
     icon = 'file_copy';
   }
+
+  if (content.type === 'eg') {
+    title = 'Enxugar Gastos';
+    icon = 'colorize';
+  }
   return (
     <div className="col-md-3">
       <div className="card card-pricing bg-success">

@@ -6,6 +6,7 @@ import LoadSimulation from './LoadSimulation';
 import Main from './Main';
 import Simulation from './Simulation';
 import Detail from './Detail';
+import Result from './Result';
 
 const Pq5 = ({ simulacao }) => (
   <BlankPage>
@@ -14,7 +15,17 @@ const Pq5 = ({ simulacao }) => (
     ) : (
       <>
         {simulacao.fetched ? (
-          <>{simulacao.simulating ? <Simulation /> : simulacao.details ? <Detail /> : <Main />}</>
+          <>
+            {simulacao.simulating ? (
+              <Simulation />
+            ) : simulacao.details ? (
+              <Detail />
+            ) : simulacao.result ? (
+              <Result />
+            ) : (
+              <Main />
+            )}
+          </>
         ) : (
           <LoadSimulation />
         )}

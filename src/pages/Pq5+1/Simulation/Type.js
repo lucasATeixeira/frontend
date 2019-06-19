@@ -5,9 +5,12 @@ import ConDiv from './ConDiv';
 import EmpAmig from './EmpAmig';
 import LiqPat from './LiqPat';
 import RecExt from './RecExt';
+import EnxGas from './EnxGas';
 
 const Type = ({ type }) => {
   switch (type) {
+    case 'eg':
+      return <EnxGas />;
     case 'lp':
       return <LiqPat />;
     case 'ea':

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { Creators as SimulacaoActions } from '../../store/ducks/simulacao';
 import PlanCard from './PlanCard';
 import NewPlan from './NewPlan';
 
-const Main = ({ simulacao }) => {
+const Main = ({ simulacao, startResult }) => {
   const [newPlan, setNewPlan] = useState(false);
   return (
     <>
@@ -15,6 +17,19 @@ const Main = ({ simulacao }) => {
           currency: 'BRL',
         })}
       </h2>
+
+      <div className="row">
+        <div className="col-md-12">
+          <button
+            onClick={() => startResult(true)}
+            className="btn btn-round pull-right btn-success btn-sm pull-left"
+            type="button"
+          >
+            <strong>Resultados </strong>
+          </button>
+        </div>
+      </div>
+
       {simulacao.simulacoes.reverse().map(s => (
         <PlanCard key={s._id} content={s} />
       ))}
@@ -54,10 +69,16 @@ const Main = ({ simulacao }) => {
 
 Main.propTypes = {
   simulacao: PropTypes.shape().isRequired,
+  startResult: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);

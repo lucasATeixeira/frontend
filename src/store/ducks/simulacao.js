@@ -13,9 +13,12 @@ export const Types = {
   REMOVE_SIMULATION_FAILURE: 'simulacao/REMOVE_SIMULATION_FAILURE',
   START_DETAILS: 'simulacao/START_DETAILS',
   END_DETAILS: 'simulacao/END_DETAILS',
+  START_RESULT: 'simulacao/START_RESULT',
+  END_RESULT: 'simulacao/END_RESULT',
 };
 
 const INITIAL_VALUE = {
+  result: false,
   fetched: false,
   simulating: false,
   details: false,
@@ -35,10 +38,21 @@ const INITIAL_VALUE = {
   passivos: 0,
   pmt: 0,
   saldo: 0,
+  enxugar: [],
 };
 
 export default function simulacao(state = INITIAL_VALUE, action) {
   switch (action.type) {
+    case Types.START_RESULT:
+      return {
+        ...state,
+        result: true,
+      };
+    case Types.END_RESULT:
+      return {
+        ...state,
+        result: false,
+      };
     case Types.START_DETAILS:
       return {
         ...state,
@@ -167,6 +181,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
           orcamento: 0,
           checked: undefined,
           estrategia: undefined,
+          enxugar: [],
         },
       };
     case Types.FETCH_DATA_REQUEST:
@@ -198,6 +213,14 @@ export default function simulacao(state = INITIAL_VALUE, action) {
 }
 
 export const Creators = {
+  startResult: () => ({
+    type: Types.START_RESULT,
+  }),
+
+  endResult: () => ({
+    type: Types.END_RESULT,
+  }),
+
   startDetails: content => ({
     type: Types.START_DETAILS,
     payload: { content },

@@ -20,6 +20,10 @@ const Plano = ({ content }) => {
         - 1} dívida`;
     }
 
+    if (content.type === 'eg') {
+      return `Enxugar ${content.enxugar.length} gastos para abrir espaço no orçamento`;
+    }
+
     if (content.type === 'ea') {
       return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString('pt-br', {
         style: 'currency',

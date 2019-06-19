@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Four = ({ content }) => (
+const Two = ({ content }) => (
   <>
     <div className="card">
       <div className="card-header card-header-text card-header-danger">
@@ -61,8 +61,8 @@ const Four = ({ content }) => (
   </>
 );
 
-Four.propTypes = {
+Two.propTypes = {
   content: PropTypes.shape().isRequired,
 };
 
-export default Four;
+export default Two;

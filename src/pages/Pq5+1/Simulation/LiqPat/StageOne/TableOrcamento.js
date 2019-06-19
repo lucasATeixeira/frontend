@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -6,6 +7,7 @@ import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulac
 
 const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {
   const handleChange = (i, checked) => {
+    i.gastoMensal = i.mensal;
     if (checked) {
       saveSimulation({
         ...simulacao.currentSimulation,
