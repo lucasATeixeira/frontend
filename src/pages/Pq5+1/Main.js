@@ -30,7 +30,7 @@ const Main = ({ simulacao, startResult }) => {
         </div>
       </div>
 
-      {simulacao.simulacoes.reverse().map(s => (
+      {simulacao.simulacoes.map(s => (
         <PlanCard key={s._id} content={s} />
       ))}
 

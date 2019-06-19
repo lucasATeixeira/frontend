@@ -83,69 +83,75 @@ const TopNavbar = ({
 
         <div className="collapse navbar-collapse justify-content-end">
           <ul className="navbar-nav">
-            {!checked && (
-              <li className="nav-item">
-                <DatePicker
-                  selected={start}
-                  className="form-control"
-                  onChange={handleStart}
-                  dateFormat="MM/yyyy"
-                  showMonthYearPicker
-                />
-              </li>
-            )}
-            {checked && (
-              <li className="nav-item">
-                <DatePicker
-                  selected={start}
-                  selectsStart
-                  className="form-control"
-                  startDate={start}
-                  endDate={end}
-                  dateFormat="MM/yyyy"
-                  showMonthYearPicker
-                  onChange={handleStart}
-                />
-
-                <DatePicker
-                  selected={end}
-                  selectsEnd
-                  className="form-control"
-                  startDate={start}
-                  endDate={end}
-                  dateFormat="MM/yyyy"
-                  showMonthYearPicker
-                  onChange={handleEnd}
-                />
-                {false && (
-                  <button style={style} onClick={handleMonthPick} type="button">
-                    <i className="fa fa-check-circle" />
-                  </button>
+            {window.location.pathname !== '/pq5+1' ? (
+              <>
+                {!checked && (
+                  <li className="nav-item">
+                    <DatePicker
+                      selected={start}
+                      className="form-control"
+                      onChange={handleStart}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                    />
+                  </li>
                 )}
-              </li>
+                {checked && (
+                  <li className="nav-item">
+                    <DatePicker
+                      selected={start}
+                      selectsStart
+                      className="form-control"
+                      startDate={start}
+                      endDate={end}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                      onChange={handleStart}
+                    />
+
+                    <DatePicker
+                      selected={end}
+                      selectsEnd
+                      className="form-control"
+                      startDate={start}
+                      endDate={end}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                      onChange={handleEnd}
+                    />
+                    {false && (
+                      <button style={style} onClick={handleMonthPick} type="button">
+                        <i className="fa fa-check-circle" />
+                      </button>
+                    )}
+                  </li>
+                )}
+                <li className="nav-item">
+                  <div className="form-check">
+                    <label htmlFor="check" className="form-check-label">
+                      <input
+                        id="check"
+                        className="form-check-input"
+                        type="checkbox"
+                        checked={checked}
+                        onClick={() => setChecked(!checked)}
+                        onChange={() => {
+                          setChecked(!checked);
+                          if (checked) return fetchDataRequest(start, start);
+                          return fetchDataRequest(start, end);
+                        }}
+                      />
+                      Intervalo
+                      <span className="form-check-sign">
+                        <span className="check" />
+                      </span>
+                    </label>
+                  </div>
+                </li>
+              </>
+            ) : (
+              false
             )}
-            <li className="nav-item">
-              <div className="form-check">
-                <label htmlFor="check" className="form-check-label">
-                  <input
-                    id="check"
-                    className="form-check-input"
-                    type="checkbox"
-                    checked={checked}
-                    onClick={() => setChecked(!checked)}
-                    onChange={() => {
-                      setChecked(!checked);
-                      if (checked) return fetchDataRequest(start, start);
-                      return fetchDataRequest(start, end);
-                    }}
-                  />
-                  Intervalo
-                  <span className="form-check-sign">
-                    <span className="check" />
-                  </span>
-                </label>
-              </div>
-            </li>
             <li className="nav-item dropdown">
               <a
                 className="nav-link"
