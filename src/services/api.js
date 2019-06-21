@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.API_URL, // || 'http://localhost:4000/',
+  baseURL: 'https://ondazul-backend.herokuapp.com/', // || 'http://localhost:4000/',
 });
 
 api.interceptors.request.use((config) => {
