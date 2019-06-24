@@ -1156,10 +1156,10 @@
   resolved "https://registry.yarnpkg.com/@redux-saga/types/-/types-1.0.2.tgz#1d94f02800b094753f9271c206a26c2a06ca14ee"
   integrity sha512-8/qcMh15507AnXJ3lBeuhsdFwnWQqnp68EpUuHlYPixJ5vjVmls7/Jq48cnUlrZI8Jd9U1jkhfCl0gaT5KMgVw==
 
-"@rocketseat/unform@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@rocketseat/unform/-/unform-1.0.1.tgz#6309f819e322b9380f87145f391557f20c07fc2b"
-  integrity sha512-bSMDyeYtqST0HoQr/ynPeCRkejn8gRZ0eooDsLZyRAH1mI1UTm6Pzru+FpKv8/wHYavRRiy4Ulw8UN7eqq4eIg==
+"@rocketseat/unform@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@rocketseat/unform/-/unform-1.5.0.tgz#109bf2d90367ae0ec2ddec54e174822610686b6f"
+  integrity sha512-EIOjWJVnL20DiIFmnYC/ZTigD8KqxFTc4trtKcQfyT/QPQU0M0IYFpfBannXmUBOVjbFXiUg+o1rOkwhDDdceg==
   dependencies:
     dot-object "^1.7.1"
     npm-run-all "^4.1.5"

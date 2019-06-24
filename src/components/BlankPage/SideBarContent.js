@@ -28,7 +28,29 @@ export default function SideBarContent({ setPage }) {
           },
         ]}
       />
-      <CollapsedItem title="Almejar" icon="mood" idColapse="almejar" itens={[]} setPage={setPage} />
+      <CollapsedItem
+        title="Almejar"
+        icon="mood"
+        idColapse="almejar"
+        itens={[
+          {
+            href: '/V1Ano',
+            mini: 'V1A',
+            title: 'V1Ano',
+          },
+          {
+            href: '/V5ANos',
+            mini: 'V5A',
+            title: 'V5Anos',
+          },
+          {
+            href: '/Ressignificacao',
+            mini: 'RC',
+            title: 'Ressignificação',
+          },
+        ]}
+        setPage={setPage}
+      />
       <CollapsedItem
         title="Planejar"
         icon="trending_up"
@@ -39,6 +61,11 @@ export default function SideBarContent({ setPage }) {
             mini: 'PQ',
             title: 'PQ5+1',
           },
+          {
+            href: '/acoes30d',
+            mini: 'A30',
+            title: 'Ações 30D',
+          },
         ]}
         setPage={setPage}
       />
@@ -46,14 +73,23 @@ export default function SideBarContent({ setPage }) {
         title="Atuar"
         icon="text_rotation_none"
         idColapse="atuar"
-        itens={[]}
-        setPage={setPage}
-      />
-      <CollapsedItem
-        title="Gestão"
-        icon="library_books"
-        idColapse="gestao"
-        itens={[]}
+        itens={[
+          {
+            href: '/acoes_atuar30d',
+            mini: 'A30',
+            title: 'Ações 30D',
+          },
+          {
+            href: '/acoes_atuar7d',
+            mini: 'A7',
+            title: 'Ações 7D',
+          },
+          {
+            href: '/acoes_atuar1d',
+            mini: 'A1',
+            title: 'Ações 1D',
+          },
+        ]}
         setPage={setPage}
       />
     </ul>

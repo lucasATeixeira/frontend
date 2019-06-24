@@ -1,0 +1,24 @@
+MAPEAR => {
+  -Orçamento
+  -Patrimonios
+  -Autoconhecimento (formulários)
+}
+
+ALMEJAR => {
+  -Como a pessoa se ve daqui 5 anos (limite 10)
+  -Como a pessoa se ve dauqi a 1 ano
+  -ressignificação de crenças (puxa do Autoconhecimento)
+  -resultado ação e crença
+}
+
+PLANEJAR => {
+  -PQ5+1
+  -Ações para os próximos 30 dias (creças)
+}
+
+ALMEJAR => {
+  - 30 dias (ações data etc)
+  - 7 dias
+  - amanhã
+}
+

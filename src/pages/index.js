@@ -7,6 +7,13 @@ import Orcamento from './Orcamento';
 import Extrato from './Extrato';
 import Patrimonio from './Patrimonio';
 import Pq5 from './Pq5+1';
+import V1 from './V1';
+import V5 from './V5';
+import RessCren from './RessCren';
+import A30d from './A30d';
+import Aatuar30d from './Aatuar30d';
+import Aatuar7d from './Aatuar7d';
+import Aatuar1d from './Aatuar1d';
 
 const Pages = () => (
   <BrowserRouter>
@@ -17,6 +24,13 @@ const Pages = () => (
       <PrivateRoute exact path="/extrato" component={Extrato} />
       <PrivateRoute exact path="/patrimonio" component={Patrimonio} />
       <PrivateRoute exact path="/pq5+1" component={Pq5} />
+      <PrivateRoute exact path="/V1Ano" component={V1} />
+      <PrivateRoute exact path="/V5ANos" component={V5} />
+      <PrivateRoute exact path="/Ressignificacao" component={RessCren} />
+      <PrivateRoute exact path="/acoes30d" component={A30d} />
+      <PrivateRoute exact path="/acoes_atuar30d" component={Aatuar30d} />
+      <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
+      <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
       <Route component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
