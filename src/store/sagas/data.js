@@ -36,6 +36,7 @@ export function* fetchDataRequest(action) {
     yield put(V1Actions.fetchDataRequest(v1));
     yield put(V5Actions.fetchDataRequest(v5));
     yield put(A30dActions.fetchDataA30d(a30d));
+
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
     yield put(DataActions.fetchDataSuccess());
   } catch (err) {

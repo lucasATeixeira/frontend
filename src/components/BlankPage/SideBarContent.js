@@ -26,6 +26,11 @@ export default function SideBarContent({ setPage }) {
             mini: 'PR',
             title: 'Patrimônio',
           },
+          {
+            href: '/crencas',
+            mini: 'CR',
+            title: 'Crenças',
+          },
         ]}
       />
       <CollapsedItem
