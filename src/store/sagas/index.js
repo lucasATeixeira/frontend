@@ -7,12 +7,14 @@ import { Types as SimulacaoTypes } from '../ducks/simulacao';
 import { Types as V1Types } from '../ducks/v1';
 import { Types as V5Types } from '../ducks/v5';
 import { Types as A30dTypes } from '../ducks/a30d';
+import { Types as CrencaTypes } from '../ducks/crencas';
 import { authUser } from './user';
 import { fetchDataRequest } from './data';
 import { addPatrimonioRequest, removePatrimonioRequest } from './patrimonios';
 import { addV1Request, removeV1Request } from './v1';
 import { addV5Request, removeV5Request } from './v5';
 import { addA30dRequest, removeA30dRequest, updateA30dRequest } from './a30d';
+import { saveRequest } from './crencas';
 import {
   fetchSimulacaoRequest,
   submitSimulationRequest,
@@ -49,5 +51,6 @@ export default function* rootSaga() {
     takeLatest(A30dTypes.ADD_A30D_REQUEST, addA30dRequest),
     takeLatest(A30dTypes.REMOVE_A30D_REQUEST, removeA30dRequest),
     takeLatest(A30dTypes.UPDATE_A30D_REQUEST, updateA30dRequest),
+    takeLatest(CrencaTypes.SAVE_REQUEST, saveRequest),
   ]);
 }
