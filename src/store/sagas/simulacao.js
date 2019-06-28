@@ -24,6 +24,7 @@ export function* removeSimulationRequest(action) {
 export function* submitSimulationRequest(action) {
   try {
     let { currentSimulation } = action.payload;
+    console.log(currentSimulation);
     currentSimulation = {
       enxugar: currentSimulation.enxugar.map(e => ({
         tipo: e.tipo,
@@ -79,14 +80,16 @@ export function* submitSimulationRequest(action) {
             })
             .reduce((a, b) => a + b)
           : 0)
-        - (currentSimulation.itensRemovidos[0]
+        - ((currentSimulation.itensRemovidos[0]
           ? currentSimulation.itensRemovidos
             .map((r) => {
               if (r.tipo === 'gasto') return r.mensal;
               return 0;
             })
             .reduce((a, b) => a + b)
-          : 0),
+          : 0)
+          + currentSimulation.enxugar.map(e => e.orcado).reduce((a, b) => a + b)
+          - currentSimulation.enxugar.map(e => e.valorEnxugado).reduce((a, b) => a + b)),
       ativos:
         (currentSimulation.patrimonios[0]
           ? currentSimulation.patrimonios

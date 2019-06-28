@@ -132,6 +132,15 @@ const Two = ({
                                   <span className="bmd-form-group">
                                     <span className="bmd-form-group">
                                       <form onSubmit={e => handleSubmit(e, l)}>
+                                        <button
+                                          style={{ position: 'absolute', right: '10px' }}
+                                          type="submit"
+                                          className="btn btn-success btn-round btn-sm btn-just-icon"
+                                        >
+                                          <i className="material-icons" role="button" tabIndex="0">
+                                            done
+                                          </i>
+                                        </button>
                                         <CurrencyInput
                                           className="form-control"
                                           decimalSeparator=","
@@ -153,8 +162,9 @@ const Two = ({
                                     {'  '}
                                     <button
                                       onClick={() => {
+                                        if (input !== '') return alert('Salve a última Edição');
                                         setInput(l._id);
-                                        setInputValue(l.valorEnxugado);
+                                        return setInputValue(l.valorEnxugado);
                                       }}
                                       type="button"
                                       style={{
@@ -179,7 +189,10 @@ const Two = ({
               <div className="row">
                 <div className="col-md-12">
                   <button
-                    onClick={() => submitSimulationRequest(currentSimulation)}
+                    onClick={() => {
+                      if (input !== '') return alert('Salve A Ultima Edição');
+                      return submitSimulationRequest(currentSimulation);
+                    }}
                     className="btn btn-round pull-right btn-info"
                     type="button"
                   >

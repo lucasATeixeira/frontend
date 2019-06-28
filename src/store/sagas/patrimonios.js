@@ -23,6 +23,7 @@ export function* removePatrimonioRequest(action) {
         p => p._id !== patrimonio._id,
       );
       local.patrimonios.passivos.total -= patrimonio.total;
+      local.patrimonios.passivos.pmt -= patrimonio.pmt;
       local.patrimonios.passivos.sumPassivosFinanceiros
         -= patrimonio.classificacao === 'financeiro' ? patrimonio.total : 0;
       local.patrimonios.passivos.sumPassivosPatrimoniais
@@ -54,6 +55,7 @@ export function* addPatrimonioRequest(action) {
       data.total = (moment(data.dataFinal).diff(moment(), 'months') + 1) * data.pmt;
       local.patrimonios.passivos.list.push(data);
       local.patrimonios.passivos.total += data.total;
+      local.patrimonios.passivos.pmt += data.pmt;
       local.patrimonios.passivos.sumPassivosFinanceiros
         += data.classificacao === 'financeiro' ? data.total : 0;
       local.patrimonios.passivos.sumPassivosPatrimoniais
