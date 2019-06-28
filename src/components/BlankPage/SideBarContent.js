@@ -39,15 +39,16 @@ export default function SideBarContent({ setPage }) {
         idColapse="almejar"
         itens={[
           {
-            href: '/V1Ano',
-            mini: 'V1A',
-            title: 'V1Ano',
-          },
-          {
             href: '/V5ANos',
             mini: 'V5A',
-            title: 'V5Anos',
+            title: 'Visão de 5 anos',
           },
+          {
+            href: '/V1Ano',
+            mini: 'V1A',
+            title: 'Visão de 1 ano',
+          },
+
           {
             href: '/Ressignificacao',
             mini: 'RC',
@@ -69,7 +70,7 @@ export default function SideBarContent({ setPage }) {
           {
             href: '/acoes30d',
             mini: 'A30',
-            title: 'Ações 30D',
+            title: 'Ações 30 Dias',
           },
         ]}
         setPage={setPage}
@@ -82,17 +83,17 @@ export default function SideBarContent({ setPage }) {
           {
             href: '/acoes_atuar30d',
             mini: 'A30',
-            title: 'Ações 30D',
+            title: 'Ações 30 Dias',
           },
           {
             href: '/acoes_atuar7d',
             mini: 'A7',
-            title: 'Ações 7D',
+            title: 'Ações 7 Dias',
           },
           {
             href: '/acoes_atuar1d',
             mini: 'A1',
-            title: 'Ações 1D',
+            title: 'Ações 1 Dias',
           },
         ]}
         setPage={setPage}

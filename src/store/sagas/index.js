@@ -14,7 +14,7 @@ import { addPatrimonioRequest, removePatrimonioRequest } from './patrimonios';
 import { addV1Request, removeV1Request } from './v1';
 import { addV5Request, removeV5Request } from './v5';
 import { addA30dRequest, removeA30dRequest, updateA30dRequest } from './a30d';
-import { saveRequest } from './crencas';
+import { saveRequest, updateRequest } from './crencas';
 import {
   fetchSimulacaoRequest,
   submitSimulationRequest,
@@ -52,5 +52,6 @@ export default function* rootSaga() {
     takeLatest(A30dTypes.REMOVE_A30D_REQUEST, removeA30dRequest),
     takeLatest(A30dTypes.UPDATE_A30D_REQUEST, updateA30dRequest),
     takeLatest(CrencaTypes.SAVE_REQUEST, saveRequest),
+    takeLatest(CrencaTypes.UPDATE_REQUEST, updateRequest),
   ]);
 }

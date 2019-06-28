@@ -60,31 +60,36 @@ const Option = ({
             .reduce((total, prox) => total + prox)
             / crencas.total))
         * 100;
+
       const { cat } = [
-        { ambiente, cat: 'ambiente' },
-        { causaEfeito, cat: 'cause e efeito' },
-        { capacidade, cat: 'capacidade' },
-        { valor, cat: 'valor' },
-        { identidade, cat: 'identidade' },
-        { pertencimento, cat: 'pertencimento' },
-        { espiritualidade, cat: 'espiritualidade' },
+        { score: ambiente, cat: 'ambiente' },
+        { score: causaEfeito, cat: 'cause e efeito' },
+        { score: capacidade, cat: 'capacidade' },
+        { score: valor, cat: 'valor' },
+        { score: identidade, cat: 'identidade' },
+        { score: pertencimento, cat: 'pertencimento' },
+        { score: espiritualidade, cat: 'espiritualidade' },
       ].sort((a, b) => (a.score > b.score ? -1 : 1))[0];
 
       const crencasFinal = crencas.questions
         .filter(a => a.cat === cat)
         .sort((a, b) => (a.score > b.score ? -1 : 1))
         .slice(0, 3)
-        .map(a => ({ crenca: a }));
+        .map(a => ({ crenca: a.pergunta }));
+
       saveRequest({
-        cat,
-        crencas: crencasFinal,
-        ambiente,
-        causaEfeito,
-        capacidade,
-        valor,
-        identidade,
-        pertencimento,
-        espiritualidade,
+        quiz: {
+          cat,
+          crencas: crencasFinal,
+          ambiente,
+          causaEfeito,
+          capacidade,
+          valor,
+          identidade,
+          pertencimento,
+          espiritualidade,
+        },
+        coupleDone: !!crencas.answers[0],
       });
       return;
     }

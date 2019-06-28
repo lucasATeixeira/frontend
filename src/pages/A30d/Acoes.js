@@ -5,7 +5,10 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Creators as A30dActions } from '../../store/ducks/a30d';
 
-const Acoes = ({ a30d, addA30dRequest, removeA30dRequest }) => {
+const Acoes = ({
+  a30d, addA30dRequest, removeA30dRequest, crencas,
+}) => {
+  const crencasList = crencas.map(a => a.crencas).flat();
   const [newLine, setNewLine] = useState(false);
   const [crenca, setCrenca] = useState('Seleciona uma Crença');
   const [acao, setAcao] = useState('');
@@ -70,11 +73,9 @@ const Acoes = ({ a30d, addA30dRequest, removeA30dRequest }) => {
                             data-live-search="true"
                             name="estrategia"
                           >
-                            <option>Seleciona uma Crença</option>
-                            <option>Crença 1</option>
-                            <option>Crença 2</option>
-                            <option>Crença 3</option>
-                            <option>Crença 4</option>
+                            {crencasList.map(a => (
+                              <option key={a._id}>{a.ress}</option>
+                            ))}
                           </select>
                         </span>
                       </td>
@@ -126,10 +127,12 @@ Acoes.propTypes = {
   a30d: PropTypes.shape().isRequired,
   addA30dRequest: PropTypes.func.isRequired,
   removeA30dRequest: PropTypes.func.isRequired,
+  crencas: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 const mapStateToProps = state => ({
   a30d: state.a30d,
+  crencas: state.crencas.answers,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(A30dActions, dispatch);

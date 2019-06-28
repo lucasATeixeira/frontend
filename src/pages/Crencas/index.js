@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BlankPage from '../../components/BlankPage';
 import Quiz from './Quiz';
+import Answer from './Answer';
 import './index.css';
 
-const Crencas = ({ crencas }) => (
-  <BlankPage>{crencas.done ? <h2>Quiz Feito</h2> : <Quiz />}</BlankPage>
-);
+const Crencas = ({ crencas }) => <BlankPage>{crencas.done ? <Answer /> : <Quiz />}</BlankPage>;
 
 Crencas.propTypes = {
   crencas: PropTypes.shape().isRequired,
