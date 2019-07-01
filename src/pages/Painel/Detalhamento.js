@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Detalhamento = () => (
+const Detalhamento = ({ orcamento, patrimonios }) => (
   <div className="card">
     <div className="card-header card-header-text card-header-grafit">
       <div className="card-text">
@@ -24,51 +25,89 @@ const Detalhamento = () => (
                 <tr>
                   <td>
                     <strong className="text-grafit">Recebimentos</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {orcamento.recebimentosOrcados.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                   <td>
                     <strong className="text-grafit">Recebimentos</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {orcamento.recebimentosRealizados.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <strong className="text-info">Gastos</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {orcamento.gastosOrcados.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                   <td>
                     <strong className="text-info">Gastos</strong>
-                    <div className="pull-right">R$ 100</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong className="text-success">Investimentos</strong>
-                    <div className="pull-right">R$ 100</div>
-                  </td>
-                  <td>
-                    <strong className="text-success">Investimentos</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {orcamento.gastosRealizados.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <strong className="text-danger">Dívidas</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {patrimonios.passivos.pmt.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                   <td>
                     <strong className="text-danger">Dívidas</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {patrimonios.passivos.pmt.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <strong className="text-grafit">Balanço</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {(
+                        orcamento.recebimentosOrcados
+                        - orcamento.gastosOrcados
+                        - patrimonios.passivos.pmt
+                      ).toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                   <td>
                     <strong className="text-grafit">Balanço</strong>
-                    <div className="pull-right">R$ 100</div>
+                    <div className="pull-right">
+                      {(
+                        orcamento.recebimentosRealizados
+                        - orcamento.gastosRealizados
+                        - patrimonios.passivos.pmt
+                      ).toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -79,5 +118,10 @@ const Detalhamento = () => (
     </div>
   </div>
 );
+
+Detalhamento.propTypes = {
+  orcamento: PropTypes.shape().isRequired,
+  patrimonios: PropTypes.shape().isRequired,
+};
 
 export default Detalhamento;

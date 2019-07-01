@@ -38,64 +38,75 @@ const Pote = ({ orcamento, patrimonios }) => {
   }, [orcamento, patrimonios]);
 
   return (
-    <Bar
-      height={220}
-      redraw
-      data={barData}
-      options={{
-        legend: {
-          position: 'bottom',
-        },
-        responsive: true,
-        tooltips: {
-          mode: 'index',
-          intersect: false,
-        },
-        scales: {
-          xAxes: [
-            {
-              stacked: true,
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                beginAtZero: true,
-              },
+    <div className="card">
+      <div className="card-header card-header-text card-header-info">
+        <div className="card-text">
+          <h4 className="card-title">Pote</h4>
+        </div>
+      </div>
+      <div className="card-body">
+        <div className="text-center">
+          <b>Avanço: Realizado / Orçado</b>
+        </div>
+        <Bar
+          height={220}
+          data={barData}
+          options={{
+            legend: {
+              position: 'bottom',
             },
-          ],
+            responsive: true,
+            tooltips: {
+              mode: 'index',
+              intersect: false,
+            },
+            scales: {
+              xAxes: [
+                {
+                  stacked: true,
+                  gridLines: {
+                    display: false,
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                },
+              ],
 
-          yAxes: [
-            {
-              stacked: true,
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                beginAtZero: true,
-                max: maxOrcado > maxRealizado ? maxOrcado : maxRealizado,
-                callback(value) {
-                  return value.toLocaleString('pt-BR');
+              yAxes: [
+                {
+                  stacked: true,
+                  gridLines: {
+                    display: false,
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    max: maxOrcado > maxRealizado ? maxOrcado : maxRealizado,
+                    callback(value) {
+                      return value.toLocaleString('pt-BR');
+                    },
+                  },
                 },
-              },
-            },
-            {
-              id: 'right',
-              position: 'right',
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                beginAtZero: true,
-                max: maxOrcado > maxRealizado ? maxOrcado : maxRealizado,
-                callback(value) {
-                  return value.toLocaleString('pt-BR');
+                {
+                  id: 'right',
+                  position: 'right',
+                  gridLines: {
+                    display: false,
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    max: maxOrcado > maxRealizado ? maxOrcado : maxRealizado,
+                    callback(value) {
+                      return value.toLocaleString('pt-BR');
+                    },
+                  },
                 },
-              },
+              ],
             },
-          ],
-        },
-      }}
-    />
+          }}
+        />
+      </div>
+    </div>
   );
 };
 
