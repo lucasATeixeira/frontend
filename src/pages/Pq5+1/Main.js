@@ -5,18 +5,44 @@ import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../store/ducks/simulacao';
 import PlanCard from './PlanCard';
 import NewPlan from './NewPlan';
+import CardStats from './CardStats';
 
 const Main = ({ simulacao, startResult }) => {
   const [newPlan, setNewPlan] = useState(false);
   return (
     <>
-      <h2>
-        Saldo:{' '}
-        {simulacao.saldo.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
-        })}
-      </h2>
+      <div className="row">
+        <div className="col-md-4">
+          <CardStats
+            color="success"
+            textColor="text-success"
+            info="Saldo"
+            title={simulacao.saldo.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
+            footer={[{ materialIcon: 'attach_money' }]}
+          />
+        </div>
+        <div className="col-md-4">
+          <CardStats
+            textColor="text-info"
+            title={simulacao.gastos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+            info="Mudança dos Gastos"
+            materialIcon="shopping_cart"
+          />
+        </div>
+        <div className="col-md-4">
+          <CardStats
+            info="Mudança PMT"
+            title={simulacao.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+            color="danger"
+            materialIcon="business"
+            faIcon="fa-files-o"
+            textColor="text-danger"
+          />
+        </div>
+      </div>
 
       <div className="row">
         <div className="col-md-12">

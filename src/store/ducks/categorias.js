@@ -25,8 +25,10 @@ const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
     categorias: [],
     gastosOrcados: 0,
     gastosRealizados: 0,
+    gastosRealizadosParcelados: 0,
     recebimentosOrcados: 0,
     recebimentosRealizados: 0,
+    recebimentosRealizadosParcelados: 0,
     mediaGastos: 0,
     mediaRecebimentos: 0,
     qntCategoriasRecebimentos: 0,
@@ -223,7 +225,7 @@ export const Creators = {
     payload: { categoria },
   }),
 
-  removeItemRequest: (item, mensal, realizado, tipo, categoria) => ({
+  removeItemRequest: (item, mensal, realizado, tipo, categoria, realizadoParcelado) => ({
     type: Types.REMOVE_ITEM_REQUEST,
     payload: {
       item,
@@ -231,6 +233,7 @@ export const Creators = {
       realizado,
       tipo,
       categoria,
+      realizadoParcelado,
     },
   }),
 
@@ -260,13 +263,14 @@ export const Creators = {
     payload: { categoria },
   }),
 
-  removeCategoriaRequest: (categoria, orcado, realizado, tipo) => ({
+  removeCategoriaRequest: (categoria, orcado, realizado, tipo, realizadoParcelado) => ({
     type: Types.REMOVE_CATEGORIA_REQUEST,
     payload: {
       categoria,
       orcado,
       realizado,
       tipo,
+      realizadoParcelado,
     },
   }),
 

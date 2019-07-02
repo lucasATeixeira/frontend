@@ -19,7 +19,13 @@ const TableCard = ({
         'Esta categoria pode conter itens e lancamnentos atrelados a ela, tem certeza que deseja excluir?',
       )
     ) return;
-    removeCategoriaRequest(categoria._id, categoria.orcado, categoria.realizado, categoria.tipo);
+    removeCategoriaRequest(
+      categoria._id,
+      categoria.orcado,
+      categoria.realizado,
+      categoria.tipo,
+      categoria.realizadoParcelado,
+    );
   };
   return (
     <>

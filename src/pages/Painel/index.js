@@ -29,7 +29,9 @@ const Painel = ({ orcamento, patrimonios }) => (
               faIcon="fa-files-o"
               info="PMT"
               textColor="text-danger"
-              title={patrimonios.passivos.pmt.toLocaleString('pt-br', {
+              title={(
+                patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados
+              ).toLocaleString('pt-br', {
                 style: 'currency',
                 currency: 'BRL',
               })}

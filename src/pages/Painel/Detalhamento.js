@@ -35,7 +35,10 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                   <td>
                     <strong className="text-grafit">Recebimentos</strong>
                     <div className="pull-right">
-                      {orcamento.recebimentosRealizados.toLocaleString('pt-br', {
+                      {(
+                        orcamento.recebimentosRealizados
+                        + orcamento.recebimentosRealizadosParcelados
+                      ).toLocaleString('pt-br', {
                         style: 'currency',
                         currency: 'BRL',
                       })}
@@ -75,7 +78,9 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                   <td>
                     <strong className="text-danger">Dívidas</strong>
                     <div className="pull-right">
-                      {patrimonios.passivos.pmt.toLocaleString('pt-br', {
+                      {(
+                        patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados
+                      ).toLocaleString('pt-br', {
                         style: 'currency',
                         currency: 'BRL',
                       })}
@@ -101,7 +106,9 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                     <div className="pull-right">
                       {(
                         orcamento.recebimentosRealizados
+                        + orcamento.recebimentosRealizadosParcelados
                         - orcamento.gastosRealizados
+                        - orcamento.gastosRealizadosParcelados
                         - patrimonios.passivos.pmt
                       ).toLocaleString('pt-br', {
                         style: 'currency',

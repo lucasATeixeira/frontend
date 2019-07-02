@@ -6,7 +6,7 @@ import Card from './Card';
 import Content from './Content';
 import ContentDividas from './ContentDividas';
 
-const Orcamento = ({ categorias }) => {
+const Orcamento = ({ categorias, patrimonios }) => {
   const [active, setActive] = useState(2);
 
   return (
@@ -44,11 +44,16 @@ const Orcamento = ({ categorias }) => {
           <Card
             setActive={setActive}
             type={3}
-            title="R$ 0,00"
+            title={(
+              categorias.gastosRealizadosParcelados + patrimonios.passivos.pmt
+            ).toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
             textColor="text-danger"
             faIcon="fa-files-o"
             materialIcon="file_copy"
-            info="Dívidas"
+            info="Parcelamentos"
             color="danger"
           />
         </div>
@@ -74,6 +79,7 @@ const Orcamento = ({ categorias }) => {
 };
 
 Orcamento.propTypes = {
+  patrimonios: PropTypes.shape().isRequired,
   categorias: PropTypes.shape({
     categorias: PropTypes.arrayOf(
       PropTypes.shape({
@@ -93,5 +99,6 @@ Orcamento.propTypes = {
 
 const mapStateToProps = state => ({
   categorias: state.categorias,
+  patrimonios: state.patrimonios,
 });
 export default connect(mapStateToProps)(Orcamento);

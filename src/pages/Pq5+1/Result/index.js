@@ -74,6 +74,7 @@ const Result = ({
                     patrimonios.patrimonioLiquido
                     - simulacao.passivos
                     + simulacao.ativos
+                    + simulacao.saldo
                   ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                 </h4>
                 <br />

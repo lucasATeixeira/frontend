@@ -15,12 +15,35 @@ export function* removeLancamentoRequest(action) {
       local.categorias.start,
       local.categorias.end,
     );
-    if (start || end) {
+    const middleStart = moment(local.categorias.start).isBetween(
+      action.payload.lancamento.data,
+      action.payload.lancamento.dataFinal,
+    );
+    const middleEnd = moment(local.categorias.end).isBetween(
+      action.payload.lancamento.data,
+      action.payload.lancamento.dataFinal,
+    );
+    if (start || end || middleStart || middleEnd) {
       local.categorias = {
         ...local.categorias,
+        gastosRealizadosParcelados:
+          local.categorias.gastosRealizadosParcelados
+          - (action.payload.lancamento.tipo === 'gasto'
+          && action.payload.lancamento.formaPagamento === 'Parcelado'
+            ? action.payload.lancamento.mensal
+            : 0),
         gastosRealizados:
           local.categorias.gastosRealizados
-          - (action.payload.lancamento.tipo === 'gasto' ? action.payload.lancamento.mensal : 0),
+          - (action.payload.lancamento.tipo === 'gasto'
+          && action.payload.lancamento.formaPagamento !== 'Parcelado'
+            ? action.payload.lancamento.mensal
+            : 0),
+        recebimentosRealizadosParcelados:
+          local.categorias.recebimentosRealizadosParcelados
+          - (action.payload.lancamento.tipo === 'recebimento'
+          && action.payload.lancamento.formaPagamento === 'Parcelado'
+            ? action.payload.lancamento.mensal
+            : 0),
         recebimentosRealizados:
           local.categorias.recebimentosRealizados
           - (action.payload.lancamento.tipo === 'recebimento' ? action.payload.lancamento.mensal : 0),
@@ -28,12 +51,26 @@ export function* removeLancamentoRequest(action) {
           if (c._id !== action.payload.lancamento.categoria) return c;
           return {
             ...c,
-            realizado: c.realizado - action.payload.lancamento.mensal,
+            realizado:
+              c.formaPagamento !== 'Parcelado'
+                ? c.realizado - action.payload.lancamento.mensal
+                : c.realizado,
+            realizadoParcelado:
+              c.formaPagamento === 'Parcelado'
+                ? c.realizadoParcelado - action.payload.lancamento.mensal
+                : c.realizadoParcelado,
             itens: c.itens.map((i) => {
               if (i._id !== action.payload.lancamento.item) return i;
               return {
                 ...i,
-                realizado: i.realizado - action.payload.lancamento.mensal,
+                realizado:
+                  i.formaPagamento !== 'Parcelado'
+                    ? i.realizado - action.payload.lancamento.mensal
+                    : i.realizado,
+                realizadoParcelado:
+                  i.formaPagamento === 'Pagamento'
+                    ? i.realizado - action.payload.lancamento.mensal
+                    : i.realizado,
                 lancamentos: i.lancamentos.filter(l => l._id !== action.payload.lancamento._id),
               };
             }),
@@ -52,6 +89,7 @@ export function* addCategoriaRequest(action) {
   try {
     const { data } = yield call(api.post, 'api/categoria', action.payload.categoria);
     data.realizado = 0;
+    data.realizadoParcelado = 0;
     data.orcado = 0;
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
     local.categorias.categorias.push(data);
@@ -74,9 +112,16 @@ export function* removeCategoriaRequest(action) {
       recebimentosOrcados:
         local.categorias.recebimentosOrcados
         - (action.payload.tipo === 'recebimento' ? action.payload.orcado : 0),
+
+      gastosRealizadosParcelados:
+        local.categorias.gastosRealizadosParcelados
+        - (action.payload.tipo === 'gasto' ? action.payload.realizadoParcelado : 0),
       gastosRealizados:
         local.categorias.gastosRealizados
         - (action.payload.tipo === 'gasto' ? action.payload.realizado : 0),
+      recebimentosRealizadosParcelados:
+        local.categorias.recebimentosRealizadosParcelados
+        - (action.payload.tipo === 'recebimento' ? action.payload.realizadoParcelado : 0),
       recebimentosRealizados:
         local.categorias.recebimentosRealizados
         - (action.payload.tipo === 'recebimento' ? action.payload.realizado : 0),
@@ -101,18 +146,25 @@ export function* removeItemRequest(action) {
       gastosRealizados:
         local.categorias.gastosRealizados
         - (action.payload.tipo === 'gasto' ? action.payload.realizado : 0),
+      gastosRealizadosParcelados:
+        local.categorias.gastosRealizadosParcelados
+        - (action.payload.tipo === 'gasto' ? action.payload.realizadoParcelado : 0),
       recebimentosOrcados:
         local.categorias.recebimentosOrcados
         - (action.payload.tipo === 'recebimento' ? action.payload.mensal : 0),
       recebimentosRealizados:
         local.categorias.recebimentosRealizados
         - (action.payload.tipo === 'recebimento' ? action.payload.realizado : 0),
+      recebimentosRealizadosParcelados:
+        local.categorias.recebimentosRealizadosParcelados
+        - (action.payload.tipo === 'recebimento' ? action.payload.realizadoParcelado : 0),
       categorias: local.categorias.categorias.map((c) => {
         if (action.payload.categoria !== c._id) return c;
         return {
           ...c,
           orcado: c.orcado - action.payload.mensal,
           realizado: c.realizado - action.payload.realizado,
+          realizadoParcelado: c.realizadoParcelado - action.payload.realizadoParcelado,
           itens: c.itens.filter(i => i._id !== action.payload.item),
         };
       }),
@@ -132,6 +184,7 @@ export function* addItemRequest(action) {
       ? (data.orcado * local.categorias.periodo) / data.recorrencia
       : data.orcado * local.categorias.periodo * data.recorrencia;
     data.realizado = 0;
+    data.realizadoParcelado = 0;
     local.categorias = {
       ...local.categorias,
       gastosOrcados: local.categorias.gastosOrcados + (data.tipo === 'gasto' ? data.mensal : 0),
@@ -159,24 +212,43 @@ export function* lancamentoRequest(action) {
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
     const start = moment(data.data).isBetween(local.categorias.start, local.categorias.end);
     const end = moment(data.dataFinal).isBetween(local.categorias.start, local.categorias.end);
+    const middleStart = moment(local.categorias.start).isBetween(data.data, data.dataFinal);
+    const middleEnd = moment(local.categorias.end).isBetween(data.data, data.dataFinal);
     data.mensal = data.formaPagamento === 'Parcelado' ? data.valor / data.vezes : data.valor;
-    if (start || end) {
+    if (start || end || middleStart || middleEnd) {
       local.categorias = {
         ...local.categorias,
         gastosRealizados:
-          local.categorias.gastosRealizados + (data.tipo === 'gasto' ? data.mensal : 0),
+          local.categorias.gastosRealizados
+          + (data.tipo === 'gasto' && data.formaPagamento !== 'Parcelado' ? data.mensal : 0),
+        gastosRealizadosParcelados:
+          local.categorias.gastosRealizadosParcelados
+          + (data.tipo === 'gasto' && data.formaPagamento === 'Parcelado' ? data.mensal : 0),
         recebimentosRealizados:
           local.categorias.recebimentosRealizados + (data.tipo === 'recebimento' ? data.mensal : 0),
+        recebimentosRealizadosParcelados:
+          local.categorias.recebimentosRealizadosParcelados
+          + (data.tipo === 'recebimento' && data.formaPagamento === 'Parcelado' ? data.mensal : 0),
         categorias: local.categorias.categorias.map((c) => {
           if (data.categoria !== c._id) return c;
           return {
             ...c,
-            realizado: c.realizado + data.mensal,
+            realizado:
+              data.formaPagamento !== 'Parcelado' ? c.realizado + data.mensal : c.realizado,
+            realizadoParcelado:
+              data.formaPagamento === 'Parcelado'
+                ? c.realizadoParcelado + data.mensal
+                : c.realizadoParcelado,
             itens: c.itens.map((i) => {
               if (data.item !== i._id) return i;
               return {
                 ...i,
-                realizado: i.realizado + data.mensal,
+                realizadoParcelado:
+                  data.formaPagamento === 'Parcelado'
+                    ? i.realizadoParcelado + data.mensal
+                    : i.realizadoParcelado,
+                realizado:
+                  data.formaPagamento !== 'Parcelado' ? i.realizado + data.mensal : i.realizado,
                 lancamentos: [...i.lancamentos, data],
               };
             }),

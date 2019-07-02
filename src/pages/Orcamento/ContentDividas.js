@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import TableParcelados from './TableParcelados';
+import TableDividas from './TableDividas';
 import TableCard from './TableCard';
 
 const Component = ({ color, materialIcon }) => (
@@ -14,6 +15,17 @@ const Component = ({ color, materialIcon }) => (
           </h4>
           <br />
           <TableParcelados color={color} />
+        </TableCard>
+      </div>
+    </div>
+    <div className="row">
+      <div className="col-md-12">
+        <TableCard color={color} options={false} materialIcon={materialIcon}>
+          <h4 className="card-title">
+            <b>Demais Dívidas</b>
+          </h4>
+          <br />
+          <TableDividas color={color} />
         </TableCard>
       </div>
     </div>

@@ -13,11 +13,11 @@ const Table = ({
   const [valor, setValor] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
   const [classificacao, setClassificacao] = useState('Flexível');
-  const handleDelete = (item, mensal, realizado, tipo) => {
+  const handleDelete = (item, mensal, realizado, tipo, realizadoParcelado) => {
     if (
       !window.confirm('Este item pode conter lançamentos feitos, tem certeza que deseja excluir?')
     ) return;
-    removeItemRequest(item, mensal, realizado, tipo, idCategoria);
+    removeItemRequest(item, mensal, realizado, tipo, idCategoria, realizadoParcelado);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,8 +70,10 @@ const Table = ({
                         className="btn btn-danger btn-link btn-just-icon btn-sm"
                       >
                         <i
-                          onClick={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo)}
-                          onKeyPress={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo)}
+                          onClick={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo, i.realizadoParcelado)
+                          }
+                          onKeyPress={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo, i.realizadoParcelado)
+                          }
                           className="material-icons"
                           role="button"
                           tabIndex="0"
@@ -171,9 +173,7 @@ const Table = ({
           className={`btn btn-${color} btn-sm`}
         >
           <strong>
-            <i className="material-icons">add_circle_outline</i>
-            {' '}
-Adicionar item
+            <i className="material-icons">add_circle_outline</i> Adicionar item
           </strong>
         </button>
       </div>

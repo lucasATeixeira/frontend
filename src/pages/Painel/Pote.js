@@ -3,8 +3,14 @@ import { Bar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 
 const Pote = ({ orcamento, patrimonios }) => {
-  const maxOrcado = orcamento.gastosOrcados + orcamento.recebimentosOrcados + patrimonios.passivos.pmt;
-  const maxRealizado = orcamento.gastosRealizados + orcamento.recebimentosRealizados + patrimonios.passivos.pmt;
+  const maxOrcado = orcamento.gastosOrcados
+    + orcamento.gastosRealizadosParcelados
+    + orcamento.recebimentosOrcados
+    + patrimonios.passivos.pmt;
+  const maxRealizado = orcamento.gastosRealizados
+    + orcamento.gastosRealizadosParcelados
+    + orcamento.recebimentosRealizados
+    + patrimonios.passivos.pmt;
 
   const [barData, setBarData] = useState({});
   useEffect(() => {
@@ -13,7 +19,10 @@ const Pote = ({ orcamento, patrimonios }) => {
       datasets: [
         {
           label: 'Recebimentos',
-          data: [orcamento.recebimentosOrcados, orcamento.recebimentosRealizados],
+          data: [
+            orcamento.recebimentosOrcados + orcamento.recebimentosRealizadosParcelados,
+            orcamento.recebimentosRealizados + orcamento.recebimentosRealizadosParcelados,
+          ],
           backgroundColor: 'transparent',
           borderColor: 'rgb(63, 76, 107)',
           borderWidth: 3,
@@ -21,7 +30,10 @@ const Pote = ({ orcamento, patrimonios }) => {
         },
         {
           label: 'Dívidas',
-          data: [patrimonios.passivos.pmt, patrimonios.passivos.pmt],
+          data: [
+            patrimonios.passivos.pmt,
+            patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados,
+          ],
           backgroundColor: 'rgb(218, 68, 83)',
           borderColor: 'transparent',
           borderWidth: 3,

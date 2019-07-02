@@ -7,11 +7,13 @@ const Progress = ({ content }) => {
   const [grey, setGrey] = useState(false);
 
   useEffect(() => {
-    setGrey(content.orcado === 0 && content.realizado !== 0);
+    setGrey(content.orcado === 0 && content.realizado + content.realizadoParcelado !== 0);
     let red = 0;
     let blue = 0;
     if (content.orcado !== 0) {
-      blue = content.realizado === 0 ? 0 : (content.realizado * 100) / content.orcado;
+      blue = content.realizado + content.realizadoParcelado === 0
+        ? 0
+        : ((content.realizado + content.realizadoParcelado) * 100) / content.orcado;
       if (blue > 200) blue = 200;
       if (blue > 100) {
         red = blue - 100;
@@ -27,8 +29,11 @@ const Progress = ({ content }) => {
         <strong>{content.nome}</strong>
       </span>
       <span className="progress-badge pull-right">
-        {content.realizado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} /{' '}
-        {content.orcado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        {(content.realizado + content.realizadoParcelado).toLocaleString('pt-br', {
+          style: 'currency',
+          currency: 'BRL',
+        })}{' '}
+        / {content.orcado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
       </span>
       <div className="progress">
         <div
