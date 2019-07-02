@@ -7,7 +7,9 @@ import PlanCard from './PlanCard';
 import NewPlan from './NewPlan';
 import CardStats from './CardStats';
 
-const Main = ({ simulacao, startResult }) => {
+const Main = ({
+  simulacao, startResult, orcamento, patrimonios,
+}) => {
   const [newPlan, setNewPlan] = useState(false);
   return (
     <>
@@ -30,6 +32,22 @@ const Main = ({ simulacao, startResult }) => {
             title={simulacao.gastos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
             info="Mudança dos Gastos"
             materialIcon="shopping_cart"
+            footer={[
+              {
+                materialIcon: 'attach_money',
+                text: `Gastos Antes: ${orcamento.gastosOrcados.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}`,
+              },
+              {
+                materialIcon: 'attach_money',
+                text: `Gastos Depois: ${(orcamento.gastosOrcados + simulacao.gastos).toLocaleString(
+                  'pt-br',
+                  { style: 'currency', currency: 'BRL' },
+                )}`,
+              },
+            ]}
           />
         </div>
         <div className="col-md-4">
@@ -40,6 +58,22 @@ const Main = ({ simulacao, startResult }) => {
             materialIcon="business"
             faIcon="fa-files-o"
             textColor="text-danger"
+            footer={[
+              {
+                materialIcon: 'attach_money',
+                text: `PMT Antes: ${patrimonios.passivos.pmt.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}`,
+              },
+              {
+                materialIcon: 'attach_money',
+                text: `PMT Depois: ${(patrimonios.passivos.pmt + simulacao.pmt).toLocaleString(
+                  'pt-br',
+                  { style: 'currency', currency: 'BRL' },
+                )}`,
+              },
+            ]}
           />
         </div>
       </div>
@@ -96,10 +130,14 @@ const Main = ({ simulacao, startResult }) => {
 Main.propTypes = {
   simulacao: PropTypes.shape().isRequired,
   startResult: PropTypes.func.isRequired,
+  orcamento: PropTypes.shape().isRequired,
+  patrimonios: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = state => ({
   simulacao: state.simulacao,
+  orcamento: state.categorias,
+  patrimonios: state.patrimonios,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);

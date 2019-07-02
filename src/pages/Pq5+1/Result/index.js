@@ -46,7 +46,26 @@ const Result = ({
       <div className="col-md-6">
         <div className="row">
           <div className="col-md-6">
-            <Card textColor="text-info" title={simulacao.gastos} info="Mudança dos Gastos" />
+            <Card
+              textColor="text-info"
+              title={simulacao.gastos}
+              info="Mudança dos Gastos"
+              footer={[
+                {
+                  materialIcon: 'attach_money',
+                  text: `Gastos Antes: ${orcamento.gastosOrcados.toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}`,
+                },
+                {
+                  materialIcon: 'attach_money',
+                  text: `Gastos Depois: ${(
+                    orcamento.gastosOrcados + simulacao.gastos
+                  ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`,
+                },
+              ]}
+            />
           </div>
           <div className="col-md-6">
             <Card
@@ -56,6 +75,22 @@ const Result = ({
               materialIcon="business"
               faIcon="fa-files-o"
               textColor="text-danger"
+              footer={[
+                {
+                  materialIcon: 'attach_money',
+                  text: `PMT Antes: ${patrimonios.passivos.pmt.toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}`,
+                },
+                {
+                  materialIcon: 'attach_money',
+                  text: `PMT Depois: ${(patrimonios.passivos.pmt + simulacao.pmt).toLocaleString(
+                    'pt-br',
+                    { style: 'currency', currency: 'BRL' },
+                  )}`,
+                },
+              ]}
             />
           </div>
         </div>

@@ -4,6 +4,7 @@ import CurrencyInput from 'react-currency-input';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
+import Meta from './Meta';
 
 const Two = ({
   listData, saveSimulation, simulacao, submitSimulationRequest,
@@ -38,13 +39,14 @@ const Two = ({
       saveSimulation({
         ...currentSimulation,
         enxugar: currentSimulation.enxugar.map((enxugar) => {
-          if (enxugar !== item._id) return enxugar;
+          if (enxugar._id !== item._id) return enxugar;
           return {
             ...enxugar,
             valorEnxugado: inputValue,
           };
         }),
       });
+      return;
     }
 
     if (item.orcado === inputValue) return;
@@ -63,6 +65,11 @@ const Two = ({
 
   return (
     <>
+      <div className="row">
+        <div className="col-md-12">
+          <Meta />
+        </div>
+      </div>
       <div className="row">
         <div className="col-md-12">
           <div className="card">

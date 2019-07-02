@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function Card({
-  color, faIcon, title, info, textColor, materialIcon, footerText,
+  color, faIcon, title, info, textColor, footer,
 }) {
   return (
     <div role="button" tabIndex="0" className="card card-stats">
@@ -17,10 +17,12 @@ export default function Card({
       </div>
 
       <div className="card-footer">
-        <div className="stats">
-          <i className="material-icons">{materialIcon}</i>
-          {footerText}
-        </div>
+        {footer.map(f => (
+          <div key={Math.random()} className="stats">
+            <i className="material-icons">{f.materialIcon}</i>
+            <strong>{f.text}</strong>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -32,8 +34,7 @@ Card.propTypes = {
   title: PropTypes.number,
   info: PropTypes.string,
   textColor: PropTypes.string,
-  materialIcon: PropTypes.string,
-  footerText: PropTypes.string,
+  footer: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 Card.defaultProps = {
@@ -42,6 +43,10 @@ Card.defaultProps = {
   title: 10,
   info: 'info',
   textColor: '',
-  materialIcon: 'bar_chart',
-  footerText: '',
+  footer: [
+    {
+      materialIcon: 'shopping_cart',
+      text: '',
+    },
+  ],
 };

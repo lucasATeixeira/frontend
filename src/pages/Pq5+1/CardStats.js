@@ -19,7 +19,7 @@ const CardStats = ({
       {footer.map(f => (
         <div key={Math.random()} className="stats">
           <i className="material-icons">{f.materialIcon}</i>
-          {f.text}
+          <strong>{f.text}</strong>
         </div>
       ))}
     </div>
