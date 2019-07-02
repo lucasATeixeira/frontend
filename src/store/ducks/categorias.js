@@ -18,6 +18,15 @@ export const Types = {
   REMOVE_LANCAMENTO_REQUEST: 'categorias/REMOVE_LANCAMENTO_REQUEST',
   REMOVE_LANCAMENTO_SUCCESS: 'categorias/REMOVE_LANCAMENTO_SUCCESS',
   REMOVE_LANCAMENTO_FAILURE: 'categorias/REMOVE_LANCAMENTO_FAILURE',
+  UPDATE_CATEGORIA_REQUEST: 'categorias/UPDATE_CATEGORIA_REQUEST',
+  UPDATE_CATEGORIA_FAILURE: 'categorias/UPDATE_CATEGORIA_FAILURE',
+  UPDATE_CATEGORIA_SUCCESS: 'categorias/UPDATE_CATEGORIA_SUCCESS',
+  UPDATE_ITEM_REQUEST: 'categorias/UPDATE_ITEM_REQUEST',
+  UPDATE_ITEM_FAILURE: 'categorias/UPDATE_ITEM_FAILURE',
+  UPDATE_ITEM_SUCCESS: 'categorias/UPDATE_ITEM_SUCCESS',
+  UPDATE_LANCAMENTO_REQUEST: 'categorias/UPDATE_LANCAMENTO_REQUEST',
+  UPDATE_LANCAMENTO_FAILURE: 'categorias/UPDATE_LANCAMENTO_FAILURE',
+  UPDATE_LANCAMENTO_SUCCESS: 'categorias/UPDATE_LANCAMENTO_SUCCESS',
 };
 
 const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
@@ -50,6 +59,72 @@ const INITIAL_STATE = {
 
 export default function categorias(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.UPDATE_LANCAMENTO_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        err: false,
+      };
+    case Types.UPDATE_LANCAMENTO_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        err: action.payload.err,
+      };
+    case Types.UPDATE_LANCAMENTO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        err: false,
+        ...action.payload.data,
+      };
+    case Types.UPDATE_ITEM_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        err: false,
+      };
+    case Types.UPDATE_ITEM_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        err: action.payload.err,
+      };
+    case Types.UPDATE_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        err: false,
+        ...action.payload.data,
+      };
+    case Types.UPDATE_CATEGORIA_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        success: false,
+        err: false,
+      };
+    case Types.UPDATE_CATEGORIA_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        err: action.payload.err,
+      };
+    case Types.UPDATE_CATEGORIA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        err: false,
+        ...action.payload.data,
+      };
     case Types.REMOVE_LANCAMENTO_REQUEST:
       return {
         ...state,
@@ -195,6 +270,51 @@ export default function categorias(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  updateLancamentoRequest: body => ({
+    type: Types.UPDATE_LANCAMENTO_REQUEST,
+    payload: { body },
+  }),
+
+  updateLancamentoFailure: err => ({
+    type: Types.UPDATE_LANCAMENTO_FAILURE,
+    payload: { err },
+  }),
+
+  updateLancamentoSuccess: data => ({
+    type: Types.UPDATE_LANCAMENTO_SUCCESS,
+    payload: { data },
+  }),
+
+  updateItemRequest: body => ({
+    type: Types.UPDATE_ITEM_REQUEST,
+    payload: { body },
+  }),
+
+  updateItemFailure: err => ({
+    type: Types.UPDATE_ITEM_FAILURE,
+    payload: { err },
+  }),
+
+  updateItemSuccess: data => ({
+    type: Types.UPDATE_ITEM_SUCCESS,
+    payload: { data },
+  }),
+
+  updateCategoriaRequest: body => ({
+    type: Types.UPDATE_CATEGORIA_REQUEST,
+    payload: { body },
+  }),
+
+  updateCategoriaFailure: err => ({
+    type: Types.UPDATE_CATEGORIA_FAILURE,
+    payload: { err },
+  }),
+
+  updateCategoriaSuccess: data => ({
+    type: Types.UPDATE_CATEGORIA_SUCCESS,
+    payload: { data },
+  }),
+
   removeLancamentoRequest: lancamento => ({
     type: Types.REMOVE_LANCAMENTO_REQUEST,
     payload: { lancamento },

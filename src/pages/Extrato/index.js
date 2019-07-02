@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import BlankPage from '../../components/BlankPage';
 import HeaderIcon from './HeaderIcon';
 import { Creators as CategoriasActions } from '../../store/ducks/categorias';
+import Modal from './Modal';
 import './style.css';
 
 const Extrato = ({ categorias, removeLancamentoRequest }) => {
@@ -13,6 +14,7 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
   const [active, setActive] = useState('gasto');
   const [lancamentosGastos, setLancamentosGastos] = useState([]);
   const [lancamentosRecebimentos, setLancamentosRecebimentos] = useState([]);
+  const [edit, setEdit] = useState({});
 
   useEffect(() => {
     setLancamentosGastos(
@@ -31,8 +33,10 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
               <div className="pull-right">
                 <button
                   type="button"
-                  onClick={() => handleEdit(l._id)}
                   className="btn btn-success btn-link btn-just-icon btn-sm"
+                  data-toggle="modal"
+                  data-target="#edit"
+                  onClick={() => setEdit(l)}
                 >
                   <i className="material-icons">edit</i>
                 </button>
@@ -110,9 +114,7 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
                         href="/painel"
                         role="tablist"
                       >
-                        <i className="material-icons">attach_money</i>
-                        {' '}
-                        <strong>Recebimentos</strong>
+                        <i className="material-icons">attach_money</i> <strong>Recebimentos</strong>
                       </a>
                     </li>
                     <li className="nav-item">
@@ -123,9 +125,7 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
                         href="/painel"
                         role="tablist"
                       >
-                        <i className="material-icons">shopping_cart</i>
-                        {' '}
-                        <strong>Gastos</strong>
+                        <i className="material-icons">shopping_cart</i> <strong>Gastos</strong>
                       </a>
                     </li>
                   </ul>
@@ -233,6 +233,7 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
             </HeaderIcon>
           </div>
         </div>
+        <Modal l={edit} />
       </BlankPage>
     </>
   );

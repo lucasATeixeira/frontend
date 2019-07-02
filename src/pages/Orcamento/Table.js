@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
@@ -6,13 +7,21 @@ import { bindActionCreators } from 'redux';
 import { Creators as CategoriaActions } from '../../store/ducks/categorias';
 
 const Table = ({
-  color, itens, addItemRequest, idCategoria, removeItemRequest, periodo,
+  color,
+  itens,
+  addItemRequest,
+  idCategoria,
+  removeItemRequest,
+  periodo,
+  updateItemRequest,
 }) => {
   const [newItem, setNewItem] = useState(false);
   const [nome, setNome] = useState('');
   const [valor, setValor] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
   const [classificacao, setClassificacao] = useState('Flexível');
+  const [edit, setEdit] = useState('');
+
   const handleDelete = (item, mensal, realizado, tipo, realizadoParcelado) => {
     if (
       !window.confirm('Este item pode conter lançamentos feitos, tem certeza que deseja excluir?')
@@ -21,17 +30,31 @@ const Table = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!nome) return alert('Preencha o nome');
-    if (recorrencia <= 0) return alert('Recorrência deve ser maior que zero');
-    addItemRequest({
-      tipo: color === 'info' ? 'gasto' : 'recebimento',
-      nome,
-      classificacao,
-      orcado: valor,
-      recorrencia,
-      idCategoria,
-    });
-    return setNewItem(false);
+    if (newItem) {
+      if (!nome) return alert('Preencha o nome');
+      if (recorrencia <= 0) return alert('Recorrência deve ser maior que zero');
+      addItemRequest({
+        tipo: color === 'info' ? 'gasto' : 'recebimento',
+        nome,
+        classificacao,
+        orcado: valor,
+        recorrencia,
+        idCategoria,
+      });
+    }
+    if (edit) {
+      if (!nome) return alert('Preencha o nome');
+      if (recorrencia <= 0) return alert('Recorrência deve ser maior que zero');
+      updateItemRequest({
+        _id: edit,
+        nome,
+        classificacao,
+        orcado: valor,
+        recorrencia,
+      });
+    }
+    setNewItem(false);
+    return setEdit('');
   };
   return (
     <div className="row">
@@ -52,36 +75,145 @@ const Table = ({
               <tbody>
                 {itens.map(i => (
                   <tr key={i._id}>
-                    <td>{i.nome}</td>
-                    <td>{i.classificacao}</td>
-                    <td>
-                      {i.orcado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                    </td>
-                    <td>{i.recorrencia}</td>
-                    <td>
-                      {i.mensal.toLocaleString('pt-br', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })}
-                    </td>
-                    <td className="td-actions text-right">
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-link btn-just-icon btn-sm"
-                      >
-                        <i
-                          onClick={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo, i.realizadoParcelado)
-                          }
-                          onKeyPress={() => handleDelete(i._id, i.mensal, i.realizado, i.tipo, i.realizadoParcelado)
-                          }
-                          className="material-icons"
-                          role="button"
-                          tabIndex="0"
-                        >
-                          close
-                        </i>
-                      </button>
-                    </td>
+                    {edit !== i._id ? (
+                      <>
+                        <td>{i.nome}</td>
+                        <td>{i.classificacao}</td>
+                        <td>
+                          {i.orcado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                        </td>
+                        <td>{i.recorrencia}</td>
+                        <td>
+                          {i.mensal.toLocaleString('pt-br', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </td>
+                        <td className="td-actions text-right">
+                          <button
+                            type="button"
+                            className="btn btn-success btn-link btn-just-icon btn-sm"
+                            onClick={() => {
+                              setNewItem(false);
+                              setEdit(i._id);
+                              setNome(i.nome);
+                              setValor(i.orcado);
+                              setRecorrencia(i.recorrencia);
+                              setClassificacao(i.classificacao);
+                            }}
+                          >
+                            <i className="fa fa-pencil small" />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-danger btn-link btn-just-icon btn-sm"
+                          >
+                            <i
+                              onClick={() => handleDelete(
+                                i._id,
+                                i.mensal,
+                                i.realizado,
+                                i.tipo,
+                                i.realizadoParcelado,
+                              )
+                              }
+                              onKeyPress={() => handleDelete(
+                                i._id,
+                                i.mensal,
+                                i.realizado,
+                                i.tipo,
+                                i.realizadoParcelado,
+                              )
+                              }
+                              className="material-icons"
+                              role="button"
+                              tabIndex="0"
+                            >
+                              close
+                            </i>
+                          </button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>
+                          <span className="bmd-form-group">
+                            <input
+                              value={nome}
+                              onChange={e => setNome(e.target.value)}
+                              type="text"
+                              placeholder="Nome do item"
+                              className="form-control"
+                            />
+                          </span>
+                        </td>
+                        <td>
+                          <span className="bmd-form-group">
+                            <div className="form-group has-feedback">
+                              <select
+                                value={classificacao}
+                                onChange={e => setClassificacao(e.target.value)}
+                                className="form-control"
+                                data-style="select-with-transition"
+                                data-size="7"
+                                data-live-search="true"
+                              >
+                                <option value="Flexível">Flexível</option>
+                                <option value="Comprometido">Comprometido</option>
+                                <option value="Eventual">Eventual</option>
+                              </select>
+                            </div>
+                          </span>
+                        </td>
+                        <td>
+                          <span className="bmd-form-group">
+                            <CurrencyInput
+                              className="form-control"
+                              decimalSeparator=","
+                              thousandSeparator="."
+                              precision="2"
+                              prefix="R$"
+                              value={valor}
+                              onChangeEvent={(e, mv, fv) => setValor(fv)}
+                            />
+                          </span>
+                        </td>
+                        <td>
+                          <span className="bmd-form-group">
+                            <input
+                              value={recorrencia}
+                              onChange={e => setRecorrencia(e.target.value)}
+                              type="number"
+                              className="form-control"
+                              placeholder="Recorrência"
+                            />
+                          </span>
+                        </td>
+                        <td className="text-center">
+                          {valor === 0
+                            ? '--'
+                            : classificacao === 'Eventual'
+                              ? ((valor * periodo) / recorrencia).toLocaleString('pt-br', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              })
+                              : (valor * periodo * recorrencia).toLocaleString('pt-br', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              })}
+                        </td>
+                        <td className="text-center">
+                          <div>
+                            <button
+                              type="submit"
+                              className="btn btn-success btn-link btn-just-icon btn-sm"
+                            >
+                              <i className="material-icons">add_circle_outline</i>
+                            </button>
+                          </div>
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
 
@@ -169,7 +301,14 @@ const Table = ({
         </div>
         <button
           type="button"
-          onClick={() => setNewItem(true)}
+          onClick={() => {
+            setNewItem(true);
+            setEdit('');
+            setNome('');
+            setValor(0);
+            setRecorrencia(0);
+            setClassificacao('Flexível');
+          }}
           className={`btn btn-${color} btn-sm`}
         >
           <strong>
@@ -182,23 +321,13 @@ const Table = ({
 };
 
 Table.propTypes = {
+  updateItemRequest: PropTypes.func.isRequired,
   periodo: PropTypes.number.isRequired,
   removeItemRequest: PropTypes.func.isRequired,
   color: PropTypes.string,
   addItemRequest: PropTypes.func.isRequired,
   idCategoria: PropTypes.string,
-  itens: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      categoria: PropTypes.string,
-      classificacao: PropTypes.string,
-      mensal: PropTypes.number,
-      nome: PropTypes.string,
-      orcado: PropTypes.number,
-      recorrencia: PropTypes.number,
-      tipo: PropTypes.string,
-    }),
-  ),
+  itens: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 Table.defaultProps = {

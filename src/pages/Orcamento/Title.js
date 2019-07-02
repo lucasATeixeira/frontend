@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as CategoriaActions } from '../../store/ducks/categorias';
 
-const Title = ({ title, pencil }) => {
+const Title = ({ categoria, pencil, updateCategoriaRequest }) => {
   const [editTitle, setEditTitle] = useState(false);
-  const [valueEditTitle, setValueEditTitle] = useState(title);
+  const [valueEditTitle, setValueEditTitle] = useState(categoria.nome);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateCategoriaRequest({
+      ...categoria,
+      nome: valueEditTitle,
+    });
+    setEditTitle(false);
+  };
 
   return (
     <>
       {editTitle && (
         <>
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               value={valueEditTitle}
@@ -25,10 +37,7 @@ const Title = ({ title, pencil }) => {
       {!editTitle && (
         <>
           <h4 className="card-title">
-            <b>
-              {title}
-              {' '}
-            </b>
+            <b>{categoria.nome} </b>
             {pencil && (
               <button
                 type="button"
@@ -47,13 +56,20 @@ const Title = ({ title, pencil }) => {
 };
 
 Title.propTypes = {
-  title: PropTypes.string,
+  categoria: PropTypes.shape().isRequired,
   pencil: PropTypes.bool,
+  updateCategoriaRequest: PropTypes.func.isRequired,
 };
 
 Title.defaultProps = {
-  title: 'Parcelados',
   pencil: true,
 };
 
-export default Title;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => bindActionCreators(CategoriaActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Title);

@@ -27,6 +27,9 @@ import {
   removeCategoriaRequest,
   lancamentoRequest,
   removeLancamentoRequest,
+  updateCategoriaRequest,
+  updateItemRequest,
+  updateLancamentoRequest,
 } from './categorias';
 
 export default function* rootSaga() {
@@ -39,6 +42,9 @@ export default function* rootSaga() {
     takeLatest(CategoriasTypes.REMOVE_CATEGORIA_REQUEST, removeCategoriaRequest),
     takeLatest(CategoriasTypes.LANCAMENTO_REQUEST, lancamentoRequest),
     takeLatest(CategoriasTypes.REMOVE_LANCAMENTO_REQUEST, removeLancamentoRequest),
+    takeLatest(CategoriasTypes.UPDATE_CATEGORIA_REQUEST, updateCategoriaRequest),
+    takeLatest(CategoriasTypes.UPDATE_ITEM_REQUEST, updateItemRequest),
+    takeLatest(CategoriasTypes.UPDATE_LANCAMENTO_REQUEST, updateLancamentoRequest),
     takeLatest(PatrimoniosTypes.ADD_PATRIMONIO_REQUEST, addPatrimonioRequest),
     takeLatest(PatrimoniosTypes.REMOVE_PATRIMONIO_REQUEST, removePatrimonioRequest),
     takeLatest(SimulacaoTypes.FETCH_DATA_REQUEST, fetchSimulacaoRequest),

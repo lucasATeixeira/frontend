@@ -38,7 +38,7 @@ const Component = ({
         <div key={c._id} className="row">
           <div className="col-md-12">
             <TableCard categoria={c} color={color} options materialIcon={materialIcon}>
-              <Title title={c.nome} pencil />
+              <Title categoria={c} pencil />
               <Table idCategoria={c._id} itens={c.itens} color={color} />
             </TableCard>
           </div>
