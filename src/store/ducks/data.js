@@ -7,11 +7,11 @@ export const Types = {
 const INITIAL_STATE = {
   loading: false,
   err: false,
-  success: true,
+  success: false,
 };
 
 export default function data(state = INITIAL_STATE, action) {
-  switch (action.payload) {
+  switch (action.type) {
     case Types.FETCH_DATA_REQUEST:
       return {
         loading: true,

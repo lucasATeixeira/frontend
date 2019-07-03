@@ -37,7 +37,7 @@ const RessCren = ({ crencas, updateRequest }) => {
               <div className="card">
                 <div className={`card-header card-header-text card-header-${a.ress ? 'success' : 'danger'}`}>
                   <div className="card-text">
-                    <h4 className="card-title"><strong>Nome da pessoa</strong></h4>
+                    <h4 className="card-title"><strong>{b.name}</strong></h4>
                   </div>
                 </div>
                 <div className="card-body">

@@ -6,10 +6,11 @@ import { bindActionCreators } from 'redux';
 import { Creators as CrencasActions } from '../../store/ducks/crencas';
 
 const Option = ({
-  content, peso, next, crencas, saveRequest,
+  content, peso, next, crencas, saveRequest, name,
 }) => {
   const question = crencas.questions[crencas.current];
   const handleChange = () => {
+    if (!name) return alert('Preencha um Nome antes de continuar!');
     if (crencas.current >= crencas.total - 1) {
       const ambiente = (crencas.ambiente
           / (crencas.total * 4)
@@ -79,6 +80,7 @@ const Option = ({
 
       saveRequest({
         quiz: {
+          name,
           cat,
           crencas: crencasFinal,
           ambiente,
@@ -135,6 +137,7 @@ Option.propTypes = {
   next: PropTypes.func.isRequired,
   crencas: PropTypes.shape().isRequired,
   saveRequest: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({

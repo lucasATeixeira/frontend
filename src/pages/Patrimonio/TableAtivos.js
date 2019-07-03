@@ -29,6 +29,7 @@ const TableAtivos = ({
     if (!nomeAtivo) return alert('Adicione um nome');
     if (valor <= 0) return alert('Adicione um valor Válido');
     if (newAtivo) {
+      setNewAtivo(false);
       return addPatrimonioRequest({
         nome: nomeAtivo,
         tipo: 'ativo',

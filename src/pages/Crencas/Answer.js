@@ -7,11 +7,11 @@ import { Creators as CrencaActions } from '../../store/ducks/crencas';
 const Answer = ({ crencas, newQuiz }) => (
   <div className="row">
     <div className="col-md-6">
-      <h2>Primeiro Quiz Feito</h2>
+      <h2>{crencas.answers[0].name}, Resposta do Quiz</h2>
     </div>
     <div className="col-md-6">
       {crencas.coupleDone ? (
-        <h2>Segundo Quiz Feito</h2>
+        <h2>{crencas.answers[1].name}, Resposta do Quiz</h2>
       ) : (
         <button onClick={() => newQuiz()} className="btn btn-round btn-info" type="button">
           <strong>Fazer Quiz do cônjuge</strong>

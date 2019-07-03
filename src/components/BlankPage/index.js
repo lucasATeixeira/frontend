@@ -28,8 +28,10 @@ const BlankPage = ({ children, fetchDataRequest, data }) => {
             <div className="container-fluid">
               {data.loading ? (
                 <>
-                  <i className="fa fa-spinner fa-pulse" />
-                  <h2>Loading Data</h2>
+                  <h2>
+                    <i className="fa fa-spinner fa-pulse" />
+                    Carregando
+                  </h2>
                 </>
               ) : (
                 <>

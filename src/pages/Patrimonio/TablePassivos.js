@@ -42,6 +42,7 @@ const TablePassivos = ({
       .add(pRestantes, 'months')
       .format();
     if (newPassivo) {
+      setNewPassivo(false);
       return addPatrimonioRequest({
         nome: nomePassivo,
         tipo: 'passivo',
