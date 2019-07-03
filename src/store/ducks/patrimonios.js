@@ -6,6 +6,9 @@ export const Types = {
   REMOVE_PATRIMONIO_REQUEST: 'patrimonios/REMOVE_PATRIMONIO_REQUEST',
   REMOVE_PATRIMONIO_FAILURE: 'patrimonios/REMOVE_PATRIMONIO_FAILURE',
   REMOVE_PATRIMONIO_SUCCESS: 'patrimonios/REMOVE_PATRIMONIO_SUCCESS',
+  UPDATE_PATRIMONIO_REQUEST: 'patrimonios/UPDATE_PATRIMONIO_REQUEST',
+  UPDATE_PATRIMONIO_FAILURE: 'patrimonios/UPDATE_PATRIMONIO_FAILURE',
+  UPDATE_PATRIMONIO_SUCCESS: 'patrimonios/UPDATE_PATRIMONIO_SUCCESS',
 };
 
 const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
@@ -35,6 +38,28 @@ const INITIAL_STATE = {
 
 export default function patrimonios(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.UPDATE_PATRIMONIO_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        err: false,
+        success: false,
+      };
+    case Types.UPDATE_PATRIMONIO_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        err: action.payload.err,
+        success: false,
+      };
+    case Types.UPDATE_PATRIMONIO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        err: false,
+        success: true,
+        ...action.payload.data,
+      };
     case Types.REMOVE_PATRIMONIO_REQUEST:
       return {
         ...state,
@@ -90,6 +115,21 @@ export default function patrimonios(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+  updatePatrimonioRequest: body => ({
+    type: Types.UPDATE_PATRIMONIO_REQUEST,
+    payload: { body },
+  }),
+
+  updatePatrimonioFailure: err => ({
+    type: Types.UPDATE_PATRIMONIO_FAILURE,
+    payload: { err },
+  }),
+
+  updatePatrimonioSuccess: data => ({
+    type: Types.UPDATE_PATRIMONIO_SUCCESS,
+    payload: { data },
+  }),
+
   removePatrimonioRequest: patrimonio => ({
     type: Types.REMOVE_PATRIMONIO_REQUEST,
     payload: { patrimonio },

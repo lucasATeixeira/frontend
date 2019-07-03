@@ -9,7 +9,11 @@ import moment from 'moment';
 import { Creators as PatrimoniosActions } from '../../store/ducks/patrimonios';
 
 const TablePassivos = ({
-  list, addPatrimonioRequest, removePatrimonioRequest, classificacao,
+  list,
+  addPatrimonioRequest,
+  removePatrimonioRequest,
+  classificacao,
+  updatePatrimonioRequest,
 }) => {
   const [newPassivo, setNewPassivo] = useState(false);
   const [nomePassivo, setNomePassivo] = useState('');
@@ -18,6 +22,7 @@ const TablePassivos = ({
   const [pmt, setPmt] = useState(0);
   const [taxa, setTaxa] = useState(0);
   const [aVista, setAVista] = useState(0);
+  const [edit, setEdit] = useState('');
 
   const handleDelete = (patrimonio) => {
     if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;
@@ -36,18 +41,36 @@ const TablePassivos = ({
     const dataFinal = moment()
       .add(pRestantes, 'months')
       .format();
+    if (newPassivo) {
+      return addPatrimonioRequest({
+        nome: nomePassivo,
+        tipo: 'passivo',
+        classificacao,
+        instituicao,
+        pmt,
+        data,
+        dataFinal,
+        taxa,
+        aVista,
+      });
+    }
+
+    if (!newPassivo) {
+      setEdit('');
+      return updatePatrimonioRequest({
+        _id: edit,
+        nome: nomePassivo,
+        classificacao,
+        instituicao,
+        pmt,
+        data,
+        dataFinal,
+        taxa,
+        aVista,
+      });
+    }
     setNewPassivo(false);
-    return addPatrimonioRequest({
-      nome: nomePassivo,
-      tipo: 'passivo',
-      classificacao,
-      instituicao,
-      pmt,
-      data,
-      dataFinal,
-      taxa,
-      aVista,
-    });
+    return setEdit('');
   };
 
   return (
@@ -91,29 +114,152 @@ const TablePassivos = ({
                 <tbody>
                   {list.map(p => (
                     <tr key={p._id}>
-                      <td>{p.nome}</td>
-                      <td>{p.instituicao}</td>
-                      <td>
-                        {p.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                      </td>
-                      <td>{p.parcelas}</td>
-                      <td>{p.taxa}%</td>
-                      <td>
-                        {p.aVista.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                      </td>
-                      <td>
-                        {p.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                      </td>
-                      <td>{((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')}%</td>
-                      <td className="td-actions text-right">
-                        <button
-                          onClick={() => handleDelete(p)}
-                          type="button"
-                          className="btn btn-danger btn-link btn-just-icon btn-sm"
-                        >
-                          <i className="material-icons">close</i>
-                        </button>
-                      </td>
+                      {edit !== p._id ? (
+                        <>
+                          <td>{p.nome}</td>
+                          <td>{p.instituicao}</td>
+                          <td>
+                            {p.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                          </td>
+                          <td>{p.parcelas}</td>
+                          <td>{p.taxa}%</td>
+                          <td>
+                            {p.aVista.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
+                          </td>
+                          <td>
+                            {p.total.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
+                          </td>
+                          <td>{((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')}%</td>
+                          <td className="td-actions text-right">
+                            <button
+                              type="button"
+                              className="btn btn-success btn-link btn-just-icon btn-sm"
+                              onClick={() => {
+                                setNewPassivo(false);
+                                setNomePassivo(p.nome);
+                                setInstituicao(p.instituicao);
+                                setPRestantes(p.parcelas);
+                                setPmt(p.pmt);
+                                setTaxa(p.taxa);
+                                setAVista(p.aVista);
+                                setEdit(p._id);
+                              }}
+                            >
+                              <i className="fa fa-pencil small" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(p)}
+                              type="button"
+                              className="btn btn-danger btn-link btn-just-icon btn-sm"
+                            >
+                              <i className="material-icons">close</i>
+                            </button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td>
+                            <span className="bmd-form-group">
+                              <input
+                                value={nomePassivo}
+                                onChange={e => setNomePassivo(e.target.value)}
+                                type="text"
+                                placeholder="Nome do Passivo"
+                                className="form-control"
+                              />
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bmd-form-group">
+                              <input
+                                value={instituicao}
+                                onChange={e => setInstituicao(e.target.value)}
+                                type="text"
+                                placeholder="Instituição"
+                                className="form-control"
+                              />
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bmd-form-group">
+                              <CurrencyInput
+                                value={pmt}
+                                onChangeEvent={(e, mv, fv) => setPmt(fv)}
+                                className="form-control"
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                precision="2"
+                                prefix="R$"
+                              />
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bmd-form-group">
+                              <input
+                                value={pRestantes}
+                                onChange={e => setPRestantes(e.target.value)}
+                                type="number"
+                                placeholder="P. Restantes"
+                                className="form-control"
+                              />
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bmd-form-group">
+                              <CurrencyInput
+                                value={taxa}
+                                onChangeEvent={(e, mv, fv) => setTaxa(fv)}
+                                className="form-control"
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                precision="2"
+                                suffix="%"
+                              />
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bmd-form-group">
+                              <CurrencyInput
+                                value={aVista}
+                                onChangeEvent={(e, mv, fv) => setAVista(fv)}
+                                className="form-control"
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                precision="2"
+                                prefix="R$"
+                              />
+                            </span>
+                          </td>
+                          <td className="text-center">
+                            {(pRestantes * pmt).toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
+                          </td>
+                          <td className="text-center">
+                            {isNaN((1 - aVista / (pRestantes * pmt)) * 100)
+                              ? 0
+                              : Math.round((1 - aVista / (pRestantes * pmt)) * 100)}
+                            %
+                          </td>
+                          <td className="text-center">
+                            <div>
+                              <button
+                                type="submit"
+                                className="btn btn-success btn-link btn-just-icon btn-sm"
+                              >
+                                <i className="material-icons">add_circle_outline</i>
+                              </button>
+                            </div>
+                          </td>
+                        </>
+                      )}
                     </tr>
                   ))}
 
@@ -219,7 +365,10 @@ const TablePassivos = ({
             <br />
             <button
               type="button"
-              onClick={() => setNewPassivo(true)}
+              onClick={() => {
+                setNewPassivo(true);
+                setEdit('');
+              }}
               className="btn btn-danger btn-sm"
             >
               <strong>
@@ -238,6 +387,7 @@ TablePassivos.propTypes = {
   addPatrimonioRequest: PropTypes.func.isRequired,
   removePatrimonioRequest: PropTypes.func.isRequired,
   classificacao: PropTypes.string.isRequired,
+  updatePatrimonioRequest: PropTypes.func.isRequired,
 };
 
 TablePassivos.defaultProps = {

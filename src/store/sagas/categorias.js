@@ -22,8 +22,6 @@ export function* updateLancamentoRequest(action) {
 
     data.mensal = data.formaPagamento === 'Parcelado' ? data.valor / data.vezes : data.valor;
 
-    console.log(body, data);
-
     if (start || end || middleStart || middleEnd) {
       local.categorias.gastosRealizados
         -= data.tipo === 'gasto' ? (data.formaPagamento !== 'Parcelado' ? data.mensal : 0) : 0;

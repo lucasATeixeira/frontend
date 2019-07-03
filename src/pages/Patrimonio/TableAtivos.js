@@ -7,12 +7,17 @@ import CurrencyInput from 'react-currency-input';
 import { Creators as PatrimoniosActions } from '../../store/ducks/patrimonios';
 
 const TableAtivos = ({
-  list, addPatrimonioRequest, removePatrimonioRequest, classificacao,
+  list,
+  addPatrimonioRequest,
+  removePatrimonioRequest,
+  classificacao,
+  updatePatrimonioRequest,
 }) => {
   const [nomeAtivo, setNomeAtivo] = useState('');
   const [tipo, setTipo] = useState('Moradia');
   const [valor, setValor] = useState(0);
   const [newAtivo, setNewAtivo] = useState(false);
+  const [edit, setEdit] = useState('');
 
   const handleDelete = (patrimonio) => {
     if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;
@@ -23,14 +28,28 @@ const TableAtivos = ({
     e.preventDefault();
     if (!nomeAtivo) return alert('Adicione um nome');
     if (valor <= 0) return alert('Adicione um valor Válido');
+    if (newAtivo) {
+      return addPatrimonioRequest({
+        nome: nomeAtivo,
+        tipo: 'ativo',
+        classificacao,
+        valor,
+        categoria: tipo,
+      });
+    }
+
+    if (!newAtivo) {
+      setEdit('');
+      return updatePatrimonioRequest({
+        _id: edit,
+        nome: nomeAtivo,
+        classificacao,
+        valor,
+        categoria: tipo,
+      });
+    }
     setNewAtivo(false);
-    return addPatrimonioRequest({
-      nome: nomeAtivo,
-      tipo: 'ativo',
-      classificacao,
-      valor,
-      categoria: tipo,
-    });
+    return setEdit('');
   };
 
   return (
@@ -59,20 +78,98 @@ const TableAtivos = ({
                 <tbody>
                   {list.map(a => (
                     <tr key={a._id}>
-                      <td>{a.nome}</td>
-                      <td>{a.categoria}</td>
-                      <td>
-                        {a.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                      </td>
-                      <td className="td-actions text-right">
-                        <button
-                          onClick={() => handleDelete(a)}
-                          type="button"
-                          className="btn btn-danger btn-link btn-just-icon btn-sm"
-                        >
-                          <i className="material-icons">close</i>
-                        </button>
-                      </td>
+                      {edit !== a._id ? (
+                        <>
+                          <td>{a.nome}</td>
+                          <td>{a.categoria}</td>
+                          <td>
+                            {a.valor.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
+                          </td>
+                          <td className="td-actions text-right">
+                            <button
+                              type="button"
+                              className="btn btn-success btn-link btn-just-icon btn-sm"
+                              onClick={() => {
+                                setNewAtivo(false);
+                                setNomeAtivo(a.nome);
+                                setTipo(a.categoria);
+                                setValor(a.valor);
+                                setEdit(a._id);
+                              }}
+                            >
+                              <i className="fa fa-pencil small" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(a)}
+                              type="button"
+                              className="btn btn-danger btn-link btn-just-icon btn-sm"
+                            >
+                              <i className="material-icons">close</i>
+                            </button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td>
+                            <span className="bmd-form-group">
+                              <input
+                                value={nomeAtivo}
+                                onChange={e => setNomeAtivo(e.target.value)}
+                                type="text"
+                                placeholder="Nome do Ativo"
+                                className="form-control"
+                              />
+                            </span>
+                          </td>
+
+                          <td>
+                            <span className="bmd-form-group">
+                              <div className="form-group has-feedback">
+                                <select
+                                  value={tipo}
+                                  onChange={e => setTipo(e.target.value)}
+                                  className="form-control"
+                                  data-style="select-with-transition"
+                                  data-size="7"
+                                  data-live-search="true"
+                                >
+                                  <option value="moradia">Moradia</option>
+                                  <option value="transporte">Transporte</option>
+                                  <option value="bens nao utilizados">Bens Não Utilizados</option>
+                                  <option value="outros bens">Outros Bens</option>
+                                </select>
+                              </div>
+                            </span>
+                          </td>
+
+                          <td>
+                            <span className="bmd-form-group">
+                              <CurrencyInput
+                                value={valor}
+                                onChangeEvent={(e, mv, fv) => setValor(fv)}
+                                className="form-control"
+                                decimalSeparator=","
+                                thousandSeparator="."
+                                precision="2"
+                                prefix="R$"
+                              />
+                            </span>
+                          </td>
+                          <td className="text-center">
+                            <div>
+                              <button
+                                type="submit"
+                                className="btn btn-success btn-link btn-just-icon btn-sm"
+                              >
+                                <i className="material-icons">add_circle_outline</i>
+                              </button>
+                            </div>
+                          </td>
+                        </>
+                      )}
                     </tr>
                   ))}
 
@@ -139,7 +236,10 @@ const TableAtivos = ({
             <br />
             <button
               type="button"
-              onClick={() => setNewAtivo(true)}
+              onClick={() => {
+                setNewAtivo(true);
+                setEdit('');
+              }}
               className="btn btn-success btn-sm"
             >
               <strong>
@@ -158,6 +258,7 @@ TableAtivos.propTypes = {
   addPatrimonioRequest: PropTypes.func.isRequired,
   removePatrimonioRequest: PropTypes.func.isRequired,
   classificacao: PropTypes.string.isRequired,
+  updatePatrimonioRequest: PropTypes.func.isRequired,
 };
 
 TableAtivos.defaultProps = {

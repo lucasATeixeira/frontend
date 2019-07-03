@@ -25,8 +25,6 @@ const Content = ({
   const [descricao, setDescricao] = useState('');
   const [dataLancamento, setDataLancamento] = useState(new Date());
 
-  console.log(idCategoria);
-
   useEffect(() => {
     if (l.categoria) {
       setIdCategoria(l.categoria);
@@ -46,6 +44,15 @@ const Content = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (idCategoria === 'CATEGORIA') {
+      return toast.error('Selecione uma Categoria');
+    }
+
+    if (idItem === 'ITEM') {
+      return toast.error('Selecione um Item');
+    }
+
     if (!descricao) {
       return toast.error('Coloque uma descrição');
     }
@@ -55,11 +62,12 @@ const Content = ({
     if (vezes <= 0) {
       return toast.error('A quantidade de vezes deve ser superior a zero');
     }
+
     const dataFinal = moment(dataLancamento)
       .add(Number(vezes) - 1, 'month')
       .format();
 
-    updateLancamentoRequest({
+    return updateLancamentoRequest({
       _id: l._id,
       categoria: idCategoria,
       item: idItem,
@@ -88,6 +96,7 @@ const Content = ({
                     data-size="7"
                     data-live-search="true"
                   >
+                    <option>CATEGORIA</option>
                     {categorias
                       .filter(c => c.tipo === l.tipo)
                       .map(c => (
@@ -107,6 +116,7 @@ const Content = ({
                     data-size="7"
                     data-live-search="true"
                   >
+                    <option>ITEM</option>
                     {categorias.map((c) => {
                       if (!(c._id === idCategoria)) return null;
                       return c.itens.map(i => (
