@@ -29,9 +29,9 @@ export default function UpperNavbar() {
           <div className="collapse navbar-collapse justify-content-end">
             <ul className="navbar-nav">
               <li className="nav-item ">
-                <Link className="nav-link" to="/esqueci_minha_senha">
+                <Link className="nav-link" to="/">
                   <i className="material-icons">lock</i>
-                  ESQUECI MINHA SENHA
+                  Login
                 </Link>
               </li>
             </ul>

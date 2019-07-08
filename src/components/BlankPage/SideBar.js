@@ -20,7 +20,7 @@ const Sidebar = ({ user, setPage }) => (
 
       <div className="user-info">
         <a href="/painel" className="username">
-          {user.email}
+          {user.nome}
         </a>
       </div>
     </div>

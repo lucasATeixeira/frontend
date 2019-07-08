@@ -15,6 +15,8 @@ import Aatuar30d from './Aatuar30d';
 import Aatuar7d from './Aatuar7d';
 import Aatuar1d from './Aatuar1d';
 import Crencas from './Crencas';
+import Forgot from './Forgot';
+import Reset from './Reset';
 
 const Pages = () => (
   <BrowserRouter>
@@ -33,6 +35,8 @@ const Pages = () => (
       <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
       <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
       <PrivateRoute exact path="/crencas" component={Crencas} />
+      <Route exact path="/esqueci_minha_senha" component={Forgot} />
+      <Route exact path="/reset_password" component={Reset} />
       <Route component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
