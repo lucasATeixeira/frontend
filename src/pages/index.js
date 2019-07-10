@@ -22,6 +22,8 @@ const Pages = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={Login} />
+      <Route exact path="/esqueci_minha_senha" component={Forgot} />
+      <Route exact path="/reset_password" component={Reset} />
       <PrivateRoute exact path="/painel" component={Painel} />
       <PrivateRoute exact path="/orcamento" component={Orcamento} />
       <PrivateRoute exact path="/extrato" component={Extrato} />
@@ -35,8 +37,6 @@ const Pages = () => (
       <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
       <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
       <PrivateRoute exact path="/crencas" component={Crencas} />
-      <Route exact path="/esqueci_minha_senha" component={Forgot} />
-      <Route exact path="/reset_password" component={Reset} />
       <Route component={() => <h1>Page not found</h1>} />
     </Switch>
   </BrowserRouter>
