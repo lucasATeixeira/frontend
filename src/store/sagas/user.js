@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import { call, put } from 'redux-saga/effects';
 import { Creators as UserActions } from '../ducks/user';
 import api from '../../services/api';
@@ -7,6 +8,9 @@ export function* authUser(action) {
   try {
     const { data } = yield call(api.post, 'api/session', { email, senha });
     const { token, user } = data;
+    if (user.payment_status === 'pending') {
+      throw { response: { data: { error: 'Estamos processando seu pagamento' } } };
+    }
     localStorage.setItem('@Ondazul: user', JSON.stringify(user));
     localStorage.setItem('@Ondazul: token', token);
     yield put(UserActions.loginSuccess(user, token));

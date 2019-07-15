@@ -17,6 +17,7 @@ import Aatuar1d from './Aatuar1d';
 import Crencas from './Crencas';
 import Forgot from './Forgot';
 import Reset from './Reset';
+import Checkout from './Checkout';
 
 const Pages = () => (
   <BrowserRouter>
@@ -24,6 +25,7 @@ const Pages = () => (
       <Route path="/" exact component={Login} />
       <Route exact path="/esqueci_minha_senha" component={Forgot} />
       <Route exact path="/reset_password" component={Reset} />
+      <Route exact path="/checkout" component={Checkout} />
       <PrivateRoute exact path="/painel" component={Painel} />
       <PrivateRoute exact path="/orcamento" component={Orcamento} />
       <PrivateRoute exact path="/extrato" component={Extrato} />
