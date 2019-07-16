@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 import CardOne from './CardOne';
@@ -10,7 +11,7 @@ import DividasTable from '../../DividasTable';
 const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
   const { currentSimulation } = simulacao;
   const handleClick = () => {
-    if (!currentSimulation.estrategia) return alert('Escolha uma Estratégia');
+    if (!currentSimulation.estrategia) return toast.error('Escolha uma Estratégia', { containerId: 'alerts' });
     return submitSimulationRequest(currentSimulation);
   };
   const moradia = [

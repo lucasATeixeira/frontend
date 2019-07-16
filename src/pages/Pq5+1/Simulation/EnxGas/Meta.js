@@ -21,7 +21,7 @@ const Meta = ({ orcamento, simulacao, pmt }) => {
 
   return (
     <div className="card">
-      <div className="card-header card-header-text card-header-grafit">
+      <div className="card-header card-header-text card-header-info">
         <div className="card-text">
           <h4 className="card-title">Meta</h4>
         </div>

@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 
@@ -18,8 +19,9 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     }
     if (!checked) {
       if (currentSimulation.saldo < p.total) {
-        alert(
+        toast.error(
           'Você não tem saldo suficente para quitar esta dívida, mas fique tranquilo, salve esta estratégia para que o saldo fique salvo!',
+          { containerId: 'alerts' },
         );
         return;
       }

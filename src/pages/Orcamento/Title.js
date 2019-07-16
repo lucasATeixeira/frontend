@@ -36,7 +36,7 @@ const Title = ({ categoria, pencil, updateCategoriaRequest }) => {
 
       {!editTitle && (
         <>
-          <h4 className="card-title">
+          <h4 className="card-title text-uppercase">
             <b>{categoria.nome} </b>
             {pencil && (
               <button

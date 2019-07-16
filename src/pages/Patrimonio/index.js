@@ -99,6 +99,9 @@ const Patrimonio = ({ patrimonios }) => {
             </HeaderText>
           </div>
         </div>
+        <br />
+        <br />
+        <br />
 
         <div className="row">
           <div className="col-md-12">
@@ -114,6 +117,9 @@ const Patrimonio = ({ patrimonios }) => {
             </HeaderText>
           </div>
         </div>
+        <br />
+        <br />
+        <br />
 
         <div className="row">
           <div className="col-md-12">
@@ -129,6 +135,9 @@ const Patrimonio = ({ patrimonios }) => {
             </HeaderText>
           </div>
         </div>
+        <br />
+        <br />
+        <br />
 
         <div className="row">
           <div className="col-md-6">
@@ -184,6 +193,7 @@ const Patrimonio = ({ patrimonios }) => {
                     yAxes: [
                       {
                         ticks: {
+                          beginAtZero: true,
                           callback(value) {
                             return value.toLocaleString('pt-BR', {
                               style: 'currency',

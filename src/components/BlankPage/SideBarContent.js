@@ -41,12 +41,12 @@ export default function SideBarContent({ setPage }) {
           {
             href: '/V5ANos',
             mini: 'V5A',
-            title: 'Visão de 5 anos',
+            title: 'Visão 5 anos',
           },
           {
             href: '/V1Ano',
             mini: 'V1A',
-            title: 'Visão de 1 ano',
+            title: 'Visão 1 ano',
           },
 
           {

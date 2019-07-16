@@ -32,8 +32,8 @@ const Content = ({
   }, [idCategoria, idItem]);
 
   useEffect(() => {
-    if (success) toast.success('Lançamento Realizado');
-    if (err) toast.error('Ocorreu um erro com o lançamento');
+    if (success) toast.success('Lançamento Realizado', { containerId: 'lancamento' });
+    if (err) toast.error('Ocorreu um erro com o lançamento', { containerId: 'lancamento' });
   }, [success, err]);
 
   useEffect(() => {
@@ -217,7 +217,7 @@ const Content = ({
             </button>
           </div>
         </div>
-        <ToastContainer autoClose={2000} />
+        <ToastContainer enableMultiContainer containerId="lancamento" autoClose={2000} />
       </form>
     </>
   );

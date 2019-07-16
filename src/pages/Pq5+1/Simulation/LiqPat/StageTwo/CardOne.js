@@ -241,7 +241,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
               />
               <Input
                 currency
-                label="Seguro do veículo (ano)"
+                label="Seguro do veículo (anual)"
                 value={seguroOutro}
                 onChange={(e, mv, fv) => {
                   setSeguroOutro(fv);
@@ -259,7 +259,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
               />
               <Input
                 currency
-                label="Manutenções / Revisões (ano)"
+                label="Manutenções / Revisões (anual)"
                 value={manutencaoOutro}
                 onChange={(e, mv, fv) => {
                   setManutencaoOutro(fv);

@@ -8,10 +8,10 @@ const Patrimonio = ({ content }) => {
 
     if (content.ativos === 0) ativos = 'Não houve alteração nos ativos';
     if (content.ativos < 0) {
-      ativos = `Redução de ${(content.ativos * -1).toLocaleString('pt-br', {
+      ativos = `Seus ativos reduziram em ${(content.ativos * -1).toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} nos seus ativos`;
+      })}`;
     }
     if (content.ativos > 0) {
       ativos = `Aumento de ${content.ativos.toLocaleString('pt-br', {
@@ -22,19 +22,20 @@ const Patrimonio = ({ content }) => {
 
     if (content.passivos === 0) passivos = ' e não houve alteraçao nos seus passivos';
     if (content.passivos < 0) {
-      passivos = ` e houve uma redução de ${(content.passivos * -1).toLocaleString('pt-br', {
+      passivos = ` e seus passivos reduziram em ${(content.passivos * -1).toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} nos seus passivos`;
+      })}`;
     }
     if (content.passivos > 0) {
-      passivos = ` e houve um aumento de ${content.passivos.toLocaleString('pt-br', {
+      passivos = ` e seus passivos aumentaram em ${content.passivos.toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} nos seus passivos`;
+      })}`;
     }
 
-    return `${ativos + passivos}, totalizando um saldo de ${content.saldo.toLocaleString('pt-br', {
+    return `${ativos
+      + passivos}, você ainda teria um saldo de um saldo de ${content.saldo.toLocaleString('pt-br', {
       style: 'currency',
       currency: 'BRL',
     })}`;

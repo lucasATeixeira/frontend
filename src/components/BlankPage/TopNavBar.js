@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import { Creators as UserActions } from '../../store/ducks/user';
 import { Creators as DataActions } from '../../store/ducks/data';
@@ -27,7 +28,7 @@ const TopNavbar = ({
     return fetchDataRequest(e, end);
   };
   const handleEnd = (e) => {
-    if (e < start) return alert('Coloque uma data superior a do começo');
+    if (e < start) return toast.error('Coloque uma data superior a do começo', { containerId: 'alerts' });
     setEnd(e);
     return fetchDataRequest(start, e);
   };

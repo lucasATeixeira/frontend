@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import { bindActionCreators } from 'redux';
 import { Creators as CategoriaActions } from '../../store/ducks/categorias';
+import scrollHook from '../../hooks/scrollHook';
 
 const Table = ({
   color,
@@ -28,11 +30,16 @@ const Table = ({
     ) return;
     removeItemRequest(item, mensal, realizado, tipo, idCategoria, realizadoParcelado);
   };
+
+  const handleKeyUp = (e) => {
+    if (e.keyCode !== 27) return;
+    setNewItem(false);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newItem) {
-      if (!nome) return alert('Preencha o nome');
-      if (recorrencia <= 0) return alert('Recorrência deve ser maior que zero');
+      if (!nome) return toast.error('Preencha o nome', { containerId: 'alerts' });
+      if (recorrencia <= 0) return toast.error('Recorrência deve ser maior que zero', { containerId: 'alerts' });
       addItemRequest({
         tipo: color === 'info' ? 'gasto' : 'recebimento',
         nome,
@@ -43,8 +50,8 @@ const Table = ({
       });
     }
     if (edit) {
-      if (!nome) return alert('Preencha o nome');
-      if (recorrencia <= 0) return alert('Recorrência deve ser maior que zero');
+      if (!nome) return toast.error('Preencha o nome', { containerId: 'alerts' });
+      if (recorrencia <= 0) return toast.error('Recorrência deve ser maior que zero', { containerId: 'alerts' });
       updateItemRequest({
         _id: edit,
         nome,
@@ -60,15 +67,15 @@ const Table = ({
     <div className="row">
       <div className="col-md-12">
         <div className="table-responsive">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
             <table className="table">
               <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Classificação</th>
-                  <th>Orçado</th>
+                  <th className="text-right">Orçado</th>
                   <th>Recorrência</th>
-                  <th>Valor Período</th>
+                  <th className="text-right">Valor Período</th>
                   <th className="text-right">Actions</th>
                 </tr>
               </thead>
@@ -79,11 +86,11 @@ const Table = ({
                       <>
                         <td>{i.nome}</td>
                         <td>{i.classificacao}</td>
-                        <td>
+                        <td className="text-right">
                           {i.orcado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                         </td>
                         <td>{i.recorrencia}</td>
-                        <td>
+                        <td className="text-right">
                           {i.mensal.toLocaleString('pt-br', {
                             style: 'currency',
                             currency: 'BRL',
@@ -149,20 +156,18 @@ const Table = ({
                         </td>
                         <td>
                           <span className="bmd-form-group">
-                            <div className="form-group has-feedback">
-                              <select
-                                value={classificacao}
-                                onChange={e => setClassificacao(e.target.value)}
-                                className="form-control"
-                                data-style="select-with-transition"
-                                data-size="7"
-                                data-live-search="true"
-                              >
-                                <option value="Flexível">Flexível</option>
-                                <option value="Comprometido">Comprometido</option>
-                                <option value="Eventual">Eventual</option>
-                              </select>
-                            </div>
+                            <select
+                              value={classificacao}
+                              onChange={e => setClassificacao(e.target.value)}
+                              className="form-control"
+                              data-style="select-with-transition"
+                              data-size="7"
+                              data-live-search="true"
+                            >
+                              <option value="Flexível">Flexível</option>
+                              <option value="Comprometido">Comprometido</option>
+                              <option value="Eventual">Eventual</option>
+                            </select>
                           </span>
                         </td>
                         <td>
@@ -218,7 +223,7 @@ const Table = ({
                 ))}
 
                 {newItem && (
-                  <tr>
+                  <tr ref={scrollHook}>
                     <td>
                       <span className="bmd-form-group">
                         <input
@@ -231,22 +236,18 @@ const Table = ({
                       </span>
                     </td>
                     <td>
-                      <span className="bmd-form-group">
-                        <div className="form-group has-feedback">
-                          <select
-                            value={classificacao}
-                            onChange={e => setClassificacao(e.target.value)}
-                            className="form-control"
-                            data-style="select-with-transition"
-                            data-size="7"
-                            data-live-search="true"
-                          >
-                            <option value="Flexível">Flexível</option>
-                            <option value="Comprometido">Comprometido</option>
-                            <option value="Eventual">Eventual</option>
-                          </select>
-                        </div>
-                      </span>
+                      <select
+                        value={classificacao}
+                        onChange={e => setClassificacao(e.target.value)}
+                        className="form-control"
+                        data-style="select-with-transition"
+                        data-size="7"
+                        data-live-search="true"
+                      >
+                        <option value="Flexível">Flexível</option>
+                        <option value="Comprometido">Comprometido</option>
+                        <option value="Eventual">Eventual</option>
+                      </select>
                     </td>
                     <td>
                       <span className="bmd-form-group">

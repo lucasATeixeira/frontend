@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import CurrencyInput from 'react-currency-input';
 import { Creators as PatrimoniosActions } from '../../store/ducks/patrimonios';
 
@@ -24,11 +25,20 @@ const TableAtivos = ({
     removePatrimonioRequest(patrimonio);
   };
 
+  const handleKeyUp = (e) => {
+    if (e.keyCode !== 27) return;
+    setNewAtivo(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!nomeAtivo) return alert('Adicione um nome');
-    if (valor <= 0) return alert('Adicione um valor Válido');
+    if (!nomeAtivo) return toast.error('Adicione um nome', { containerId: 'alerts' });
+    if (valor <= 0) return toast.error('Adicione um valor Válido', { containerId: 'alerts' });
     if (newAtivo) {
+      setNewAtivo(false);
+      setNomeAtivo('');
+      setTipo('Moradia');
+      setValor(0);
       setNewAtivo(false);
       return addPatrimonioRequest({
         nome: nomeAtivo,
@@ -41,6 +51,10 @@ const TableAtivos = ({
 
     if (!newAtivo) {
       setEdit('');
+      setNomeAtivo('');
+      setTipo('Moradia');
+      setValor(0);
+      setNewAtivo(false);
       return updatePatrimonioRequest({
         _id: edit,
         nome: nomeAtivo,
@@ -49,13 +63,16 @@ const TableAtivos = ({
         categoria: tipo,
       });
     }
+    setNomeAtivo('');
+    setTipo('Moradia');
+    setValor(0);
     setNewAtivo(false);
     return setEdit('');
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
         <div className="row">
           <div className="col-md-12">
             <div className="table-responsive">
@@ -128,21 +145,19 @@ const TableAtivos = ({
 
                           <td>
                             <span className="bmd-form-group">
-                              <div className="form-group has-feedback">
-                                <select
-                                  value={tipo}
-                                  onChange={e => setTipo(e.target.value)}
-                                  className="form-control"
-                                  data-style="select-with-transition"
-                                  data-size="7"
-                                  data-live-search="true"
-                                >
-                                  <option value="moradia">Moradia</option>
-                                  <option value="transporte">Transporte</option>
-                                  <option value="bens nao utilizados">Bens Não Utilizados</option>
-                                  <option value="outros bens">Outros Bens</option>
-                                </select>
-                              </div>
+                              <select
+                                value={tipo}
+                                onChange={e => setTipo(e.target.value)}
+                                className="form-control"
+                                data-style="select-with-transition"
+                                data-size="7"
+                                data-live-search="true"
+                              >
+                                <option value="moradia">Moradia</option>
+                                <option value="transporte">Transporte</option>
+                                <option value="bens nao utilizados">Bens Não Utilizados</option>
+                                <option value="outros bens">Outros Bens</option>
+                              </select>
                             </span>
                           </td>
 
@@ -190,21 +205,19 @@ const TableAtivos = ({
 
                       <td>
                         <span className="bmd-form-group">
-                          <div className="form-group has-feedback">
-                            <select
-                              value={tipo}
-                              onChange={e => setTipo(e.target.value)}
-                              className="form-control"
-                              data-style="select-with-transition"
-                              data-size="7"
-                              data-live-search="true"
-                            >
-                              <option value="moradia">Moradia</option>
-                              <option value="transporte">Transporte</option>
-                              <option value="bens nao utilizados">Bens Não Utilizados</option>
-                              <option value="outros bens">Outros Bens</option>
-                            </select>
-                          </div>
+                          <select
+                            value={tipo}
+                            onChange={e => setTipo(e.target.value)}
+                            className="form-control"
+                            data-style="select-with-transition"
+                            data-size="7"
+                            data-live-search="true"
+                          >
+                            <option value="moradia">Moradia</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="bens nao utilizados">Bens Não Utilizados</option>
+                            <option value="outros bens">Outros Bens</option>
+                          </select>
                         </span>
                       </td>
 

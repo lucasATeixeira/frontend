@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
@@ -86,7 +87,7 @@ const Two = ({
                       <thead>
                         <tr>
                           <th className="text-info">
-                            <strong>Quadrante</strong>
+                            <strong>Prioridade</strong>
                           </th>
                           <th className="text-info">
                             <strong>Gasto</strong>
@@ -169,7 +170,11 @@ const Two = ({
                                     {'  '}
                                     <button
                                       onClick={() => {
-                                        if (input !== '') return alert('Salve a última Edição');
+                                        if (input !== '') {
+                                          return toast.error('Salve a última Edição', {
+                                            containerId: 'alerts',
+                                          });
+                                        }
                                         setInput(l._id);
                                         return setInputValue(l.valorEnxugado);
                                       }}
@@ -197,7 +202,7 @@ const Two = ({
                 <div className="col-md-12">
                   <button
                     onClick={() => {
-                      if (input !== '') return alert('Salve A Ultima Edição');
+                      if (input !== '') return toast.error('Salve A Ultima Edição', { containerId: 'alerts' });
                       return submitSimulationRequest(currentSimulation);
                     }}
                     className="btn btn-round pull-right btn-info"

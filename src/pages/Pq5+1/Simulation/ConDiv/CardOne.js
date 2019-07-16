@@ -6,6 +6,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import CurrencyInput from 'react-currency-input';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
 
@@ -53,8 +54,8 @@ const CardOne = ({ simulacao, saveSimulation }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (parcelas <= 0) return alert('Parcelas deve ser maior que zero');
-    if (!instituicao) return alert('Coloque um Nome');
+    if (parcelas <= 0) return toast.error('Parcelas deve ser maior que zero', { containerId: 'alerts' });
+    if (!instituicao) return toast.error('Coloque um Nome', { containerId: 'alerts' });
     const id = Math.random();
     saveSimulation({
       ...currentSimulation,

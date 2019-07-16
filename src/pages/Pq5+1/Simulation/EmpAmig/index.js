@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import TopInfo from '../TopInfo';
 import CardOne from './CardOne';
@@ -11,7 +12,7 @@ import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao'
 const EmpAmig = ({ simulacao, submitSimulationRequest }) => {
   const { currentSimulation } = simulacao;
   const handleClick = () => {
-    if (!currentSimulation.patrimonios.length) return alert('Você deve inserir um Empréstimo');
+    if (!currentSimulation.patrimonios.length) return toast.error('Você deve inserir um Empréstimo', { containerId: 'alerts' });
     return submitSimulationRequest(currentSimulation);
   };
   return (

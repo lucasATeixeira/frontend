@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import { Creators as PatrimoniosActions } from '../../store/ducks/patrimonios';
 
 const TablePassivos = ({
@@ -29,19 +30,31 @@ const TablePassivos = ({
     removePatrimonioRequest(patrimonio);
   };
 
+  const handleKeyUp = (e) => {
+    if (e.keyCode !== 27) return;
+    setNewPassivo(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!nomePassivo) return alert('Inclua um nome');
-    if (!instituicao) return alert('Inclua um nome para Instituição');
-    if (pRestantes <= 0) return alert('Inclua um valor de parcelas restantes válido');
-    if (pmt <= 0) return alert('Inclua um valor de PMT válido');
-    if (taxa < 0) return alert('Inclua um valor da taxa válido');
-    if (aVista < 0) return alert('Inclua um valor à Vista válido');
+    if (!nomePassivo) return toast.error('Inclua um nome', { containerId: 'alerts' });
+    if (!instituicao) return toast.error('Inclua um nome para Instituição', { containerId: 'alerts' });
+    if (pRestantes <= 0) return toast.error('Inclua um valor de parcelas restantes válido', { containerId: 'alerts' });
+    if (pmt <= 0) return toast.error('Inclua um valor de PMT válido', { containerId: 'alerts' });
+    if (taxa < 0) return toast.error('Inclua um valor da taxa válido', { containerId: 'alerts' });
+    if (aVista < 0) return toast.error('Inclua um valor à Vista válido', { containerId: 'alerts' });
     const data = moment();
     const dataFinal = moment()
       .add(pRestantes, 'months')
       .format();
     if (newPassivo) {
+      setNewPassivo(false);
+      setNomePassivo('');
+      setInstituicao('');
+      setPRestantes(0);
+      setPmt(0);
+      setTaxa(0);
+      setAVista(0);
       setNewPassivo(false);
       return addPatrimonioRequest({
         nome: nomePassivo,
@@ -58,6 +71,13 @@ const TablePassivos = ({
 
     if (!newPassivo) {
       setEdit('');
+      setNomePassivo('');
+      setInstituicao('');
+      setPRestantes(0);
+      setPmt(0);
+      setTaxa(0);
+      setAVista(0);
+      setNewPassivo(false);
       return updatePatrimonioRequest({
         _id: edit,
         nome: nomePassivo,
@@ -70,13 +90,20 @@ const TablePassivos = ({
         aVista,
       });
     }
+
+    setNomePassivo('');
+    setInstituicao('');
+    setPRestantes(0);
+    setPmt(0);
+    setTaxa(0);
+    setAVista(0);
     setNewPassivo(false);
     return setEdit('');
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
         <div className="row">
           <div className="col-md-12">
             <div className="table-responsive">

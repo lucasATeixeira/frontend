@@ -10,13 +10,10 @@ const V5 = ({ v5 }) => {
   return (
     <BlankPage>
       <h3>
-        Acrescentar uma perspectiva de 5 anos{' '}
-        <button
-          onClick={() => setNewCard(true)}
-          type="button"
-          className="btn btn-link btn-just-icon"
-        >
-          <i className="material-icons">add_circle_outline</i>
+        <button onClick={() => setNewCard(true)} type="button" className="btn btn-success ">
+          <strong>
+            <i className="material-icons">add_circle_outline</i> Incluir Visão de 5 anos
+          </strong>
         </button>
       </h3>
       <br />

@@ -12,9 +12,9 @@ const Plano = ({ content }) => {
         estrategia = 'comprar um carro mais barato';
       }
       if (content.estrategia === 'assinatura') {
-        estrategia = 'fazer assinatura de um carro';
+        estrategia = 'fazer assinatura de um veículo';
       }
-      return `Vender o patrimônio ${content.patrimoniosRemovidos[0].nome}, remover ${
+      return `Vender o patrimônio "${content.patrimoniosRemovidos[0].nome}", remover ${
         content.itensRemovidos.length
       } gastos do Orçamento, ${estrategia} e quitar ${content.patrimoniosRemovidos.length
         - 1} dívida`;
@@ -28,7 +28,7 @@ const Plano = ({ content }) => {
       return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} com o ${content.patrimonios[0].instituicao} e quitar ${
+      })} com o(a) ${content.patrimonios[0].instituicao} e quitar ${
         content.patrimoniosRemovidos.length
       } dívida`;
     }

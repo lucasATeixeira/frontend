@@ -15,7 +15,7 @@ const A30d = ({ v1 }) => (
         ))}
       </div>
       <div className="col-md-8">
-        <h2>Ações e Crenças</h2>
+        <h2>Ações dos Próximos 30 Dias</h2>
         <div className="card">
           <div className="card-body">
             <Acoes />

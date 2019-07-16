@@ -5,32 +5,32 @@ const Orcamento = ({ content }) => {
   const [texto] = useState(() => {
     let orcamento = '';
     let pmt = '';
-    if (content.gastos === 0) orcamento = 'Não houve alteração nos gastos do orçamento';
+    if (content.gastos === 0) orcamento = 'Não houve alteração nos seus gastos';
     if (content.gastos < 0) {
-      orcamento = `Redução de ${(content.gastos * -1).toLocaleString('pt-br', {
+      orcamento = `Seus gastos reduziram em ${(content.gastos * -1).toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} de gastos no seu orçamento`;
+      })}`;
     }
     if (content.gastos > 0) {
-      orcamento = `Aumento de ${content.gastos.toLocaleString('pt-br', {
+      orcamento = `Seus gastos aumentaram em ${content.gastos.toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} de gastos no seu orçamento`;
+      })}`;
     }
 
-    if (content.pmt === 0) pmt = ' e o PMT permaneceu inalterado';
+    if (content.pmt === 0) pmt = ' e as parcelas das dívidas permaneceram intactas';
     if (content.pmt < 0) {
-      pmt = ` e houve uma redução de ${(content.pmt * -1).toLocaleString('pt-br', {
+      pmt = ` e as parcelas das dívidas reduziram em ${(content.pmt * -1).toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} no PMT`;
+      })}`;
     }
     if (content.pmt > 0) {
-      pmt = ` e houve um aumento de ${content.pmt.toLocaleString('pt-br', {
+      pmt = ` e as parcelas das dívidas aumentaram em ${content.pmt.toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} no PMT`;
+      })}`;
     }
     return orcamento + pmt;
   });

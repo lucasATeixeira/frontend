@@ -43,7 +43,7 @@ const Card = ({ content, removeV5Request }) => {
           </h4>
           <div className="card-description">{content.description}</div>
         </div>
-        <div className="card-footer">
+        {/* <div className="card-footer">
           <div className="stats">
             <p className="card-category">
               <i className="material-icons">calendar_today</i>
@@ -54,7 +54,7 @@ const Card = ({ content, removeV5Request }) => {
               <i className="material-icons">alarm</i>
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

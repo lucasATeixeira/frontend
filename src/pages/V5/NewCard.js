@@ -2,16 +2,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Form, Input, Textarea } from '@rocketseat/unform';
 import { Creators as V5Actions } from '../../store/ducks/v5';
 
 const NewCard = ({ addV5Request, setNewCard }) => {
+  const handleKeyUp = (e) => {
+    if (!e.keyCode) return;
+    setNewCard(false);
+  };
+
   const handleSubmit = (data) => {
     const { image, title, description } = data;
-    if (!image) return alert('Insira o campo url da imagem');
-    if (!title) return alert('Insira o campo do título');
-    if (!description) return alert('Insira uma descrição');
+    if (!image) return toast.error('Insira o campo url da imagem', { containerId: 'alerts' });
+    if (!title) return toast.error('Insira o campo do título', { containerId: 'alerts' });
+    if (!description) return toast.error('Insira uma descrição', { containerId: 'alerts' });
     addV5Request({ image_url: image, title, description });
     return setNewCard(false);
   };
@@ -35,6 +41,7 @@ const NewCard = ({ addV5Request, setNewCard }) => {
                       type="text"
                       placeholder="URL da imagem"
                       className="form-control"
+                      onKeyUp={handleKeyUp}
                     />
                   </div>
                 </div>
@@ -45,7 +52,13 @@ const NewCard = ({ addV5Request, setNewCard }) => {
               <a href="#p">
                 <div className="row">
                   <div className="col-md-8 ml-auto mr-auto">
-                    <Input name="title" type="text" placeholder="Título" className="form-control" />
+                    <Input
+                      name="title"
+                      type="text"
+                      placeholder="Título"
+                      className="form-control"
+                      onKeyUp={handleKeyUp}
+                    />
                   </div>
                 </div>
               </a>
@@ -57,6 +70,7 @@ const NewCard = ({ addV5Request, setNewCard }) => {
                     name="description"
                     className="form-control"
                     placeholder="Descrição..."
+                    onKeyUp={handleKeyUp}
                   />
                 </div>
                 <button
@@ -71,7 +85,7 @@ const NewCard = ({ addV5Request, setNewCard }) => {
               </div>
             </div>
           </div>
-          <div className="card-footer">
+          {/* <div className="card-footer">
             <div className="stats">
               <p className="card-category">
                 <i className="material-icons">calendar_today</i>
@@ -82,7 +96,7 @@ const NewCard = ({ addV5Request, setNewCard }) => {
                 <i className="material-icons">alarm</i>
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </Form>
     </div>

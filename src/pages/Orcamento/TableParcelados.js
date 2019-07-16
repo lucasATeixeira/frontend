@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import moment from 'moment';
 import { Creators as CategoriasActions } from '../../store/ducks/categorias';
+import scrollHook from '../../hooks/scrollHook'
 
-const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }) => {
+const Table = ({
+  color, categorias, lancamentoRequest, removeLancamentoRequest,
+}) => {
   const [newItem, setNewItem] = useState(false);
 
   const [pAtual, setPAtual] = useState(0);
@@ -16,18 +20,27 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
   const [categoria, setCategoria] = useState('Categoria');
   const [item, setItem] = useState('Item');
 
-  const handleDelete = l => {
-    if (!window.confirm('Tem certeza que deseja excluir este parcelamento?')) return
-    return removeLancamentoRequest(l)
-  }
+  const handleKeyUp = (e) => {
+    if (e.keyCode !== 27) return;
+    setNewItem(false);
+  };
+
+  const handleDelete = (l) => {
+    if (!window.confirm('Tem certeza que deseja excluir este parcelamento?')) return;
+    return removeLancamentoRequest(l);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!pAtual || !pFinal || !descricao || !valor) return alert('Preencha todos os Campos');
-    if (categoria === 'Categoria') return alert('Selecione uma Categoria');
-    if (item === 'Item') return alert('Selecione um Item');
-    if (Number(pAtual) > Number(pFinal)) return alert('Parcela Atual não pode ser maior que a Parcela Total');
-    if (Number(pAtual) <= 0 || Number(pFinal) <= 0) return alert('As parcelas não podem ser menor que zero');
+    if (!pAtual || !pFinal || !descricao || !valor) return toast.error('Preencha todos os Campos', { containerId: 'alerts' });
+    if (categoria === 'Categoria') return toast.error('Selecione uma Categoria', { containerId: 'alerts' });
+    if (item === 'Item') return toast.error('Selecione um Item', { containerId: 'alerts' });
+    if (Number(pAtual) > Number(pFinal)) {
+      return toast.error('Parcela Atual não pode ser maior que a Parcela Total', {
+        containerId: 'alerts',
+      });
+    }
+    if (Number(pAtual) <= 0 || Number(pFinal) <= 0) return toast.error('As parcelas não podem ser menor que zero', { containerId: 'alerts' });
 
     setPAtual(0);
     setPFinal(0);
@@ -35,13 +48,14 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
     setValor(0);
     setCategoria('Categoria');
     setItem('Item');
+    setNewItem(false)
 
     return lancamentoRequest({
       tipo: 'gasto',
       data: moment().subtract(pAtual - 1, 'month'),
       dataFinal: moment().add(pFinal - pAtual, 'month'),
       descricao,
-      valor: (valor * pFinal),
+      valor: valor * pFinal,
       formaPagamento: 'Parcelado',
       vezes: pFinal,
       idCategoria: categoria,
@@ -53,17 +67,17 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
     <div className="row">
       <div className="col-md-12">
         <div className="table-responsive">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
             <table className="table">
               <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Categoria</th>
-                  <th>Item</th>                  
+                  <th>Item</th>
                   <th>Parcela Atual</th>
                   <th>Total Parcelas</th>
-                  <th>Valor Parcela</th>
-                  <th>Valor Restante da Dívida</th>
+                  <th className="text-right">Valor Parcela</th>
+                  <th className="text-right">Valor Restante da Dívida</th>
                   <th className="text-right">Actions</th>
                 </tr>
               </thead>
@@ -73,7 +87,7 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
                   .map(c => c.itens.map(i => i.lancamentos
                     .filter(l => l.formaPagamento === 'Parcelado')
                     .map((l) => {
-                      const pAtualMap = l.vezes - (moment(l.dataFinal).diff(moment(categorias.start), 'month'));
+                      const pAtualMap = l.vezes - moment(l.dataFinal).diff(moment(categorias.start), 'month');
                       return (
                         <tr key={l._id}>
                           <td>{l.descricao}</td>
@@ -81,13 +95,13 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
                           <td>{i.nome}</td>
                           <td>{pAtualMap}</td>
                           <td>{l.vezes}</td>
-                          <td>
+                          <td className="text-right">
                             {l.mensal.toLocaleString('pt-br', {
                               style: 'currency',
                               currency: 'BRL',
                             })}
                           </td>
-                          <td>
+                          <td className="text-right">
                             {((l.vezes - pAtualMap + 1) * l.mensal).toLocaleString('pt-br', {
                               style: 'currency',
                               currency: 'BRL',
@@ -109,62 +123,80 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
                     })))}
 
                 {newItem && (
-                  <tr>
+                  <tr ref={scrollHook}>
                     <td>
                       <span className="bmd-form-group">
-                        <input value={descricao} onChange={e => setDescricao(e.target.value)} type="text" placeholder="Nome" className="form-control" />
+                        <input
+                          value={descricao}
+                          onChange={e => setDescricao(e.target.value)}
+                          type="text"
+                          placeholder="Nome"
+                          className="form-control"
+                        />
                       </span>
                     </td>
                     <td>
                       <span className="bmd-form-group">
-                        <div className="form-group has-feedback">
-                          <select
-                            className="form-control"
-                            data-style="select-with-transition"
-                            data-size="7"
-                            data-live-search="true"
-                            value={categoria}
-                            onChange={e => setCategoria(e.target.value)}
-                          >
-                            <option>Categoria</option>
-                            {categorias.categorias
-                              .filter(c => c.tipo === 'gasto')
-                              .map(c => (
-                                <option key={c._id} value={c._id}>{c.nome}</option>
-                              ))}
-                          </select>
-                        </div>
+                        <select
+                          className="form-control"
+                          data-style="select-with-transition"
+                          data-size="7"
+                          data-live-search="true"
+                          value={categoria}
+                          onChange={e => setCategoria(e.target.value)}
+                        >
+                          <option>Categoria</option>
+                          {categorias.categorias
+                            .filter(c => c.tipo === 'gasto')
+                            .map(c => (
+                              <option key={c._id} value={c._id}>
+                                {c.nome}
+                              </option>
+                            ))}
+                        </select>
                       </span>
                     </td>
                     <td>
                       <span className="bmd-form-group">
-                        <div className="form-group has-feedback">
-                          <select
-                            className="form-control"
-                            data-style="select-with-transition"
-                            data-size="7"
-                            data-live-search="true"
-                            value={item}
-                            onChange={e => setItem(e.target.value)}
-                          >
-                            <option>Item</option>
-                            {categorias.categorias
-                              .filter(c => c._id === categoria)
-                              .map(c => c.itens.map(i => (
-                                <option key={i._id} value={i._id}>{i.nome}</option>
-                              )))}
-                          </select>
-                        </div>
+                        <select
+                          className="form-control"
+                          data-style="select-with-transition"
+                          data-size="7"
+                          data-live-search="true"
+                          value={item}
+                          onChange={e => setItem(e.target.value)}
+                        >
+                          <option>Item</option>
+                          {categorias.categorias
+                            .filter(c => c._id === categoria)
+                            .map(c => c.itens.map(i => (
+                              <option key={i._id} value={i._id}>
+                                {i.nome}
+                              </option>
+                            )))}
+                        </select>
                       </span>
                     </td>
                     <td>
                       <span className="bmd-form-group">
-                        <input value={pAtual} onChange={e => setPAtual(e.target.value)} type="number" className="form-control" placeholder="Parcela Atual" />
+                        <input
+                          value={pAtual}
+                          onChange={e => setPAtual(e.target.value)}
+                          type="number"
+                          className="form-control"
+                          placeholder="Parcela Atual"
+                        />
                       </span>
                     </td>
                     <td>
                       <span className="bmd-form-group">
-                        <input type="number" value={pFinal} onChange={e => setPFinal(e.target.value)} className="form-control" placeholder="Total Parcelas" />
+                        <input
+                          type="number"
+                          value={pFinal}
+                          onChange={e => setPFinal(e.target.value)}
+                          className="form-control"
+                          placeholder="Total Parcelas"
+                        />
                       </span>
                     </td>
                     <td>
@@ -181,7 +213,12 @@ const Table = ({ color, categorias, lancamentoRequest, removeLancamentoRequest }
                       </span>
                     </td>
 
-                    <td>{(valor * (Number(pFinal) + 1 - Number(pAtual))).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
+                    <td>
+                      {(valor * (Number(pFinal) + 1 - Number(pAtual))).toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })}
+                    </td>
                     <td className="td-actions text-right">
                       <button
                         type="submit"

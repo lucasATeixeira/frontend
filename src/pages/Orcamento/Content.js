@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Form, Input, Select } from '@rocketseat/unform';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import { Creators as CategoriasActions } from '../../store/ducks/categorias';
+import scrollHook from '../../hooks/scrollHook';
 
 import Table from './Table';
 import Title from './Title';
@@ -16,17 +18,20 @@ const Component = ({
   const handleSubmit = (data) => {
     const { nome, classificacao } = data;
     const tipo = color === 'info' ? 'gasto' : 'recebimento';
-    if (!classificacao) return alert('Indique a classificação da categoria');
+    if (color === 'info' && !classificacao) return toast.error('Indique a classificação da categoria', { containerId: 'alerts' });
     addCategoriaRequest({ nome, tipo, classificacao });
     return setAddCategoria(false);
   };
+
   return (
     <>
       <div className="row">
         <div className="col-md-12">
           <button
             type="button"
-            onClick={() => setAddCategoria(true)}
+            onClick={() => {
+              setAddCategoria(true);
+            }}
             className={`btn btn-round btn-sm pull-right btn-${color}`}
           >
             <strong>Criar uma nova categoria</strong>
@@ -46,13 +51,13 @@ const Component = ({
       ))}
 
       {addCategoria && (
-        <div className="row">
+        <div ref={scrollHook} className="row">
           <div className="col-md-12">
             <TableCard options={false} color={color}>
               <br />
               <Form onSubmit={handleSubmit}>
                 <div className="row">
-                  <div className="col-md-7">
+                  <div className="col-md-12">
                     <span className="bmd-form-group">
                       <Input
                         name="nome"
@@ -62,18 +67,21 @@ const Component = ({
                       />
                     </span>
                   </div>
-                  <div className="col-md-5">
-                    <span className="bmd-form-group">
-                      <Select
-                        className="form-control"
-                        name="classificacao"
-                        options={[
-                          { id: 'moradia', title: 'Moradia' },
-                          { id: 'transporte', title: 'Transporte' },
-                          { id: 'outros', title: 'Outros' },
-                        ]}
-                      />
-                    </span>
+                  <div className="col-md-12">
+                    {color === 'info' && (
+                      <span className="bmd-form-group">
+                        <Select
+                          className="form-control"
+                          name="classificacao"
+                          placeholder="Classificação da Categoria"
+                          options={[
+                            { id: 'moradia', title: 'Moradia' },
+                            { id: 'transporte', title: 'Transporte' },
+                            { id: 'outros', title: 'Outros' },
+                          ]}
+                        />
+                      </span>
+                    )}
                   </div>
                 </div>
                 <br />

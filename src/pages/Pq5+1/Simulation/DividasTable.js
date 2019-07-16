@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import React from 'react';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -18,8 +19,9 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     }
     if (!checked) {
       if (currentSimulation.saldo < p.total) {
-        alert(
+        toast.error(
           'Você não tem saldo suficente para quitar esta dívida, mas fique tranquilo, salve esta estratégia para que o saldo fique salvo!',
+          { containerId: 'alerts' },
         );
         return;
       }

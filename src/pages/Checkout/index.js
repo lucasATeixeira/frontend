@@ -46,10 +46,10 @@ export default function Checkout() {
       10,
       14,
     )}`;
-    if (isNaN(telefoneString)) return toast.error('Telefone Inválido');
+    if (isNaN(telefoneString)) return toast.error('Telefone Inválido', { containerId: 'checkout' });
     if (cpfString.length !== 11) return toast.error('CPF Inválido');
-    if (!nome || !cpf || !telefone || !nascimento || !email || !senha) return toast.error('Preencha todos os campos');
-    if (senha !== repeatSenha) return toast.error('Senhas devem ser iguais');
+    if (!nome || !cpf || !telefone || !nascimento || !email || !senha) return toast.error('Preencha todos os campos', { containerId: 'checkout' });
+    if (senha !== repeatSenha) return toast.error('Senhas devem ser iguais', { containerId: 'checkout' });
 
     const checkout = new window.PagarMeCheckout.Checkout({
       encryption_key: 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
@@ -128,7 +128,7 @@ export default function Checkout() {
   }
   return (
     <>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer enableMultiContainer containerId="checkout" autoClose={2000} />
       <Upper />
       <div className="wrapper wrapper-full-page">
         <div

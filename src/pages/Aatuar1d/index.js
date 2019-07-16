@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import DatePicker from 'react-datepicker';
@@ -31,7 +32,7 @@ const Aatuar30d = ({
 
   const handleNewSubmit = (e) => {
     e.preventDefault();
-    if (!acao) return alert('Adicione pelo menos um nome a ação');
+    if (!acao) return toast.error('Adicione pelo menos um nome a ação', { containerId: 'alerts' });
     addA30dRequest({
       acao,
       onde,

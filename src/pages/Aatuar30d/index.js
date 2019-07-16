@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -31,7 +32,7 @@ const Aatuar30d = ({
 
   const handleNewSubmit = (e) => {
     e.preventDefault();
-    if (!acao) return alert('Adicione pelo menos um nome a ação');
+    if (!acao) return toast.error('Adicione pelo menos um nome a ação', { containerId: 'alerts' });
     addA30dRequest({
       acao,
       onde,

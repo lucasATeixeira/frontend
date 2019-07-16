@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 import { Creators as DataActions } from '../../store/ducks/data';
 import Wrapper from './Wrapper';
 import SideBar from './SideBar';
@@ -21,6 +22,7 @@ const BlankPage = ({ children, fetchDataRequest, data }) => {
   return (
     <>
       <Wrapper>
+        <ToastContainer autoClose={2000} enableMultiContainer containerId="alerts" />
         <SideBar setPage={setPage} />
         <MainPanel>
           <TopNavBar page={page} />

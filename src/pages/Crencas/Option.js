@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import { Creators as CrencasActions } from '../../store/ducks/crencas';
 
 const Option = ({
@@ -10,7 +11,7 @@ const Option = ({
 }) => {
   const question = crencas.questions[crencas.current];
   const handleChange = () => {
-    if (!name) return alert('Preencha um Nome antes de continuar!');
+    if (!name) return toast.error('Preencha um Nome antes de continuar!', { containerId: 'alerts' });
     if (crencas.current >= crencas.total - 1) {
       const ambiente = (crencas.ambiente
           / (crencas.total * 4)

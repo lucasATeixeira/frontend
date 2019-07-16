@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { Creators as A30dActions } from '../../store/ducks/a30d';
 
 const Acoes = ({
@@ -17,18 +18,24 @@ const Acoes = ({
     removeA30dRequest(body);
   };
 
+  const handleKeyUp = (e) => {
+    if (e.keyCode !== 27) return;
+    setNewLine(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!acao) alert('Insira uma Ação');
-    if (crenca === 'Seleciona uma Crença') return alert('Seleciona uma Crença');
+    if (!acao) toast.error('Insira uma Ação', { containerId: 'alerts' });
+    if (crenca === 'Seleciona uma Crença') return toast.error('Seleciona uma Crença', { containerId: 'alerts' });
     addA30dRequest({ acao, crenca });
     setCrenca('Seleciona uma Crença');
+    setNewLine(false);
     return setAcao('');
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
         <div className="row">
           <div className="col-md-12">
             <div className="table-responsive table-sales">
@@ -73,9 +80,11 @@ const Acoes = ({
                             data-live-search="true"
                             name="estrategia"
                           >
-                            {crencasList.map(a => (
-                              <option key={a._id}>{a.ress}</option>
-                            ))}
+                            <option>Qual será sua crença fortalecedora?</option>
+                            {crencasList.map((a) => {
+                              if (!a.ress) return null;
+                              return <option key={a._id}>{a.ress}</option>;
+                            })}
                           </select>
                         </span>
                       </td>
@@ -92,10 +101,10 @@ const Acoes = ({
               <button
                 onClick={() => setNewLine(true)}
                 type="button"
-                className="btn btn-success btn-sm btn-link"
+                className="btn btn-success btn-sm"
               >
                 <strong>
-                  <i className="material-icons">add_circle_outline</i> Nova Ação
+                  <i className="material-icons">add_circle_outline</i> Adicionar nova Ação
                 </strong>
               </button>
             ) : (

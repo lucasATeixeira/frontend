@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 import BlankPage from '../../components/BlankPage';
 import { Creators as A30dActions } from '../../store/ducks/a30d';
@@ -31,7 +32,7 @@ const Aatuar30d = ({
 
   const handleNewSubmit = (e) => {
     e.preventDefault();
-    if (!acao) return alert('Adicione pelo menos um nome a ação');
+    if (!acao) return toast.error('Adicione pelo menos um nome a ação', { containerId: 'alerts' });
     addA30dRequest({
       acao,
       onde,
@@ -165,7 +166,7 @@ const Aatuar30d = ({
                         <button
                           onClick={() => {
                             setInput('');
-                            setNewCard(false)
+                            setNewCard(false);
                             setId('');
                           }}
                           type="button"

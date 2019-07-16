@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -15,7 +16,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
   const [orcado, setOrcado] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
   const handleSubmit = (e) => {
-    if (recorrencia <= 0) return alert('Recorrência não pode ser igual ou menor que zero');
+    if (recorrencia <= 0) return toast.error('Recorrência não pode ser igual ou menor que zero', { containerId: 'alerts' });
     e.preventDefault();
     const id = Math.random();
     saveSimulation({

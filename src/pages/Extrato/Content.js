@@ -38,29 +38,31 @@ const Content = ({
   }, [l]);
 
   useEffect(() => {
-    if (success) toast.success('Edição Realizado', { containerId: 'A' });
-    if (err) toast.error('Ocorreu um erro com a edição', { containerId: 'A' });
+    if (success) toast.success('Edição Realizado', { containerId: 'extrato' });
+    if (err) toast.error('Ocorreu um erro com a edição', { containerId: 'extrato' });
   }, [success, err]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (idCategoria === 'CATEGORIA') {
-      return toast.error('Selecione uma Categoria');
+      return toast.error('Selecione uma Categoria', { containerId: 'extrato' });
     }
 
     if (idItem === 'ITEM') {
-      return toast.error('Selecione um Item');
+      return toast.error('Selecione um Item', { containerId: 'extrato' });
     }
 
     if (!descricao) {
-      return toast.error('Coloque uma descrição');
+      return toast.error('Coloque uma descrição', { containerId: 'extrato' });
     }
     if (valor <= 0) {
-      return toast.error('Coloque um valor do Lançamento');
+      return toast.error('Coloque um valor do Lançamento', { containerId: 'extrato' });
     }
     if (vezes <= 0) {
-      return toast.error('A quantidade de vezes deve ser superior a zero');
+      return toast.error('A quantidade de vezes deve ser superior a zero', {
+        containerId: 'extrato',
+      });
     }
 
     const dataFinal = moment(dataLancamento)
@@ -218,7 +220,7 @@ const Content = ({
             </button>
           </div>
         </div>
-        <ToastContainer autoClose={2000} containerId="A" />
+        <ToastContainer enableMultiContainer autoClose={2000} containerId="extrato" />
       </form>
     </>
   );

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactTable from 'react-table';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import BlankPage from '../../components/BlankPage';
 import HeaderIcon from './HeaderIcon';
 import { Creators as CategoriasActions } from '../../store/ducks/categorias';
@@ -10,7 +11,7 @@ import Modal from './Modal';
 import './style.css';
 
 const Extrato = ({ categorias, removeLancamentoRequest }) => {
-  const handleEdit = () => alert('Editando');
+  const handleEdit = () => toast.success('Editando', { containerId: 'alerts' });
   const [active, setActive] = useState('gasto');
   const [lancamentosGastos, setLancamentosGastos] = useState([]);
   const [lancamentosRecebimentos, setLancamentosRecebimentos] = useState([]);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import TopInfo from '../TopInfo';
 import DividasTable from '../DividasTable';
@@ -10,7 +11,7 @@ import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao'
 const ConDiv = ({ simulacao, submitSimulationRequest }) => {
   const { currentSimulation } = simulacao;
   const handleClick = () => {
-    if (!currentSimulation.patrimonios.length) return alert('Adicione uma consolidação');
+    if (!currentSimulation.patrimonios.length) return toast.error('Adicione uma consolidação', { containerId: 'alerts' });
     return submitSimulationRequest(currentSimulation);
   };
   return (
