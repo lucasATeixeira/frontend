@@ -42,14 +42,14 @@ const EnxGas = ({ orcamento }) => {
       listData.map((l) => {
         if (l._id !== id) return l;
         let quadrante = 0;
-        if (!e.target.checked && l.substituivelValue && !mediaMenor) quadrante = 1;
-        if (!e.target.checked && l.substituivelValue && mediaMenor) quadrante = 2;
-        if (!e.target.checked && !l.substituivelValue && !mediaMenor) quadrante = 3;
-        if (e.target.checked && l.substituivelValue && !mediaMenor) quadrante = 4;
-        if (e.target.checked && l.substituivelValue && mediaMenor) quadrante = 5;
-        if (!e.target.checked && !l.substituivelValue && mediaMenor) quadrante = 6;
-        if (e.target.checked && !l.substituivelValue && !mediaMenor) quadrante = 7;
-        if (e.target.checked && !l.substituivelValue && mediaMenor) quadrante = 8;
+        if (!e.target.checked && !l.substituivelValue && !mediaMenor) quadrante = 1; // sem
+        if (!e.target.checked && !l.substituivelValue && mediaMenor) quadrante = 2; // sem
+        if (!e.target.checked && l.substituivelValue && !mediaMenor) quadrante = 3;
+        if (e.target.checked && !l.substituivelValue && !mediaMenor) quadrante = 4; // sem
+        if (e.target.checked && !l.substituivelValue && mediaMenor) quadrante = 5; // sem
+        if (!e.target.checked && l.substituivelValue && mediaMenor) quadrante = 6;
+        if (e.target.checked && l.substituivelValue && !mediaMenor) quadrante = 7;
+        if (e.target.checked && l.substituivelValue && mediaMenor) quadrante = 8;
         return {
           ...l,
           prioridadeValue: e.target.checked,
@@ -63,14 +63,14 @@ const EnxGas = ({ orcamento }) => {
       listData.map((l) => {
         if (l._id !== id) return l;
         let quadrante = 0;
-        if (!l.prioridadeValue && e.target.checked && !mediaMenor) quadrante = 1;
-        if (!l.prioridadeValue && e.target.checked && mediaMenor) quadrante = 2;
-        if (!l.prioridadeValue && !e.target.checked && !mediaMenor) quadrante = 3;
-        if (l.prioridadeValue && e.target.checked && !mediaMenor) quadrante = 4;
-        if (l.prioridadeValue && e.target.checked && mediaMenor) quadrante = 5;
-        if (!l.prioridadeValue && !e.target.checked && mediaMenor) quadrante = 6;
-        if (l.prioridadeValue && !e.target.checked && !mediaMenor) quadrante = 7;
-        if (l.prioridadeValue && !e.target.checked && mediaMenor) quadrante = 8;
+        if (!l.prioridadeValue && !e.target.checked && !mediaMenor) quadrante = 1; // sem
+        if (!l.prioridadeValue && !e.target.checked && mediaMenor) quadrante = 2; // sem
+        if (!l.prioridadeValue && e.target.checked && !mediaMenor) quadrante = 3;
+        if (l.prioridadeValue && !e.target.checked && !mediaMenor) quadrante = 4; // sem
+        if (l.prioridadeValue && !e.target.checked && mediaMenor) quadrante = 5; // sem
+        if (!l.prioridadeValue && e.target.checked && mediaMenor) quadrante = 6;
+        if (l.prioridadeValue && e.target.checked && !mediaMenor) quadrante = 7;
+        if (l.prioridadeValue && e.target.checked && mediaMenor) quadrante = 8;
         return {
           ...l,
           substituivelValue: e.target.checked,

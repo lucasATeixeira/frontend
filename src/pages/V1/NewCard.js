@@ -5,11 +5,12 @@ import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { Form, Input, Textarea } from '@rocketseat/unform';
+import ReactTooltip from 'react-tooltip';
 import { Creators as V1Actions } from '../../store/ducks/v1';
 
 const NewCard = ({ addV1Request, setNewCard }) => {
   const handleKeyUp = (e) => {
-    if (!e.keyCode) return;
+    if (e.keyCode !== 27) return;
     setNewCard(false);
   };
   const handleSubmit = (data) => {
@@ -22,8 +23,9 @@ const NewCard = ({ addV1Request, setNewCard }) => {
   };
 
   return (
-    <div className="col-md-4">
+    <div className="col-md-6">
       <Form onSubmit={handleSubmit}>
+        <ReactTooltip type="info" />
         <div className="card card-product">
           <div className="card-header card-header-image">
             <a href="#p">
@@ -41,6 +43,11 @@ const NewCard = ({ addV1Request, setNewCard }) => {
                       placeholder="URL da imagem"
                       className="form-control"
                       onKeyUp={handleKeyUp}
+                    />
+                    <i
+                      style={{ position: 'absolute', right: '0', top: '0' }}
+                      className="fa fa-question"
+                      data-tip="Cole aqui o endereço da imagem que você pesquisou no google"
                     />
                   </div>
                 </div>

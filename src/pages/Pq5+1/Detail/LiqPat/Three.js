@@ -12,6 +12,9 @@ const Three = ({ content }) => {
     if (content.estrategia === 'assinatura') {
       return 'Fazer assinatura de um carro';
     }
+    if (content.estrategia === 'outra moradia') {
+      return 'Comprar um outro imóvel';
+    }
     return '';
   });
   return (
@@ -20,7 +23,7 @@ const Three = ({ content }) => {
         <div className="card-header card-header-text card-header-grafit">
           <div className="card-text">
             <h4 className="card-title">
-              <strong>{plano}</strong>
+              <strong>Plano: {plano}</strong>
             </h4>
           </div>
         </div>

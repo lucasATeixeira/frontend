@@ -53,7 +53,7 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
         <div className="card-header card-header-text card-header-success">
           <div className="card-text">
             <h4 className="card-title">
-              <strong>Patrimônios Ativos</strong>
+              <strong>Escolha qual patrimônio você vai vender</strong>
             </h4>
           </div>
         </div>
@@ -163,11 +163,9 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                             </span>
                           </td>
                           <td className="text-center">
-                            <button
-                              type="submit"
-                              className="btn btn-success btn-link btn-just-icon btn-sm"
-                            >
+                            <button type="submit" className="btn btn-success btn-sm">
                               <i className="material-icons">add_circle_outline</i>
+                              <strong>Adicionar</strong>
                             </button>
                           </td>
                         </tr>

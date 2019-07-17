@@ -8135,11 +8135,6 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-pagarme@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/pagarme/-/pagarme-4.4.0.tgz#9749cddca1e8c7e13802a465c13b8091a451460d"
-  integrity sha512-wDKacbIEMFAHFZmxOF0MTGim4MZddIrj11FNkzyt9X0FTI/KrvHNYOemtQkg25K2xRPayetuiWKMoNPavYlDgA==
-
 pako@~0.2.0:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/pako/-/pako-0.2.9.tgz#f3f7522f4ef782348da8161bad9ecfd51bf83a75"
@@ -9583,6 +9578,14 @@ react-toastify@^5.1.0:
     classnames "^2.2.6"
     prop-types "^15.7.2"
     react-transition-group "^2.6.1"
+
+react-tooltip@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.10.0.tgz#268b5ef519fd8a1369288d1f086f42c90d5da7ef"
+  integrity sha512-GGdxJvM1zSFztkTP7gCQbLTstWr1OOoMpJ5WZUGhimj0nhRY+MPz+92MpEnKmj0cftJ9Pd/M6FfSl0sfzmZWkg==
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
 
 react-transition-group@^2.6.1:
   version "2.9.0"

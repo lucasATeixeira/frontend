@@ -120,12 +120,18 @@ export function* updateItemRequest(action) {
 
     local.categorias.gastosOrcados += data.tipo === 'gasto' ? body.mensal - data.mensal : 0;
     local.categorias.recebimentosOrcados
-      += data.tipo === 'recebimento' ? body.mensal - data.mensal : 0;
+      += data.tipo === 'recebimento'
+        ? (body.classificacao === 'Eventual' ? 0 : body.mensal)
+          - (data.classificacao === 'Eventual' ? 0 : data.mensal)
+        : 0;
     local.categorias.categorias = local.categorias.categorias.map((c) => {
       if (c._id !== data.categoria) return c;
       return {
         ...c,
-        orcado: c.orcado - data.mensal + body.mensal,
+        orcado:
+          c.orcado
+          - (data.classificacao === 'Eventual' ? 0 : data.mensal)
+          + (body.classificacao === 'Eventual' ? 0 : body.mensal),
         itens: c.itens.map((i) => {
           if (i._id !== data._id) return i;
           return {
@@ -317,7 +323,11 @@ export function* removeItemRequest(action) {
         - (action.payload.tipo === 'gasto' ? action.payload.realizadoParcelado : 0),
       recebimentosOrcados:
         local.categorias.recebimentosOrcados
-        - (action.payload.tipo === 'recebimento' ? action.payload.mensal : 0),
+        - (action.payload.tipo === 'recebimento'
+          ? action.payload.classificacao === 'Eventual'
+            ? 0
+            : action.payload.mensal
+          : 0),
       recebimentosRealizados:
         local.categorias.recebimentosRealizados
         - (action.payload.tipo === 'recebimento' ? action.payload.realizado : 0),
@@ -328,7 +338,13 @@ export function* removeItemRequest(action) {
         if (action.payload.categoria !== c._id) return c;
         return {
           ...c,
-          orcado: c.orcado - action.payload.mensal,
+          orcado:
+            c.orcado
+            - (action.payload.tipo === 'recebimento'
+              ? action.payload.classificacao === 'Eventual'
+                ? 0
+                : action.payload.mensal
+              : action.payload.mensal),
           realizado: c.realizado - action.payload.realizado,
           realizadoParcelado: c.realizadoParcelado - action.payload.realizadoParcelado,
           itens: c.itens.filter(i => i._id !== action.payload.item),
@@ -355,13 +371,20 @@ export function* addItemRequest(action) {
       ...local.categorias,
       gastosOrcados: local.categorias.gastosOrcados + (data.tipo === 'gasto' ? data.mensal : 0),
       recebimentosOrcados:
-        local.categorias.recebimentosOrcados + (data.tipo === 'recebimento' ? data.mensal : 0),
+        local.categorias.recebimentosOrcados
+        + (data.tipo === 'recebimento' ? (data.classificacao === 'Eventual' ? 0 : data.mensal) : 0),
       categorias: local.categorias.categorias.map((c) => {
         if (c._id !== data.categoria) return c;
         return {
           ...c,
           itens: [...c.itens, data],
-          orcado: c.orcado + data.mensal,
+          orcado:
+            c.orcado
+            + (data.tipo === 'recebimento'
+              ? data.classificacao === 'Eventual'
+                ? 0
+                : data.mensal
+              : data.mensal),
         };
       }),
     };

@@ -27,7 +27,7 @@ const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {
         <div className="card-header card-header-text card-header-info">
           <div className="card-text">
             <h4 className="card-title">
-              <strong>Orcamento</strong>
+              <strong>Com a venda, quais destes gastos vão acabar</strong>
             </h4>
           </div>
         </div>

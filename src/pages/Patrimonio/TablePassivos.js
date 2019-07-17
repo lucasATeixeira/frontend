@@ -116,7 +116,7 @@ const TablePassivos = ({
                     <th className="text-danger">
                       <strong>Instituição</strong>
                     </th>
-                    <th className="text-danger">
+                    <th className="text-danger text-right">
                       <strong>PMT</strong>
                     </th>
                     <th className="text-danger">
@@ -125,10 +125,10 @@ const TablePassivos = ({
                     <th className="text-danger">
                       <strong>Taxa</strong>
                     </th>
-                    <th className="text-danger">
+                    <th className="text-danger text-right">
                       <strong>Saldo À Vista</strong>
                     </th>
-                    <th className="text-danger">
+                    <th className="text-danger text-right">
                       <strong>Saldo Total</strong>
                     </th>
                     <th className="text-danger">
@@ -146,18 +146,18 @@ const TablePassivos = ({
                         <>
                           <td>{p.nome}</td>
                           <td>{p.instituicao}</td>
-                          <td>
+                          <td className="text-right">
                             {p.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                           </td>
                           <td>{p.parcelas}</td>
                           <td>{p.taxa}%</td>
-                          <td>
+                          <td className="text-right">
                             {p.aVista.toLocaleString('pt-br', {
                               style: 'currency',
                               currency: 'BRL',
                             })}
                           </td>
-                          <td>
+                          <td className="text-right">
                             {p.total.toLocaleString('pt-br', {
                               style: 'currency',
                               currency: 'BRL',
@@ -278,11 +278,9 @@ const TablePassivos = ({
                           </td>
                           <td className="text-center">
                             <div>
-                              <button
-                                type="submit"
-                                className="btn btn-success btn-link btn-just-icon btn-sm"
-                              >
+                              <button type="submit" className="btn btn-success btn-sm">
                                 <i className="material-icons">add_circle_outline</i>
+                                <strong>Adicionar</strong>
                               </button>
                             </div>
                           </td>
@@ -378,11 +376,9 @@ const TablePassivos = ({
                         %
                       </td>
                       <td className="text-center">
-                        <button
-                          type="submit"
-                          className="btn btn-success btn-link btn-just-icon btn-sm"
-                        >
+                        <button type="submit" className="btn btn-success btn-sm">
                           <i className="material-icons">add_circle_outline</i>
+                          <strong>Adicionar</strong>
                         </button>
                       </td>
                     </tr>

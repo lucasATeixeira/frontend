@@ -7,7 +7,13 @@ const Four = ({ content }) => (
       <div className="card-header card-header-text card-header-danger">
         <div className="card-text">
           <h4 className="card-title">
-            <strong>Dívidas Quitadas</strong>
+            <strong>
+              Total de dívidas Quitadas:{' '}
+              {content.patrimoniosRemovidos
+                .filter(p => p.tipo === 'passivo')
+                .reduce((total, next) => total + next.total, 0)
+                .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+            </strong>
           </h4>
         </div>
       </div>
@@ -23,9 +29,6 @@ const Four = ({ content }) => (
                     </th>
                     <th className="text-danger">
                       <strong>PMT</strong>
-                    </th>
-                    <th className="text-danger">
-                      <strong>P. Restantes</strong>
                     </th>
                     <th className="text-danger">
                       <strong>Taxa</strong>
@@ -44,7 +47,6 @@ const Four = ({ content }) => (
                         <td>
                           {p.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                         </td>
-                        <td>{p.parcela}</td>
                         <td>{p.taxa}%</td>
                         <td>
                           {p.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}

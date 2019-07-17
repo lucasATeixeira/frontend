@@ -8,35 +8,40 @@ import CurrencyInput from 'react-currency-input';
 import moment from 'moment';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
 
-
-const CardOne = ({ simulacao, categorias, saveSimulation }) => {  
+const CardOne = ({ simulacao, categorias, saveSimulation }) => {
   const { currentSimulation } = simulacao;
   const [newRecebimento, setNewRecebimento] = useState(false);
   const [nome, setNome] = useState('');
   const [orcado, setOrcado] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
   const handleSubmit = (e) => {
-    if (recorrencia <= 0) return toast.error('Recorrência não pode ser igual ou menor que zero', { containerId: 'alerts' });
+    if (recorrencia <= 0) {
+      return toast.error('Recorrência não pode ser igual ou menor que zero', {
+        containerId: 'alerts',
+      });
+    }
     e.preventDefault();
     const id = Math.random();
     saveSimulation({
       ...currentSimulation,
       itensRemovidos: [],
-      patrimonios: [{
-        _id: id,
-        nome,
-        tipo: 'passivo',
-        classificacao: 'financeiro',
-        instituicao: 'recebimentos',
-        pmt: 0,
-        carencia: 0,
-        necessario: orcado,
-        parcelas: 1,
-        data: moment(),
-        dataFinal: moment(),
-        taxa: 0,
-        total: 0,
-      }],
+      patrimonios: [
+        {
+          _id: id,
+          nome,
+          tipo: 'passivo',
+          classificacao: 'financeiro',
+          instituicao: 'recebimentos',
+          pmt: 0,
+          carencia: 0,
+          necessario: orcado,
+          parcelas: 1,
+          data: moment(),
+          dataFinal: moment(),
+          taxa: 0,
+          total: 0,
+        },
+      ],
       patrimoniosRemovidos: [],
       itens: [
         {
@@ -65,21 +70,23 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
       ...simulacao.currentSimulation,
       itensRemovidos: type === 'removidos' ? [i] : [],
       itens: type === 'add' ? [i] : [],
-      patrimonios: [{
-        _id: i._id,
-        nome: i.nome,
-        tipo: 'passivo',
-        classificacao: 'financeiro',
-        instituicao: 'recebimentos',
-        pmt: 0,
-        carencia: 0,
-        necessario: i.orcado,
-        parcelas: 1,
-        data: moment(),
-        dataFinal: moment(),
-        taxa: 0,
-        total: 0,
-      }],
+      patrimonios: [
+        {
+          _id: i._id,
+          nome: i.nome,
+          tipo: 'passivo',
+          classificacao: 'financeiro',
+          instituicao: 'recebimentos',
+          pmt: 0,
+          carencia: 0,
+          necessario: i.orcado,
+          parcelas: 1,
+          data: moment(),
+          dataFinal: moment(),
+          taxa: 0,
+          total: 0,
+        },
+      ],
       checked: i,
       patrimoniosRemovidos: [],
       saldo: simulacao.saldo + i.orcado,
@@ -211,11 +218,9 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
                           </span>
                         </td>
                         <td className="text-center">
-                          <button
-                            type="submit"
-                            className="btn btn-success btn-link btn-just-icon btn-sm"
-                          >
+                          <button type="submit" className="btn btn-success btn-sm">
                             <i className="material-icons">add_circle_outline</i>
+                            <strong>Adicionar</strong>
                           </button>
                         </td>
                       </tr>

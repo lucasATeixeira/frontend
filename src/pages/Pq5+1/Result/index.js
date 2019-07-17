@@ -13,12 +13,9 @@ const Result = ({
   <>
     <div className="row">
       <div className="col-md-12">
-        <button
-          onClick={() => endResult()}
-          className="btn btn-grafiti btn-link btn-just-icon btn-sm"
-          type="button"
-        >
+        <button onClick={() => endResult()} className="btn btn-success" type="button">
           <i className="fa fa-arrow-left" />
+          <strong> Voltar</strong>
         </button>
       </div>
     </div>

@@ -28,8 +28,7 @@ const Lancamento = () => {
                             href="/painel"
                             role="tablist"
                           >
-                            <i className="material-icons">attach_money</i>
-                            {' '}
+                            <i className="material-icons">attach_money</i>{' '}
                             <strong>Recebimento</strong>
                           </a>
                         </li>
@@ -41,9 +40,7 @@ const Lancamento = () => {
                             href="/painel"
                             role="tablist"
                           >
-                            <i className="material-icons">shopping_cart</i>
-                            {' '}
-                            <strong>Gasto</strong>
+                            <i className="material-icons">shopping_cart</i> <strong>Gasto</strong>
                           </a>
                         </li>
                       </ul>

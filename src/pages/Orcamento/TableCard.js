@@ -13,6 +13,11 @@ const TableCard = ({
   categoria,
   removeCategoriaRequest,
 }) => {
+  const { classificacao } = categoria;
+  let icon = materialIcon;
+  if (classificacao === 'moradia') icon = 'home';
+  if (classificacao === 'transporte') icon = 'directions_car';
+
   const handleDelete = () => {
     if (
       !window.confirm(
@@ -32,7 +37,7 @@ const TableCard = ({
       <div className="card">
         <div className={`card-header card-header-icon card-header-${color}`}>
           <div className="card-icon">
-            <i className="material-icons">{materialIcon}</i>
+            <i className="material-icons">{icon}</i>
           </div>
 
           {options && (

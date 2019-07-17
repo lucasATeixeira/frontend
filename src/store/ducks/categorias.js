@@ -345,7 +345,15 @@ export const Creators = {
     payload: { categoria },
   }),
 
-  removeItemRequest: (item, mensal, realizado, tipo, categoria, realizadoParcelado) => ({
+  removeItemRequest: (
+    item,
+    mensal,
+    realizado,
+    tipo,
+    categoria,
+    realizadoParcelado,
+    classificacao,
+  ) => ({
     type: Types.REMOVE_ITEM_REQUEST,
     payload: {
       item,
@@ -354,6 +362,7 @@ export const Creators = {
       tipo,
       categoria,
       realizadoParcelado,
+      classificacao,
     },
   }),
 

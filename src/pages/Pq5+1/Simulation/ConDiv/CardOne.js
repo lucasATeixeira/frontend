@@ -110,7 +110,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                         <strong>Instituição</strong>
                       </th>
                       <th className="text-success">
-                        <strong>Necessário</strong>
+                        <strong>Valor do Empréstimo</strong>
                       </th>
                       <th className="text-success">
                         <strong>Parcelas</strong>
@@ -257,11 +257,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           })}
                         </td>
                         <td className="text-center">
-                          <button
-                            type="submit"
-                            className="btn btn-success btn-link btn-just-icon btn-sm"
-                          >
+                          <button type="submit" className="btn btn-success btn-sm">
                             <i className="material-icons">add_circle_outline</i>
+                            <strong>Adicionar</strong>
                           </button>
                         </td>
                       </tr>

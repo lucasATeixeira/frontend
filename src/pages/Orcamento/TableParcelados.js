@@ -220,12 +220,10 @@ const Table = ({
                       })}
                     </td>
                     <td className="td-actions text-right">
-                      <button
-                        type="submit"
-                        className="btn btn-success btn-link btn-just-icon btn-sm"
-                      >
-                        <i className="material-icons">add_circle_outline</i>
-                      </button>
+                    <button type="submit" className="btn btn-success btn-sm">
+                            <i className="material-icons">add_circle_outline</i>
+                            <strong>Adicionar</strong>
+                          </button>  
                     </td>
                   </tr>
                 )}

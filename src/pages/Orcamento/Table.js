@@ -24,11 +24,19 @@ const Table = ({
   const [classificacao, setClassificacao] = useState('Flexível');
   const [edit, setEdit] = useState('');
 
-  const handleDelete = (item, mensal, realizado, tipo, realizadoParcelado) => {
+  const handleDelete = (item, mensal, realizado, tipo, realizadoParcelado, classificacaoItem) => {
     if (
       !window.confirm('Este item pode conter lançamentos feitos, tem certeza que deseja excluir?')
     ) return;
-    removeItemRequest(item, mensal, realizado, tipo, idCategoria, realizadoParcelado);
+    removeItemRequest(
+      item,
+      mensal,
+      realizado,
+      tipo,
+      idCategoria,
+      realizadoParcelado,
+      classificacaoItem,
+    );
   };
 
   const handleKeyUp = (e) => {
@@ -122,6 +130,7 @@ const Table = ({
                                 i.realizado,
                                 i.tipo,
                                 i.realizadoParcelado,
+                                i.classificacao,
                               )
                               }
                               onKeyPress={() => handleDelete(
@@ -130,6 +139,7 @@ const Table = ({
                                 i.realizado,
                                 i.tipo,
                                 i.realizadoParcelado,
+                                i.classificacao,
                               )
                               }
                               className="material-icons"
@@ -209,11 +219,9 @@ const Table = ({
                         </td>
                         <td className="text-center">
                           <div>
-                            <button
-                              type="submit"
-                              className="btn btn-success btn-link btn-just-icon btn-sm"
-                            >
+                            <button type="submit" className="btn btn-success btn-sm">
                               <i className="material-icons">add_circle_outline</i>
+                              <strong>Adicionar</strong>
                             </button>
                           </div>
                         </td>
@@ -287,11 +295,9 @@ const Table = ({
                           })}
                     </td>
                     <td className="text-center">
-                      <button
-                        type="submit"
-                        className="btn btn-success btn-link btn-just-icon btn-sm"
-                      >
+                      <button type="submit" className="btn btn-success btn-sm">
                         <i className="material-icons">add_circle_outline</i>
+                        <strong>Adicionar</strong>
                       </button>
                     </td>
                   </tr>

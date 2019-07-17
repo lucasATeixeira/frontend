@@ -86,7 +86,7 @@ const One = ({
                       filterable: false,
                     },
                     {
-                      Header: 'Substituível',
+                      Header: 'Insubstituível',
                       accessor: 'substituivel',
                       sortable: false,
                       filterable: false,

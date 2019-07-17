@@ -85,7 +85,7 @@ const TableAtivos = ({
                     <th className="text-success">
                       <strong>Tipo</strong>
                     </th>
-                    <th className="text-success">
+                    <th className="text-success text-right">
                       <strong>Valor</strong>
                     </th>
                     <th className="text-right text-success">
@@ -100,7 +100,7 @@ const TableAtivos = ({
                         <>
                           <td>{a.nome}</td>
                           <td>{a.categoria}</td>
-                          <td>
+                          <td className="text-right">
                             {a.valor.toLocaleString('pt-br', {
                               style: 'currency',
                               currency: 'BRL',
@@ -176,11 +176,9 @@ const TableAtivos = ({
                           </td>
                           <td className="text-center">
                             <div>
-                              <button
-                                type="submit"
-                                className="btn btn-success btn-link btn-just-icon btn-sm"
-                              >
+                              <button type="submit" className="btn btn-success btn-sm">
                                 <i className="material-icons">add_circle_outline</i>
+                                <strong>Adicionar</strong>
                               </button>
                             </div>
                           </td>
@@ -235,11 +233,9 @@ const TableAtivos = ({
                         </span>
                       </td>
                       <td className="text-center">
-                        <button
-                          type="submit"
-                          className="btn btn-success btn-link btn-just-icon btn-sm"
-                        >
+                        <button type="submit" className="btn btn-success btn-sm">
                           <i className="material-icons">add_circle_outline</i>
+                          <strong>Adicionar</strong>
                         </button>
                       </td>
                     </tr>

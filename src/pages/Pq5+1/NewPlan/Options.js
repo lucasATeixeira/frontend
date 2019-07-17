@@ -21,7 +21,7 @@ const Options = ({
           type="button"
           className="btn btn-white btn-round"
         >
-          Botão
+          Iniciar
         </button>
       </div>
     </div>

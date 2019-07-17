@@ -46,11 +46,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
   }, [currentSimulation.patrimonios]);
 
   useEffect(() => {
-    setInstituicao('');
     setParcelas(1);
-    setTaxa(0);
-    setNecessario(0);
-    setCarencia(0);
   }, [isValorUnico]);
 
   const handleDelete = () => saveSimulation({
@@ -115,10 +111,10 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                         <strong>Valor Único?</strong>
                       </th>
                       <th className="text-success">
-                        <strong>Nome</strong>
+                        <strong>Nome Amigo / Familiar</strong>
                       </th>
                       <th className="text-success">
-                        <strong>Necessário</strong>
+                        <strong>Valor do Empréstimo</strong>
                       </th>
                       <th className="text-success">
                         <strong>Parcelas</strong>
@@ -278,11 +274,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           })}
                         </td>
                         <td className="text-center">
-                          <button
-                            type="submit"
-                            className="btn btn-success btn-link btn-just-icon btn-sm"
-                          >
+                          <button type="submit" className="btn btn-success btn-sm">
                             <i className="material-icons">add_circle_outline</i>
+                            <strong>Pegar Empréstimo</strong>
                           </button>
                         </td>
                       </tr>

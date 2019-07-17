@@ -3,14 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import TableAtivos from './TableAtivos';
 import TableOrcamento from './TableOrcamento';
 import { Creators as SimulacaoActions } from '../../../../../store/ducks/simulacao';
 
 const StageOne = ({ simulacao, saveSimulation }) => {
   const handleClick = () => {
-    if (!simulacao.currentSimulation.checked && simulacao.currentSimulation.stage === 1) return toast.error('Você deve selecionar um patrimônio', { containerId: 'alerts' });
+    if (!simulacao.currentSimulation.checked && simulacao.currentSimulation.stage === 1) return toast.error('Você deve selecionar um patrimônio');
     return saveSimulation({
       ...simulacao.currentSimulation,
       stage: simulacao.currentSimulation.stage + 1,
@@ -19,6 +19,7 @@ const StageOne = ({ simulacao, saveSimulation }) => {
   return (
     <>
       <div className="row">
+        <ToastContainer />
         <div className="col-md-6">
           <TableAtivos />
         </div>

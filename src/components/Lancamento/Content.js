@@ -206,13 +206,13 @@ const Content = ({
           <div className="modal-footer justify-content-center">
             <button
               type="button"
-              className="btn btn-primary btn-link btn-wd btn-lg"
+              className="btn btn-info btn-link btn-wd btn-lg"
               data-dismiss="modal"
               aria-hidden
             >
               Fechar
             </button>
-            <button type="submit" className="btn btn-primary btn-link btn-wd btn-lg">
+            <button type="submit" className="btn btn-info btn-link btn-wd btn-lg">
               Lançar
             </button>
           </div>

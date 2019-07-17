@@ -18,7 +18,7 @@ const Main = ({
           <CardStats
             color="success"
             textColor="text-success"
-            info="Saldo"
+            info="Você ainda tem para quitar suas dívidas"
             title={simulacao.saldo.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
@@ -29,8 +29,11 @@ const Main = ({
         <div className="col-md-4">
           <CardStats
             textColor="text-info"
-            title={simulacao.gastos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-            info="Mudança dos Gastos"
+            title={(Math.abs(simulacao.gastos)).toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
+            info={simulacao.gastos < 0 ? 'Reduziu seus Gastos em' : 'Aumentou seus Gastos em'}
             materialIcon="shopping_cart"
             footer={[
               {
@@ -52,8 +55,11 @@ const Main = ({
         </div>
         <div className="col-md-4">
           <CardStats
-            info="Mudança PMT"
-            title={simulacao.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+            info={simulacao.pmt < 0 ? 'Reduziu as Parcelas em' : 'Aumentou as parcelas em'}
+            title={(Math.abs(simulacao.pmt)).toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            })}
             color="danger"
             materialIcon="business"
             faIcon="fa-files-o"

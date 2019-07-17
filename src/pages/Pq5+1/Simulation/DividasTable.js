@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React from 'react';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
@@ -34,6 +34,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
   };
   return (
     <div className="card">
+      <ToastContainer />
       <div className="card-header card-header-text card-header-danger">
         <div className="card-text">
           <h4 className="card-title">
