@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import BlankPage from '../../components/BlankPage';
@@ -8,6 +8,27 @@ import ContentDividas from './ContentDividas';
 
 const Orcamento = ({ categorias, patrimonios }) => {
   const [active, setActive] = useState(2);
+
+  const calculo = useMemo(() => {
+    const c = {
+      gFlex: 0,
+      gEvent: 0,
+      gComp: 0,
+      rFlex: 0,
+      rEvent: 0,
+      rComp: 0,
+    };
+    categorias.categorias.forEach(cat => cat.itens.forEach((i) => {
+      c.gFlex += i.tipo === 'gasto' ? (i.classificacao === 'Flexível' ? i.mensal : 0) : 0;
+      c.gEvent += i.tipo === 'gasto' ? (i.classificacao === 'Eventual' ? i.mensal : 0) : 0;
+      c.gComp += i.tipo === 'gasto' ? (i.classificacao === 'Comprometido' ? i.mensal : 0) : 0;
+      c.rFlex += i.tipo === 'recebimento' ? (i.classificacao === 'Flexível' ? i.mensal : 0) : 0;
+      c.rEvent += i.tipo === 'recebimento' ? (i.classificacao === 'Eventual' ? i.mensal : 0) : 0;
+      c.rComp
+          += i.tipo === 'recebimento' ? (i.classificacao === 'Comprometido' ? i.mensal : 0) : 0;
+    }));
+    return c;
+  }, [categorias]);  
 
   return (
     <BlankPage>
@@ -22,8 +43,27 @@ const Orcamento = ({ categorias, patrimonios }) => {
             })}
             textColor="text-grafit"
             info="Recebimentos"
-            materialIcon="attach_money"
+            materialIcon=""
             color="grafit"
+            footerText={(
+              <div style={{ width: '100%' }} className="form-group">
+                <select className="form-control selectpicker" data-style="btn btn-link">
+                  <option>Mais detalhes</option>
+                  <option disabled>
+                    Soma dos Flexíveis:{' '}
+                    {calculo.rFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </option>
+                  <option disabled>
+                    Soma dos Comprometidos:{' '}
+                    {calculo.rComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </option>
+                  <option disabled>
+                    Soma dos Eventuais:{' '}
+                    {calculo.rEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </option>
+                </select>
+              </div>
+)}
           />
         </div>
         <div className="col-md-4">
@@ -36,8 +76,27 @@ const Orcamento = ({ categorias, patrimonios }) => {
             })}
             textColor="text-info"
             faIcon="fa-shopping-cart"
-            materialIcon="shopping_cart"
+            materialIcon=""
             info="Gastos"
+            footerText={(
+              <div style={{ width: '100%' }} className="form-group">
+                <select className="form-control selectpicker" data-style="btn btn-link">
+                  <option>Mais detalhes</option>
+                  <option disabled>
+                    Soma dos Flexíveis:{' '}
+                    {calculo.gFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </option>
+                  <option disabled>
+                    Soma dos Comprometidos:{' '}
+                    {calculo.gComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </option>
+                  <option disabled>
+                    Soma dos Eventuais:{' '}
+                    {calculo.gEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </option>
+                </select>
+              </div>
+)}
           />
         </div>
         <div className="col-md-4">

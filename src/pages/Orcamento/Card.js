@@ -31,12 +31,7 @@ export default function Card({
         </h3>
       </div>
 
-      <div className="card-footer">
-        <div className="stats">
-          <i className="material-icons">{materialIcon}</i>
-          {footerText}
-        </div>
-      </div>
+      <div className="card-footer">{footerText}</div>
     </div>
   );
 }
@@ -48,7 +43,7 @@ Card.propTypes = {
   info: PropTypes.string,
   textColor: PropTypes.string,
   materialIcon: PropTypes.string,
-  footerText: PropTypes.string,
+  footerText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   setActive: PropTypes.func.isRequired,
   type: PropTypes.number.isRequired,
 };
