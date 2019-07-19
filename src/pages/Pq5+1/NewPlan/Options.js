@@ -2,26 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast, ToastContainer } from 'react-toastify';
 import { Creators as SimulacaoActions } from '../../../store/ducks/simulacao';
 
 const Options = ({
-  icon, title, startSimulation, type,
+  icon, title, startSimulation, type, destaque, simulacao,
 }) => (
   <div className="col-md-2 ml-auto mr-auto">
-    <div className="card card-pricing bg-success">
-      <div className="card-body ">
-        <div className="card-icon">
+    <div className="card card-pricing ">
+      <div className={`card-body ${destaque && 'bg-info'}`}>
+        <div className={`card-icon icon-${destaque ? 'black' : 'info'}`}>
           <i className="material-icons">{icon}</i>
         </div>
         <strong>
-          <h5 className="card-title">{title}</h5>
+          <h5 className="card-title">
+            <ToastContainer autoClose={3000} />
+            <strong>{title}</strong>
+          </h5>
         </strong>
+        <br />
+
         <button
-          onClick={() => startSimulation(type)}
+          onClick={() => {
+            if (type === 'eg') return startSimulation(type);
+            if (!simulacao.simulacoes.length) {
+              return toast.error('Antes de simular alguma estratégia, tente enxugar seus gastos', {
+                containerId: 'alerts',
+              });
+            }
+            return startSimulation(type);
+          }}
           type="button"
-          className="btn btn-white btn-round"
+          className={`btn btn-${destaque ? 'white' : 'info'} btn-round`}
         >
-          Iniciar
+          <strong>Iniciar</strong>
         </button>
       </div>
     </div>
@@ -33,9 +47,17 @@ Options.propTypes = {
   title: PropTypes.string.isRequired,
   startSimulation: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
+  destaque: PropTypes.bool,
+  simulacao: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = () => ({});
+Options.defaultProps = {
+  destaque: false,
+};
+
+const mapStateToProps = state => ({
+  simulacao: state.simulacao,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
 

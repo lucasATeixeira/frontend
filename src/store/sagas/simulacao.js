@@ -33,6 +33,12 @@ export function* submitSimulationRequest(action) {
         orcado: e.orcado,
         recorrencia: e.recorrencia,
         valorEnxugado: e.valorEnxugado,
+        mensal:
+          e.classificacao === 'Eventual' ? e.orcado / e.recorrencia : e.orcado * e.recorrencia,
+        valorEnxugadoMensal:
+          e.classificacao === 'Eventual'
+            ? e.valorEnxugado / e.recorrencia
+            : e.valorEnxugado * e.recorrencia,
       })),
       estrategia: currentSimulation.estrategia,
       itens: currentSimulation.itens.map(i => ({
@@ -87,8 +93,8 @@ export function* submitSimulationRequest(action) {
             })
             .reduce((a, b) => a + b)
           : 0)
-          + currentSimulation.enxugar.map(e => e.orcado).reduce((a, b) => a + b, 0)
-          - currentSimulation.enxugar.map(e => e.valorEnxugado).reduce((a, b) => a + b, 0)),
+          + currentSimulation.enxugar.map(e => e.mensal).reduce((a, b) => a + b, 0)
+          - currentSimulation.enxugar.map(e => e.valorEnxugadoMensal).reduce((a, b) => a + b, 0)),
       ativos:
         (currentSimulation.patrimonios[0]
           ? currentSimulation.patrimonios

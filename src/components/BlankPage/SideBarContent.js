@@ -27,6 +27,11 @@ export default function SideBarContent({ setPage }) {
             title: 'Patrimônio',
           },
           {
+            href: '/comportamento',
+            mini: 'CMP',
+            title: 'Comportamento',
+          },
+          {
             href: '/crencas',
             mini: 'CR',
             title: 'Crenças',

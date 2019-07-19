@@ -110,7 +110,28 @@ const Result = ({
                   ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                 </h4>
                 <br />
-                <Radar simulacao={simulacao} patrimonios={patrimonios} orcamento={orcamento} />
+                <div className="row">
+                  <div className="col-md-6">
+                    <Radar
+                      width={100}
+                      height={50}
+                      options={{ maintainAspectRatio: false }}
+                      simulacao={simulacao}
+                      patrimonios={patrimonios}
+                      orcamento={orcamento}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <Radar
+                      width={100}
+                      height={50}
+                      options={{ maintainAspectRatio: false }}
+                      simulacao={simulacao}
+                      patrimonios={patrimonios}
+                      orcamento={orcamento}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

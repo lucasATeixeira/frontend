@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Creators as SimulationActions } from '../../../../../store/ducks/simulacao';
 import Input from './Input';
 
-const CardOne = ({ simulacao, saveSimulation }) => {
+const CardOne = ({ simulacao, saveSimulation, select }) => {
   const { currentSimulation } = simulacao;
   const [aluguel, setAluguel] = useState(0);
   const [moradia, setMoradia] = useState(0);
@@ -128,6 +128,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
         </div>
 
         <div className="card-body">
+          {select}
+          <br />
+
           {currentSimulation.estrategia === 'aluguel' && (
             <>
               <Input

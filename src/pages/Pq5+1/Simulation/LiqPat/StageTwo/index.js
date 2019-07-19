@@ -41,51 +41,50 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
   return (
     <>
       <br />
-      <div className="row">
-        <div className="col-md-4">
-          <span className="bmd-form-group">
-            <select
-              className="form-control"
-              data-style="select-with-transition"
-              data-size="7"
-              data-live-search="true"
-              name="estrategia"
-              onChange={handleChange}
-            >
-              <option value="plano">Plano</option>
-              {!currentSimulation.checked.categoria ? (
-                <>
-                  {outros.map(o => (
-                    <option key={o.id} value={o.id}>
-                      {o.title}
-                    </option>
-                  ))}
-                </>
-              ) : currentSimulation.checked.categoria === 'transporte' ? (
-                <>
-                  {transporte.map(o => (
-                    <option key={o.id} value={o.id}>
-                      {o.title}
-                    </option>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {moradia.map(o => (
-                    <option key={o.id} value={o.id}>
-                      {o.title}
-                    </option>
-                  ))}
-                </>
-              )}
-            </select>
-          </span>
-        </div>
-      </div>
       <br />
       <div className="row">
         <div className="col-md-6">
-          <CardOne />
+          <CardOne
+            select={(
+              <span className="bmd-form-group">
+                <select
+                  className="form-control"
+                  data-style="select-with-transition"
+                  data-size="7"
+                  data-live-search="true"
+                  name="estrategia"
+                  onChange={handleChange}
+                >
+                  <option value="plano">Plano</option>
+                  {!currentSimulation.checked.categoria ? (
+                    <>
+                      {outros.map(o => (
+                        <option key={o.id} value={o.id}>
+                          {o.title}
+                        </option>
+                      ))}
+                    </>
+                  ) : currentSimulation.checked.categoria === 'transporte' ? (
+                    <>
+                      {transporte.map(o => (
+                        <option key={o.id} value={o.id}>
+                          {o.title}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {moradia.map(o => (
+                        <option key={o.id} value={o.id}>
+                          {o.title}
+                        </option>
+                      ))}
+                    </>
+                  )}
+                </select>
+              </span>
+)}
+          />
         </div>
         <div className="col-md-6">
           <DividasTable />

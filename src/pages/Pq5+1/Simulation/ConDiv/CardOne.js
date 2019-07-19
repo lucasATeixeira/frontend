@@ -104,7 +104,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                   <thead>
                     <tr>
                       <th className="text-success">
-                        <strong>Nome</strong>
+                        <strong>Tipo do Empréstimo</strong>
                       </th>
                       <th className="text-success">
                         <strong>Instituição</strong>
@@ -172,15 +172,16 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                     {newFinanciamento && (
                       <tr>
                         <td>
-                          <span className="bmd-form-group">
-                            <input
-                              value={nome}
-                              onChange={e => setNome(e.target.value)}
-                              type="text"
-                              placeholder="Nome"
-                              className="form-control"
-                            />
-                          </span>
+                          <select
+                            className="form-control"
+                            data-style="btn btn-link"
+                            value={nome}
+                            onChange={e => setNome(e.target.value)}
+                          >
+                            <option>Consignado</option>
+                            <option>Crédito Pessoal</option>
+                            <option>Refinanciamento</option>
+                          </select>
                         </td>
                         <td>
                           <span className="bmd-form-group">

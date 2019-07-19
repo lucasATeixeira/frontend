@@ -1,13 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, createRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 import BlankPage from '../../components/BlankPage';
 import Card from './Card';
 import Content from './Content';
 import ContentDividas from './ContentDividas';
 
 const Orcamento = ({ categorias, patrimonios }) => {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(2);  
+
+  const ref1 = createRef();
+  const ref2 = createRef();
 
   const calculo = useMemo(() => {
     const c = {
@@ -26,9 +30,9 @@ const Orcamento = ({ categorias, patrimonios }) => {
       c.rEvent += i.tipo === 'recebimento' ? (i.classificacao === 'Eventual' ? i.mensal : 0) : 0;
       c.rComp
           += i.tipo === 'recebimento' ? (i.classificacao === 'Comprometido' ? i.mensal : 0) : 0;
-    }));
+    }));    
     return c;
-  }, [categorias]);  
+  }, [categorias]);
 
   return (
     <BlankPage>
@@ -47,7 +51,7 @@ const Orcamento = ({ categorias, patrimonios }) => {
             color="grafit"
             footerText={(
               <div style={{ width: '100%' }} className="form-group">
-                <select className="form-control selectpicker" data-style="btn btn-link">
+                <select ref={ref1} className="form-control selectpicker" data-style="btn btn-link">
                   <option>Mais detalhes</option>
                   <option disabled>
                     Soma dos Flexíveis:{' '}
@@ -80,7 +84,7 @@ const Orcamento = ({ categorias, patrimonios }) => {
             info="Gastos"
             footerText={(
               <div style={{ width: '100%' }} className="form-group">
-                <select className="form-control selectpicker" data-style="btn btn-link">
+                <select ref={ref2} className="form-control selectpicker" data-style="btn btn-link">
                   <option>Mais detalhes</option>
                   <option disabled>
                     Soma dos Flexíveis:{' '}

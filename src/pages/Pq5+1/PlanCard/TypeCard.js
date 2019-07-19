@@ -30,7 +30,7 @@ const TypeCard = ({ content, startDetails }) => {
   }
   return (
     <div className="col-md-3">
-      <div className="card card-pricing bg-success">
+      <div className="card card-pricing bg-info">
         <div className="card-body ">
           <div className="card-icon">
             <i className="material-icons">{icon}</i>

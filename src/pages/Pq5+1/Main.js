@@ -29,7 +29,7 @@ const Main = ({
         <div className="col-md-4">
           <CardStats
             textColor="text-info"
-            title={(Math.abs(simulacao.gastos)).toLocaleString('pt-br', {
+            title={Math.abs(simulacao.gastos).toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
             })}
@@ -56,7 +56,7 @@ const Main = ({
         <div className="col-md-4">
           <CardStats
             info={simulacao.pmt < 0 ? 'Reduziu as Parcelas em' : 'Aumentou as parcelas em'}
-            title={(Math.abs(simulacao.pmt)).toLocaleString('pt-br', {
+            title={Math.abs(simulacao.pmt).toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
             })}
@@ -84,11 +84,41 @@ const Main = ({
         </div>
       </div>
 
+      {newPlan && (
+        <>
+          <div className="row">
+            <div className="col-md-12">
+              <button
+                onClick={() => setNewPlan(false)}
+                className="btn btn-round pull-right btn-info pull-left"
+                type="button"
+              >
+                <strong>Voltar</strong>
+              </button>
+            </div>
+          </div>
+          <NewPlan />
+        </>
+      )}
+      {!newPlan && (
+        <div className="row">
+          <div className="col-md-12">
+            <button
+              onClick={() => setNewPlan(true)}
+              className="btn btn-round pull-right btn-info btn-sm pull-left"
+              type="button"
+            >
+              <i className="fa fa-plus" />
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="row">
         <div className="col-md-12">
           <button
             onClick={() => startResult(true)}
-            className="btn btn-round pull-right btn-success btn-sm pull-left"
+            className="btn btn-round pull-right btn-info btn-sm pull-left"
             type="button"
           >
             <strong>Resultados </strong>
@@ -99,36 +129,6 @@ const Main = ({
       {simulacao.simulacoes.map(s => (
         <PlanCard key={s._id} content={s} />
       ))}
-
-      {newPlan && (
-        <>
-          <NewPlan />
-          <div className="row">
-            <div className="col-md-12">
-              <button
-                onClick={() => setNewPlan(false)}
-                className="btn btn-round pull-right btn-success pull-left"
-                type="button"
-              >
-                <strong>Voltar</strong>
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-      {!newPlan && (
-        <div className="row">
-          <div className="col-md-12">
-            <button
-              onClick={() => setNewPlan(true)}
-              className="btn btn-round pull-right btn-success pull-left"
-              type="button"
-            >
-              <i className="fa fa-plus" />
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
