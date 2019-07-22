@@ -1,17 +1,14 @@
-import React, { useState, useMemo, createRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+import ReactTooltip from 'react-tooltip';
 import BlankPage from '../../components/BlankPage';
 import Card from './Card';
 import Content from './Content';
 import ContentDividas from './ContentDividas';
 
 const Orcamento = ({ categorias, patrimonios }) => {
-  const [active, setActive] = useState(2);  
-
-  const ref1 = createRef();
-  const ref2 = createRef();
+  const [active, setActive] = useState(2);
 
   const calculo = useMemo(() => {
     const c = {
@@ -30,12 +27,43 @@ const Orcamento = ({ categorias, patrimonios }) => {
       c.rEvent += i.tipo === 'recebimento' ? (i.classificacao === 'Eventual' ? i.mensal : 0) : 0;
       c.rComp
           += i.tipo === 'recebimento' ? (i.classificacao === 'Comprometido' ? i.mensal : 0) : 0;
-    }));    
+    }));
     return c;
   }, [categorias]);
 
   return (
     <BlankPage>
+      <ReactTooltip type="error" />
+      <ReactTooltip id="gasto" place="right" type="info" effect="float">
+        <p>Mais detalhes</p>
+        <p>
+          Soma dos Flexíveis:{' '}
+          {calculo.gFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        </p>
+        <p>
+          Soma dos Comprometidos:{' '}
+          {calculo.gComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        </p>
+        <p>
+          Soma dos Eventuais:{' '}
+          {calculo.gEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        </p>
+      </ReactTooltip>
+      <ReactTooltip id="recebimento" place="right" type="dark" effect="float">
+        <p>Mais detalhes</p>
+        <p>
+          Soma dos Flexíveis:{' '}
+          {calculo.rFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        </p>
+        <p>
+          Soma dos Comprometidos:{' '}
+          {calculo.rComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        </p>
+        <p>
+          Soma dos Eventuais:{' '}
+          {calculo.rEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+        </p>
+      </ReactTooltip>
       <div className="row">
         <div className="col-md-4">
           <Card
@@ -50,23 +78,14 @@ const Orcamento = ({ categorias, patrimonios }) => {
             materialIcon=""
             color="grafit"
             footerText={(
-              <div style={{ width: '100%' }} className="form-group">
-                <select ref={ref1} className="form-control selectpicker" data-style="btn btn-link">
-                  <option>Mais detalhes</option>
-                  <option disabled>
-                    Soma dos Flexíveis:{' '}
-                    {calculo.rFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                  </option>
-                  <option disabled>
-                    Soma dos Comprometidos:{' '}
-                    {calculo.rComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                  </option>
-                  <option disabled>
-                    Soma dos Eventuais:{' '}
-                    {calculo.rEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                  </option>
-                </select>
-              </div>
+              <>
+                <strong className=" text-grafiti" data-for="recebimento" data-tip>
+                  Detalhes
+                </strong>
+                <button type="button" className="btn btn-grafit btn-sm">
+                  Recebimentos Orçados
+                </button>
+              </>
 )}
           />
         </div>
@@ -83,23 +102,14 @@ const Orcamento = ({ categorias, patrimonios }) => {
             materialIcon=""
             info="Gastos"
             footerText={(
-              <div style={{ width: '100%' }} className="form-group">
-                <select ref={ref2} className="form-control selectpicker" data-style="btn btn-link">
-                  <option>Mais detalhes</option>
-                  <option disabled>
-                    Soma dos Flexíveis:{' '}
-                    {calculo.gFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                  </option>
-                  <option disabled>
-                    Soma dos Comprometidos:{' '}
-                    {calculo.gComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                  </option>
-                  <option disabled>
-                    Soma dos Eventuais:{' '}
-                    {calculo.gEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
-                  </option>
-                </select>
-              </div>
+              <>
+                <strong className=" text-info" data-for="gasto" data-tip>
+                  Detalhes
+                </strong>
+                <button type="button" className="btn btn-info btn-sm">
+                  Gastos Orçados
+                </button>
+              </>
 )}
           />
         </div>
@@ -118,6 +128,17 @@ const Orcamento = ({ categorias, patrimonios }) => {
             materialIcon="file_copy"
             info="Parcelamentos"
             color="danger"
+            footerText={(
+              <>
+                <strong className=" text-danger" data-tip="Aqui estão todas suas dívidas">
+                  Detalhes
+                </strong>
+
+                <button type="button" className="btn btn-danger btn-sm">
+                  Dívidas Orçadas
+                </button>
+              </>
+)}
           />
         </div>
       </div>

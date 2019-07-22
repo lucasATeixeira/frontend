@@ -219,9 +219,9 @@ const Table = ({
                         </td>
                         <td className="text-center">
                           <div>
-                            <button type="submit" className="btn btn-success btn-sm">
+                            <button type="submit" className={`btn btn-${color} btn-sm`}>
                               <i className="material-icons">add_circle_outline</i>
-                              <strong>Adicionar</strong>
+                              <strong>Editar</strong>
                             </button>
                           </div>
                         </td>
@@ -295,7 +295,7 @@ const Table = ({
                           })}
                     </td>
                     <td className="text-center">
-                      <button type="submit" className="btn btn-success btn-sm">
+                      <button type="submit" className={`btn btn-${color} btn-sm`}>
                         <i className="material-icons">add_circle_outline</i>
                         <strong>Adicionar</strong>
                       </button>

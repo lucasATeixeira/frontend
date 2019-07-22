@@ -15,7 +15,7 @@ const TableAtivos = ({
   updatePatrimonioRequest,
 }) => {
   const [nomeAtivo, setNomeAtivo] = useState('');
-  const [tipo, setTipo] = useState('Moradia');
+  const [tipo, setTipo] = useState('Escolha o tipo');
   const [valor, setValor] = useState(0);
   const [newAtivo, setNewAtivo] = useState(false);
   const [edit, setEdit] = useState('');
@@ -32,12 +32,13 @@ const TableAtivos = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (tipo === 'Escolha o tipo') return toast.error('Escolha um tipo', { containerId: 'alerts' });
     if (!nomeAtivo) return toast.error('Adicione um nome', { containerId: 'alerts' });
     if (valor <= 0) return toast.error('Adicione um valor Válido', { containerId: 'alerts' });
     if (newAtivo) {
       setNewAtivo(false);
       setNomeAtivo('');
-      setTipo('Moradia');
+      setTipo('Escolha o tipo');
       setValor(0);
       setNewAtivo(false);
       return addPatrimonioRequest({
@@ -52,7 +53,7 @@ const TableAtivos = ({
     if (!newAtivo) {
       setEdit('');
       setNomeAtivo('');
-      setTipo('Moradia');
+      setTipo('Escolha o tipo');
       setValor(0);
       setNewAtivo(false);
       return updatePatrimonioRequest({
@@ -153,10 +154,22 @@ const TableAtivos = ({
                                 data-size="7"
                                 data-live-search="true"
                               >
-                                <option value="moradia">Moradia</option>
-                                <option value="transporte">Transporte</option>
-                                <option value="bens nao utilizados">Bens Não Utilizados</option>
-                                <option value="outros bens">Outros Bens</option>
+                                <option>Escolha o Tipo</option>
+                                {classificacao === 'patrimonial' ? (
+                                  <>
+                                    <option value="moradia">Moradia</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="bens nao utilizados">Bens Não Utilizados</option>
+                                    <option value="outros bens">Outros Bens</option>
+                                  </>
+                                ) : (
+                                  <>
+                                    <option value="cdb">CDB</option>
+                                    <option value="tesouro">Tesouro</option>
+                                    <option value="ações">Ações</option>
+                                    <option value="outros ativos">Outros Ativos</option>
+                                  </>
+                                )}
                               </select>
                             </span>
                           </td>
@@ -211,10 +224,22 @@ const TableAtivos = ({
                             data-size="7"
                             data-live-search="true"
                           >
-                            <option value="moradia">Moradia</option>
-                            <option value="transporte">Transporte</option>
-                            <option value="bens nao utilizados">Bens Não Utilizados</option>
-                            <option value="outros bens">Outros Bens</option>
+                            <option>Escolha o Tipo</option>
+                            {classificacao === 'patrimonial' ? (
+                              <>
+                                <option value="moradia">Moradia</option>
+                                <option value="transporte">Transporte</option>
+                                <option value="bens nao utilizados">Bens Não Utilizados</option>
+                                <option value="outros bens">Outros Bens</option>
+                              </>
+                            ) : (
+                              <>
+                                <option value="cdb">CDB</option>
+                                <option value="tesouro">Tesouro</option>
+                                <option value="ações">Ações</option>
+                                <option value="outros ativos">Outros Ativos</option>
+                              </>
+                            )}
                           </select>
                         </span>
                       </td>

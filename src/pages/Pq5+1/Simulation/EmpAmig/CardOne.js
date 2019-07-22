@@ -108,7 +108,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                   <thead>
                     <tr>
                       <th className="text-success ">
-                        <strong>Valor Único?</strong>
+                        <strong>Pagamento Único?</strong>
                       </th>
                       <th className="text-success">
                         <strong>Nome Amigo / Familiar</strong>

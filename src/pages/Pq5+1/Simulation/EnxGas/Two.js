@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CurrencyInput from 'react-currency-input';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao';
@@ -69,6 +69,7 @@ const Two = ({
       <div className="row">
         <div className="col-md-12">
           <Meta />
+          <ToastContainer autoClose={4000} />
         </div>
       </div>
       <div className="row">

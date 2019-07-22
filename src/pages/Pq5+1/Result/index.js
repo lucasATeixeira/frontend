@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import Radar from './Radar';
+import RealRadar from './RealRadar';
 import Bar from './Bar';
 import Card from './Card';
 import { Creators as SimulacaoActions } from '../../../store/ducks/simulacao';
@@ -23,7 +24,7 @@ const Result = ({
     <h2>Resultados</h2>
 
     <div className="row">
-      <div className="col-md-6">
+      <div className="col-md-5">
         <div className="row">
           <div className="col-md-12">
             <div className="card">
@@ -40,13 +41,17 @@ const Result = ({
           </div>
         </div>
       </div>
-      <div className="col-md-6">
+      <div className="col-md-7">
         <div className="row">
           <div className="col-md-6">
             <Card
               textColor="text-info"
-              title={simulacao.gastos}
-              info="Mudança dos Gastos"
+              title={Math.abs(simulacao.gastos).toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              })}
+              info={simulacao.gastos < 0 ? 'Reduziu seus Gastos em' : 'Aumentou seus Gastos em'}
+              materialIcon="shopping_cart"
               footer={[
                 {
                   materialIcon: 'attach_money',
@@ -66,8 +71,11 @@ const Result = ({
           </div>
           <div className="col-md-6">
             <Card
-              info="Mudança PMT"
-              title={simulacao.pmt}
+              info={simulacao.pmt < 0 ? 'Reduziu as Parcelas em' : 'Aumentou as parcelas em'}
+              title={Math.abs(simulacao.pmt).toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              })}
               color="danger"
               materialIcon="business"
               faIcon="fa-files-o"
@@ -101,25 +109,27 @@ const Result = ({
               </div>
               <div className="card-body">
                 <h4 className="catd-title">
-                  Patrimônio Líquido:{' '}
-                  {(
-                    patrimonios.patrimonioLiquido
-                    - simulacao.passivos
-                    + simulacao.ativos
-                    + simulacao.saldo
-                  ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  <strong>
+                    Patrimônio Líquido Antes:{' '}
+                    {patrimonios.patrimonioLiquido.toLocaleString('pt-br', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}
+                  </strong>
+                  <strong className="pull-right">
+                    Patrimônio Líquido Depois:{' '}
+                    {(
+                      patrimonios.patrimonioLiquido
+                      - simulacao.passivos
+                      + simulacao.ativos
+                      + simulacao.saldo
+                    ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                  </strong>
                 </h4>
                 <br />
                 <div className="row">
                   <div className="col-md-6">
-                    <Radar
-                      width={100}
-                      height={50}
-                      options={{ maintainAspectRatio: false }}
-                      simulacao={simulacao}
-                      patrimonios={patrimonios}
-                      orcamento={orcamento}
-                    />
+                    <RealRadar width={100} height={50} options={{ maintainAspectRatio: false }} />
                   </div>
                   <div className="col-md-6">
                     <Radar
