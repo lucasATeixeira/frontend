@@ -83,17 +83,16 @@ const Result = ({
               footer={[
                 {
                   materialIcon: 'attach_money',
-                  text: `PMT Antes: ${patrimonios.passivos.pmt.toLocaleString('pt-br', {
+                  text: `Parcelas Antes: ${patrimonios.passivos.pmt.toLocaleString('pt-br', {
                     style: 'currency',
                     currency: 'BRL',
                   })}`,
                 },
                 {
                   materialIcon: 'attach_money',
-                  text: `PMT Depois: ${(patrimonios.passivos.pmt + simulacao.pmt).toLocaleString(
-                    'pt-br',
-                    { style: 'currency', currency: 'BRL' },
-                  )}`,
+                  text: `Parcelas Depois: ${(
+                    patrimonios.passivos.pmt + simulacao.pmt
+                  ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`,
                 },
               ]}
             />

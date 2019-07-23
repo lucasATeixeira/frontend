@@ -54,7 +54,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                       <strong>Passivo</strong>
                     </th>
                     <th className="text-danger">
-                      <strong>PMT</strong>
+                      <strong>Valor Parcela</strong>
                     </th>
                     <th className="text-danger">
                       <strong>P. Restantes</strong>

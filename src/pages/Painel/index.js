@@ -27,7 +27,7 @@ const Painel = ({ orcamento, patrimonios }) => (
             <CardStats
               color="danger"
               faIcon="fa-files-o"
-              info="PMT"
+              info="Dívidas Parceladas"
               textColor="text-danger"
               title={(
                 patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados

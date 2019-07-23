@@ -38,7 +38,7 @@ const One = ({ content }) => (
                       <strong>Carência</strong>
                     </th>
                     <th className="text-success">
-                      <strong>PMT</strong>
+                      <strong>Valor Parcela</strong>
                     </th>
                     <th className="text-success">
                       <strong>Total com Juros</strong>

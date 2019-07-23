@@ -28,7 +28,7 @@ const Two = ({ content }) => (
                       <strong>Passivo</strong>
                     </th>
                     <th className="text-danger">
-                      <strong>PMT</strong>
+                      <strong>Valor Parcela</strong>
                     </th>
                     <th className="text-danger">
                       <strong>Taxa</strong>

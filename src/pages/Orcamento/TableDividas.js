@@ -13,7 +13,7 @@ const TableDividas = ({ patrimonios }) => (
               <th>Instituição</th>
               <th>Parcelas Restantes</th>
               <th>Taxa</th>
-              <th>PMT</th>
+              <th>Valor Parcelas</th>
               <th>Saldo Total</th>
             </tr>
           </thead>

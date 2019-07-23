@@ -23,6 +23,8 @@ export default function Checkout() {
   const [street, setStreet] = useState('');
   const [number, setNumber] = useState('');
 
+  const amount = 10000;
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://assets.pagar.me/checkout/1.1.0/checkout.js';
@@ -69,6 +71,7 @@ export default function Checkout() {
           neighborhood,
           street,
           number,
+          amount,
         });
       },
       error: err => console.log(err),
@@ -76,7 +79,7 @@ export default function Checkout() {
     });
 
     checkout.open({
-      amount: 100,
+      amount,
       buttonText: 'Pagar',
       buttonClass: 'botao-pagamento',
       customerData: 'false',
@@ -118,7 +121,7 @@ export default function Checkout() {
         {
           id: '1',
           title: 'Ondazul',
-          unit_price: 100,
+          unit_price: amount,
           quantity: 1,
           tangible: false,
         },
