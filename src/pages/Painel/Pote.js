@@ -31,7 +31,7 @@ const Pote = ({ orcamento, patrimonios }) => {
         {
           label: 'Dívidas',
           data: [
-            patrimonios.passivos.pmt,
+            patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados,
             patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados,
           ],
           backgroundColor: 'rgb(218, 68, 83)',
