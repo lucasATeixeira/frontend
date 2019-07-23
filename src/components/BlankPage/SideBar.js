@@ -13,7 +13,7 @@ function Sidebar({ user, setPage }) {
     <div className="sidebar" data-color="green" data-background-color="black">
       <div className="logo">
         <a href="/painel" className="simple-text logo-mini">
-          O
+          {''}
         </a>
         <a href="/painel" className="simple-text logo-normal">
           OndAzul
