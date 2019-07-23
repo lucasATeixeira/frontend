@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf, handleDate, handleTelefone } from '../../hooks/inputHooks';
 
-export default function Checkout() {
+export default function Checkout({ history }) {
   const [loading, setLoading] = useState(false);
   const [nascimento, setNascimento] = useState('');
   const [nome, setNome] = useState('');
@@ -33,11 +34,15 @@ export default function Checkout() {
   }, []);
 
   async function handleBlur() {
-    const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-    setState(data.uf);
-    setCity(data.localidade);
-    setNeighborhood(data.bairro);
-    setStreet(data.logradouro);
+    try {
+      const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      setState(data.uf);
+      setCity(data.localidade);
+      setNeighborhood(data.bairro);
+      return setStreet(data.logradouro);
+    } catch (err) {
+      return toast.error('CEP não encontrado, insira um CEP Válido', { containerId: 'checkout' });
+    }
   }
 
   function handleSubmit(e) {
@@ -52,11 +57,11 @@ export default function Checkout() {
     if (cpfString.length !== 11) return toast.error('CPF Inválido');
     if (!nome || !cpf || !telefone || !nascimento || !email || !senha) return toast.error('Preencha todos os campos', { containerId: 'checkout' });
     if (senha !== repeatSenha) return toast.error('Senhas devem ser iguais', { containerId: 'checkout' });
+    if (!neighborhood) return toast.error('Insira um CEP válido', { containerId: 'checkout' });
 
     const checkout = new window.PagarMeCheckout.Checkout({
       encryption_key: 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
       success: async (data) => {
-        console.log(data);
         await api.post('api/checkout', {
           email,
           senha,
@@ -73,6 +78,7 @@ export default function Checkout() {
           number,
           amount,
         });
+        history.push('/');
       },
       error: err => console.log(err),
       close: () => setLoading(false),

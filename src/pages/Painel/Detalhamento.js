@@ -6,7 +6,7 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
     <div className="card-header card-header-text card-header-grafit">
       <div className="card-text">
         <h4 className="card-title">
-          <strong>Orcado / Realizado</strong>
+          <strong>Orçado / Realizado</strong>
         </h4>
       </div>
     </div>
@@ -17,7 +17,7 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
             <table className="table">
               <thead className="text-black">
                 <tr>
-                  <th>Orcado</th>
+                  <th>Orçado</th>
                   <th>Realizado</th>
                 </tr>
               </thead>
