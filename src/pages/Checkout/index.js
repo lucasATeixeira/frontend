@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf, handleDate, handleTelefone } from '../../hooks/inputHooks';
@@ -45,9 +44,8 @@ export default function Checkout({ history }) {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
     const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join('');
     const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(4, 9)}${telefone.slice(
       10,
@@ -59,81 +57,91 @@ export default function Checkout({ history }) {
     if (senha !== repeatSenha) return toast.error('Senhas devem ser iguais', { containerId: 'checkout' });
     if (!neighborhood) return toast.error('Insira um CEP válido', { containerId: 'checkout' });
 
-    const checkout = new window.PagarMeCheckout.Checkout({
-      encryption_key: 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
-      success: async (data) => {
-        await api.post('api/checkout', {
-          email,
-          senha,
-          token: data.token,
-          nome,
-          telefone: telefoneString,
-          cpf: cpfString,
-          nascimento,
-          cep: cep.replace('-', ''),
-          state,
-          city,
-          neighborhood,
-          street,
-          number,
-          amount,
-        });
-        history.push('/');
-      },
-      error: err => console.log(err),
-      close: () => setLoading(false),
-    });
+    setLoading(true);
 
-    checkout.open({
-      amount,
-      buttonText: 'Pagar',
-      buttonClass: 'botao-pagamento',
-      customerData: 'false',
-      createToken: 'true',
-      paymentMethods: 'credit_card',
-      maxInstallments: 12,
-      postbackUrl: 'https://ondazul-backend.herokuapp.com/api/notification',
-      customer: {
-        external_id: Math.random(),
-        name: nome,
-        type: 'individual',
-        country: 'br',
-        email,
-        documents: [
-          {
-            type: 'cpf',
-            number: cpfString,
+    async function checkData() {
+      try {
+        await api.post('api/user', { email, cpf: cpfString });
+        const checkout = new window.PagarMeCheckout.Checkout({
+          encryption_key: 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
+          success: async (data) => {
+            await api.post('api/checkout', {
+              email,
+              senha,
+              token: data.token,
+              nome,
+              telefone: telefoneString,
+              cpf: cpfString,
+              nascimento,
+              cep: cep.replace('-', ''),
+              state,
+              city,
+              neighborhood,
+              street,
+              number,
+              amount,
+            });
+            history.push('/');
           },
-        ],
-        phone_numbers: [`+55${telefoneString}`],
-        birthday: `${nascimento.split('/')[2]}-${nascimento.split('/')[1]}-${
-          nascimento.split('/')[0]
-        }`,
-      },
-      billing: {
-        name: nome,
-        address: {
-          country: 'br',
-          state,
-          city,
-          neighborhood,
-          street,
-          street_number: number,
-          zipcode: cep.replace('-', ''),
-        },
-      },
+          error: err => console.log(err),
+          close: () => setLoading(false),
+        });
 
-      items: [
-        {
-          id: '1',
-          title: 'Ondazul',
-          unit_price: amount,
-          quantity: 1,
-          tangible: false,
-        },
-      ],
-    });
-    return null;
+        checkout.open({
+          amount,
+          buttonText: 'Pagar',
+          buttonClass: 'botao-pagamento',
+          customerData: 'false',
+          createToken: 'true',
+          paymentMethods: 'credit_card',
+          maxInstallments: 12,
+          postbackUrl: 'https://ondazul-backend.herokuapp.com/api/notification',
+          customer: {
+            external_id: Math.random(),
+            name: nome,
+            type: 'individual',
+            country: 'br',
+            email,
+            documents: [
+              {
+                type: 'cpf',
+                number: cpfString,
+              },
+            ],
+            phone_numbers: [`+55${telefoneString}`],
+            birthday: `${nascimento.split('/')[2]}-${nascimento.split('/')[1]}-${
+              nascimento.split('/')[0]
+            }`,
+          },
+          billing: {
+            name: nome,
+            address: {
+              country: 'br',
+              state,
+              city,
+              neighborhood,
+              street,
+              street_number: number,
+              zipcode: cep.replace('-', ''),
+            },
+          },
+
+          items: [
+            {
+              id: '1',
+              title: 'Ondazul',
+              unit_price: amount,
+              quantity: 1,
+              tangible: false,
+            },
+          ],
+        });
+      } catch (err) {
+        toast.error(err.response.data.error, { containerId: 'checkout' });
+      }
+    }
+    await checkData();
+    return setLoading(false);
   }
   return (
     <>

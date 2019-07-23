@@ -71,10 +71,7 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
               },
               ticks: {
                 beginAtZero: true,
-                max:
-                  orcamento.recebimentosOrcados
-                  + orcamento.gastosOrcados
-                  + patrimonios.passivos.pmt,
+                max: orcamento.gastosOrcados + patrimonios.passivos.pmt,
                 callback(value) {
                   return value.toLocaleString('pt-BR');
                 },
@@ -88,10 +85,7 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
               },
               ticks: {
                 beginAtZero: true,
-                max:
-                  orcamento.recebimentosOrcados
-                  + orcamento.gastosOrcados
-                  + patrimonios.passivos.pmt,
+                max: orcamento.gastosOrcados + patrimonios.passivos.pmt,
                 callback(value) {
                   return value.toLocaleString('pt-BR');
                 },
