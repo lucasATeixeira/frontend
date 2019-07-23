@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Item from './Item';
 import ItemLancamento from './ItemLancamento';
 import CollapsedItem from './CollapsedItem';
+import ButtonPainel from './ButtonPainel';
 
 export default function SideBarContent({ setPage }) {
   return (
     <ul className="nav">
+      <ButtonPainel />
       <ItemLancamento />
       <Item href="/painel" title="Painel de Controle" icon="assessment" setPage={setPage} />
       <Item icon="local_printshop" title="Extrato" href="/extrato" setPage={setPage} />
@@ -30,11 +32,6 @@ export default function SideBarContent({ setPage }) {
             href: '/comportamento',
             mini: 'CMP',
             title: 'Comportamento',
-          },
-          {
-            href: '/crencas',
-            mini: 'CR',
-            title: 'Crenças',
           },
         ]}
       />
