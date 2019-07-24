@@ -81,9 +81,13 @@ export default function Checkout({ history }) {
               number,
               amount,
             });
+            setLoading(false);
             history.push('/');
           },
-          error: err => console.log(err),
+          error: (err) => {
+            if (err) return toast.error('Tivemos um erro, tente novamente', { containerId: 'checkout' });
+            return null;
+          },
           close: () => setLoading(false),
         });
 
@@ -138,10 +142,11 @@ export default function Checkout({ history }) {
         });
       } catch (err) {
         toast.error(err.response.data.error, { containerId: 'checkout' });
+        setLoading(false);
       }
     }
     await checkData();
-    return setLoading(false);
+    return null;
   }
   return (
     <>
@@ -159,7 +164,7 @@ export default function Checkout({ history }) {
         >
           <div className="container">
             <div className="row">
-              <div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+              <div className="col-lg-9 col-md-9 col-sm-9 ml-auto mr-auto">
                 <div className="card card-login">
                   <div className="card-header card-header-info text-center">
                     <h4 className="card-title">ONDAZUL</h4>
@@ -173,231 +178,235 @@ export default function Checkout({ history }) {
                       </p>
                       <div className="card-footer justify-content-center" />
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">person</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={nome}
-                            onChange={e => setNome(e.target.value)}
-                            className="form-control"
-                            placeholder="Nome..."
-                          />
-                        </div>
-                      </span>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">person</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={nome}
+                                onChange={e => setNome(e.target.value)}
+                                className="form-control"
+                                placeholder="Nome..."
+                              />
+                            </div>
+                          </span>
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">credit_card</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={cpf}
-                            onChange={e => handleCpf(e, setCpf)}
-                            className="form-control"
-                            placeholder="CPF..."
-                          />
-                        </div>
-                      </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">credit_card</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={cpf}
+                                onChange={e => handleCpf(e, setCpf)}
+                                className="form-control"
+                                placeholder="CPF..."
+                              />
+                            </div>
+                          </span>
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">settings_cell</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={telefone}
-                            onChange={e => handleTelefone(e, setTelefone)}
-                            className="form-control"
-                            placeholder="Celular..."
-                          />
-                        </div>
-                      </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">settings_cell</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={telefone}
+                                onChange={e => handleTelefone(e, setTelefone)}
+                                className="form-control"
+                                placeholder="Celular..."
+                              />
+                            </div>
+                          </span>
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">calendar_today</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={nascimento}
-                            onChange={e => handleDate(e, setNascimento)}
-                            className="form-control"
-                            placeholder="Data de Nascimento..."
-                          />
-                        </div>
-                      </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">calendar_today</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={nascimento}
+                                onChange={e => handleDate(e, setNascimento)}
+                                className="form-control"
+                                placeholder="Data de Nascimento..."
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">email</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                className="form-control"
+                                placeholder="Email..."
+                              />
+                            </div>
+                          </span>
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">location_city</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={cep}
-                            onChange={e => setCep(e.target.value)}
-                            onBlur={handleBlur}
-                            className="form-control"
-                            placeholder="CEP (apenas números)"
-                          />
-                        </div>
-                      </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">lock_outline</i>
+                                </span>
+                              </div>
+                              <br />
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">location_city</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={state}
-                            disabled
-                            className="form-control"
-                            placeholder="Estado"
-                          />
-                        </div>
-                      </span>
+                              <input
+                                value={senha}
+                                onChange={e => setSenha(e.target.value)}
+                                name="senha"
+                                type="password"
+                                className="form-control"
+                                placeholder="Senha..."
+                              />
+                            </div>
+                          </span>
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">location_city</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={city}
-                            disabled
-                            className="form-control"
-                            placeholder="Cidade"
-                          />
-                        </div>
-                      </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">lock_outline</i>
+                                </span>
+                              </div>
+                              <br />
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">location_city</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={street}
-                            disabled
-                            className="form-control"
-                            placeholder="Rua"
-                          />
+                              <input
+                                value={repeatSenha}
+                                onChange={e => setRepeatSenha(e.target.value)}
+                                name="senha"
+                                type="password"
+                                className="form-control"
+                                placeholder="Confirme sua senha..."
+                              />
+                            </div>
+                          </span>
                         </div>
-                      </span>
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">location_city</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={neighborhood}
-                            disabled
-                            className="form-control"
-                            placeholder="Bairro"
-                          />
-                        </div>
-                      </span>
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">location_city</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={number}
-                            onChange={e => setNumber(e.target.value)}
-                            className="form-control"
-                            placeholder="Número"
-                          />
-                        </div>
-                      </span>
+                        <div className="col-md-6">
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">location_city</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={cep}
+                                onChange={e => setCep(e.target.value)}
+                                onBlur={handleBlur}
+                                className="form-control"
+                                placeholder="CEP (apenas números)"
+                              />
+                            </div>
+                          </span>
 
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">email</i>
-                            </span>
-                          </div>
-                          <br />
-                          <input
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            className="form-control"
-                            placeholder="Email..."
-                          />
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">location_city</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={state}
+                                disabled
+                                className="form-control"
+                                placeholder="Estado"
+                              />
+                            </div>
+                          </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">location_city</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={city}
+                                disabled
+                                className="form-control"
+                                placeholder="Cidade"
+                              />
+                            </div>
+                          </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">location_city</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={street}
+                                disabled
+                                className="form-control"
+                                placeholder="Rua"
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">location_city</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={neighborhood}
+                                disabled
+                                className="form-control"
+                                placeholder="Bairro"
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">location_city</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={number}
+                                onChange={e => setNumber(e.target.value)}
+                                className="form-control"
+                                placeholder="Número"
+                              />
+                            </div>
+                          </span>
                         </div>
-                      </span>
-
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">lock_outline</i>
-                            </span>
-                          </div>
-                          <br />
-
-                          <input
-                            value={senha}
-                            onChange={e => setSenha(e.target.value)}
-                            name="senha"
-                            type="password"
-                            className="form-control"
-                            placeholder="Senha..."
-                          />
-                        </div>
-                      </span>
-
-                      <span className="bmd-form-group">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i className="material-icons">lock_outline</i>
-                            </span>
-                          </div>
-                          <br />
-
-                          <input
-                            value={repeatSenha}
-                            onChange={e => setRepeatSenha(e.target.value)}
-                            name="senha"
-                            type="password"
-                            className="form-control"
-                            placeholder="Confirme sua senha..."
-                          />
-                        </div>
-                      </span>
+                      </div>
                     </div>
 
                     <br />

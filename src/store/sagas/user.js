@@ -8,7 +8,7 @@ export function* authUser(action) {
   try {
     const { data } = yield call(api.post, 'api/session', { email, senha });
     const { token, user } = data;
-    if (user.payment_status === 'pending') {
+    if (user.payment_status !== 'paid') {
       throw { response: { data: { error: 'Estamos processando seu pagamento' } } };
     }
     localStorage.setItem('@Ondazul: user', JSON.stringify(user));

@@ -18,6 +18,7 @@ import Crencas from './Crencas';
 import Forgot from './Forgot';
 import Reset from './Reset';
 import Checkout from './Checkout';
+import ErrorPage from './ErrorPage'
 
 const Pages = () => (
   <BrowserRouter>
@@ -39,7 +40,7 @@ const Pages = () => (
       <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
       <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
       <PrivateRoute exact path="/crencas" component={Crencas} />
-      <Route component={() => <h1>Page not found</h1>} />
+      <Route component={ErrorPage} />
     </Switch>
   </BrowserRouter>
 );
