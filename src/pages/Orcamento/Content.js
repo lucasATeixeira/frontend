@@ -39,16 +39,18 @@ const Component = ({
         </div>
       </div>
 
-      {categorias.map(c => (
-        <div key={c._id} className="row">
-          <div className="col-md-12">
-            <TableCard categoria={c} color={color} options materialIcon={materialIcon}>
-              <Title categoria={c} pencil />
-              <Table idCategoria={c._id} itens={c.itens} color={color} />
-            </TableCard>
+      {categorias
+        .filter(c => c.classificacao !== 'diversos')
+        .map(c => (
+          <div key={c._id} className="row">
+            <div className="col-md-12">
+              <TableCard categoria={c} color={color} options materialIcon={materialIcon}>
+                <Title categoria={c} pencil />
+                <Table idCategoria={c._id} itens={c.itens} color={color} />
+              </TableCard>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
       {addCategoria && (
         <div ref={scrollHook} className="row">
@@ -75,8 +77,13 @@ const Component = ({
                           name="classificacao"
                           placeholder="Classificação da Categoria"
                           options={[
-                            { id: 'moradia', title: 'Moradia' },
-                            { id: 'transporte', title: 'Transporte' },
+                            { id: 'pessoal', title: 'Gastos Pessoais' },
+                            { id: 'dependente', title: 'Gastos de Dependentes' },
+                            { id: 'alimentação', title: 'Gastos com Alimentação' },
+                            { id: 'saude', title: 'Gastos com Vida e Saúde' },
+                            { id: 'lazer', title: 'Gastos com Lazer' },
+                            { id: 'moradia', title: 'Gastos com Moradia' },
+                            { id: 'transporte', title: 'Gastos com Transporte' },
                             { id: 'outros', title: 'Outros' },
                           ]}
                         />
