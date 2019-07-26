@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CurrencyInput from 'react-currency-input';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -24,6 +24,13 @@ const TablePassivos = ({
   const [taxa, setTaxa] = useState(0);
   const [aVista, setAVista] = useState(0);
   const [edit, setEdit] = useState('');
+
+  useEffect(() => {
+    const i = taxa / 100;
+    const fv = pRestantes * pmt;
+    const pv = fv / (1 + i) ** pRestantes;
+    setAVista(pv);
+  }, [pRestantes, pmt, taxa]);
 
   const handleDelete = (patrimonio) => {
     if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;

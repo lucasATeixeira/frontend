@@ -13,12 +13,12 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
       saveSimulation({
         ...currentSimulation,
         patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(pr => pr._id !== p._id),
-        saldo: currentSimulation.saldo + p.total,
+        saldo: currentSimulation.saldo + p.aVista,
       });
       return;
     }
     if (!checked) {
-      if (currentSimulation.saldo < p.total) {
+      if (currentSimulation.saldo < p.aVista) {
         toast.error(
           'Você não tem saldo suficente para quitar esta dívida, mas fique tranquilo, salve esta estratégia para que o saldo fique salvo!',
           { containerId: 'alerts' },
@@ -28,12 +28,13 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
       saveSimulation({
         ...currentSimulation,
         patrimoniosRemovidos: [...currentSimulation.patrimoniosRemovidos, p],
-        saldo: currentSimulation.saldo - p.total,
+        saldo: currentSimulation.saldo - p.aVista,
       });
     }
   };
   return (
     <div className="card">
+      <ToastContainer />
       <ToastContainer />
       <div className="card-header card-header-text card-header-danger">
         <div className="card-text">
@@ -63,7 +64,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                       <strong>Taxa</strong>
                     </th>
                     <th className="text-danger">
-                      <strong>Saldo Total</strong>
+                      <strong>Saldo de Quitação à vista</strong>
                     </th>
                     <th className="text-right text-danger">
                       <strong>Actions</strong>
@@ -82,7 +83,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                         <td>{p.parcelas}</td>
                         <td>{p.taxa}%</td>
                         <td>
-                          {p.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                          {p.aVista.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                         </td>
                         <td className="td-actions text-right">
                           <div className="form-check">

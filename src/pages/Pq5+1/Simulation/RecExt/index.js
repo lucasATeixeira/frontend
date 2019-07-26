@@ -25,10 +25,10 @@ const RecExt = ({ simulacao, submitSimulationRequest }) => {
         <h2>Recebimentos Extras</h2>
         <TopInfo />
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-5">
             <CardOne />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-7">
             <DividasTable />
           </div>
         </div>

@@ -29,7 +29,7 @@ const TypeCard = ({ content, startDetails }) => {
     icon = 'colorize';
   }
   return (
-    <div className="col-md-3">
+    <div className="col-lg-3 col-md-6 col-sm-12">
       <div className="card card-pricing bg-info">
         <div className="card-body ">
           <div className="card-icon">

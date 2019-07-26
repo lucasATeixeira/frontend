@@ -35,7 +35,7 @@ const Orcamento = ({ content }) => {
     return orcamento + pmt;
   });
   return (
-    <div className="col-md-3">
+    <div className="col-lg-3 col-md-6 col-sm-12">
       <div className="info info-horizontal">
         <div className="icon icon-info">
           <i className="material-icons">attach_money</i>

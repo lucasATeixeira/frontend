@@ -5,10 +5,10 @@ import Two from './Two';
 
 const RecExt = ({ content }) => (
   <div className="row">
-    <div className="col-md-6">
+    <div className="col-lg-6 col-md-12 col-sm-12">
       <One content={content} />
     </div>
-    <div className="col-md-6">
+    <div className="col-lg-6 col-md-12 col-sm-12">
       <Two content={content} />
     </div>
   </div>

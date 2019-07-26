@@ -43,7 +43,7 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
       <br />
       <br />
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-4">
           <CardOne
             select={(
               <span className="bmd-form-group">
@@ -55,7 +55,7 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
                   name="estrategia"
                   onChange={handleChange}
                 >
-                  <option value="plano">Plano</option>
+                  <option value="plano">Escolha um plano</option>
                   {!currentSimulation.checked.categoria ? (
                     <>
                       {outros.map(o => (
@@ -86,7 +86,7 @@ const StageTwo = ({ simulacao, saveSimulation, submitSimulationRequest }) => {
 )}
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-8  ">
           <DividasTable />
         </div>
       </div>

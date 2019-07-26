@@ -8,7 +8,7 @@ import { Creators as SimulacaoActions } from '../../../store/ducks/simulacao';
 const Options = ({
   icon, title, startSimulation, type, destaque, simulacao,
 }) => (
-  <div className="col-md-2 ml-auto mr-auto">
+  <div className="col-xl-2 col-lg-6 col-md-6 ml-auto mr-auto">
     <div className="card card-pricing ">
       <div className={`card-body ${destaque && 'bg-info'}`}>
         <div className={`card-icon icon-${destaque ? 'black' : 'info'}`}>

@@ -14,7 +14,7 @@ const Main = ({
   return (
     <>
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <CardStats
             color="success"
             textColor="text-success"
@@ -26,7 +26,7 @@ const Main = ({
             footer={[{ materialIcon: 'attach_money' }]}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <CardStats
             textColor="text-info"
             title={Math.abs(simulacao.gastos).toLocaleString('pt-br', {
@@ -53,7 +53,7 @@ const Main = ({
             ]}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <CardStats
             info={simulacao.pmt < 0 ? 'Reduziu as Parcelas em' : 'Aumentou as parcelas em'}
             title={Math.abs(simulacao.pmt).toLocaleString('pt-br', {

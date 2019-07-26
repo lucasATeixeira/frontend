@@ -49,7 +49,7 @@ const Plano = ({ content }) => {
   });
 
   return (
-    <div className="col-md-3">
+    <div className="col-lg-3 col-md-6 col-sm-12">
       <div className="info info-horizontal">
         <div className="icon icon-grafit">
           <i className="material-icons">insert_comment</i>
