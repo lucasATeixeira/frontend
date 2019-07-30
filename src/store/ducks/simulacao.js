@@ -182,6 +182,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
           checked: undefined,
           estrategia: undefined,
           enxugar: [],
+          amortizacao: [],
         },
       };
     case Types.FETCH_DATA_REQUEST:

@@ -53,6 +53,7 @@ export function* submitSimulationRequest(action) {
       itensRemovidos: currentSimulation.itensRemovidos,
       patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos,
       saldo: currentSimulation.saldo,
+      amortizacao: currentSimulation.amortizacao,
     };
     const { data } = yield call(api.post, 'api/simulacao', currentSimulation);
     const response = {

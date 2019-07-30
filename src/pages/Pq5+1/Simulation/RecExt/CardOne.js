@@ -15,12 +15,13 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
   const [orcado, setOrcado] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (recorrencia <= 0) {
       return toast.error('Recorrência não pode ser igual ou menor que zero', {
         containerId: 'alerts',
       });
     }
-    e.preventDefault();
+    if (!nome) return toast.error('Insira um nome', { containerId: 'alerts' });
     const id = Math.random();
     saveSimulation({
       ...currentSimulation,
@@ -49,6 +50,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
           orcado,
           recorrencia,
           classificacao: 'Eventual',
+          tipo: 'renda extra',
           mensal: orcado / recorrencia,
           _id: id,
         },
