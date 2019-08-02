@@ -26,10 +26,11 @@ const TablePassivos = ({
   const [edit, setEdit] = useState('');
 
   useEffect(() => {
-    const i = taxa / 100;
-    const fv = pRestantes * pmt;
-    const pv = fv / (1 + i) ** pRestantes;
-    setAVista(pv);
+    const j = taxa / 100;
+    const n = pRestantes;
+    const p = pmt;
+    const q = ((1 - (1 + j) ** -n) / j) * p;
+    setAVista(q);
   }, [pRestantes, pmt, taxa]);
 
   const handleDelete = (patrimonio) => {

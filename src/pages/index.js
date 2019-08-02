@@ -18,7 +18,7 @@ import Crencas from './Crencas';
 import Forgot from './Forgot';
 import Reset from './Reset';
 import Checkout from './Checkout';
-import ErrorPage from './ErrorPage'
+import ErrorPage from './ErrorPage';
 
 const Pages = () => (
   <BrowserRouter>
