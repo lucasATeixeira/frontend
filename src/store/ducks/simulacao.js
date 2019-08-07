@@ -106,6 +106,9 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         passivos: state.passivos - action.payload.simulation.passivos,
         pmt: state.pmt - action.payload.simulation.pmt,
         saldo: state.saldo - action.payload.simulation.saldo,
+        amortizacao: state.amortizacao.filter(
+          a => !action.payload.simulation.amortizacao.map(am => am._id).includes(a._id),
+        ),
       };
     case Types.SUBMIT_SIMULATION_REQUEST:
       return {
@@ -152,6 +155,7 @@ export default function simulacao(state = INITIAL_VALUE, action) {
         passivos: state.passivos + action.payload.currentSimulation.passivos,
         pmt: state.pmt + action.payload.currentSimulation.pmt,
         saldo: action.payload.currentSimulation.saldo,
+        amortizacao: [...state.amortizacao, ...action.payload.currentSimulation.amortizacao],
       };
     case Types.SAVE_SIMULATION:
       return {

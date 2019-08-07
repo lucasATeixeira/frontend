@@ -214,7 +214,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                       .map((p) => {
                         const actualP = simulacao.amortizacao
                           .filter(a => a.divida === p._id)
-                          .sort((a, b) => (a.newTotal > b.newTotal ? -1 : 1))[0];
+                          .sort((a, b) => (a.newTotal > b.newTotal ? 1 : -1))[0];
                         if (actualP) {
                           p = {
                             ...p,
