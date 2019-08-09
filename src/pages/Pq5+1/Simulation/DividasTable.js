@@ -212,9 +212,14 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                         p => !simulacao.patrimoniosRemovidos.map(pr => pr._id).includes(p._id),
                       )
                       .map((p) => {
-                        const actualP = simulacao.amortizacao
+                        let actualP = simulacao.amortizacao
                           .filter(a => a.divida === p._id)
                           .sort((a, b) => (a.newTotal > b.newTotal ? 1 : -1))[0];
+
+                        if (currentSimulation.amortizacao.find(a => a.divida === p._id)) {
+                          [actualP] = currentSimulation.amortizacao.filter(a => a.divida === p._id);
+                        }
+
                         if (actualP) {
                           p = {
                             ...p,
@@ -223,6 +228,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                             aVista: actualP.newAVista,
                           };
                         }
+
                         return (
                           <tr key={p._id}>
                             <td>{p.nome}</td>

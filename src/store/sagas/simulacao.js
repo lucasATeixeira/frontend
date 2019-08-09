@@ -17,7 +17,6 @@ export function* removeSimulationRequest(action) {
     yield call(api.delete, `api/simulacao/${simulation._id}`);
     yield put(SimulacaoActions.removeSimulationSuccess(simulation));
   } catch (err) {
-    console.log(err);
     yield put(SimulacaoActions.removeSimulationFailure(err));
   }
 }
