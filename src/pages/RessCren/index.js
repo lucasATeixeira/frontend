@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Creators as CrencaActions } from '../../store/ducks/crencas';
 import BlankPage from '../../components/BlankPage';
+import formCrencas from '../../services/formCrencas';
 
 const RessCren = ({ crencas, updateRequest }) => {
   const [input, setInput] = useState('');
@@ -65,7 +66,8 @@ const RessCren = ({ crencas, updateRequest }) => {
                   )}
                   {input === a._id ? (
                     <div>
-                      <input
+                      <textarea
+                        wrap="hard"                        
                         type="text"
                         className="form-control"
                         value={ress}
@@ -83,7 +85,11 @@ const RessCren = ({ crencas, updateRequest }) => {
                         setInput(a._id);
                         setParent(b);
                         setChild(a);
-                        setRess(a.ress ? a.ress : '');
+                        setRess(
+                          a.ress
+                            ? a.ress
+                            : formCrencas.filter(f => f.pergunta === a.crenca)[0].ress,
+                        );
                       }}
                       type="button"
                       className="btn btn-success btn-sm btn-link pull-right"

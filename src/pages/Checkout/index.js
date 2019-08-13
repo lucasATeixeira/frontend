@@ -22,6 +22,7 @@ export default function Checkout({ history }) {
   const [neighborhood, setNeighborhood] = useState('');
   const [street, setStreet] = useState('');
   const [number, setNumber] = useState('');
+  const [cupom, setCupom] = useState('');
 
   const amount = 10000;
 
@@ -46,6 +47,11 @@ export default function Checkout({ history }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (cupom) {
+      const { data: cupomResponse } = await api.get(`api/cupom/${cupom}`);
+      console.log(cupomResponse);
+    }
+    return;
     const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join('');
     const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(4, 9)}${telefone.slice(
       10,
@@ -402,6 +408,22 @@ export default function Checkout({ history }) {
                                 onChange={e => setNumber(e.target.value)}
                                 className="form-control"
                                 placeholder="Número"
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">shopping_basket</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={cupom}
+                                onChange={e => setCupom(e.target.value)}
+                                className="form-control"
+                                placeholder="Cupom"
                               />
                             </div>
                           </span>
