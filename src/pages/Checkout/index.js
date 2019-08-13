@@ -24,7 +24,7 @@ export default function Checkout({ history }) {
   const [number, setNumber] = useState('');
   const [cupom, setCupom] = useState('');
 
-  const amount = 10000;
+  let amount = 57000;
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -47,14 +47,20 @@ export default function Checkout({ history }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    let discount = 1;
+    let cupomName = 'null';
     if (cupom) {
       try {
         const { data: cupomResponse } = await api.get(`api/cupom/${cupom}`);
+        discount = (100 - cupomResponse.discount) / 100;
+        cupomName = cupomResponse.name;
+        amount *= discount;
       } catch (err) {
-        toast.error(err.response.data.error);
+        toast.error(`${err.response.data.error}, apague o cupom para continuar a compra`, {
+          containerId: 'checkout',
+        });
       }
     }
-    return;
     const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join('');
     const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(4, 9)}${telefone.slice(
       10,
@@ -89,6 +95,8 @@ export default function Checkout({ history }) {
               street,
               number,
               amount,
+              cupom: cupomName,
+              payment_value: amount,
             });
             setLoading(false);
             history.push('/');
@@ -424,9 +432,10 @@ export default function Checkout({ history }) {
                               <br />
                               <input
                                 value={cupom}
-                                onChange={e => setCupom(e.target.value)}
+                                onChange={e => setCupom(e.target.value.toUpperCase())}
                                 className="form-control"
                                 placeholder="Cupom"
+                                maxLength={6}
                               />
                             </div>
                           </span>
