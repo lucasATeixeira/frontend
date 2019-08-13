@@ -234,7 +234,7 @@ const TableAtivos = ({
                               </>
                             ) : (
                               <>
-                                <option value="cdb">CDB</option>
+                                <option value="cdb">Poupança / CDB</option>
                                 <option value="tesouro">Tesouro</option>
                                 <option value="ações">Ações</option>
                                 <option value="outros ativos">Outros Ativos</option>

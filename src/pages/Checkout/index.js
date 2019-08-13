@@ -48,8 +48,11 @@ export default function Checkout({ history }) {
   async function handleSubmit(e) {
     e.preventDefault();
     if (cupom) {
-      const { data: cupomResponse } = await api.get(`api/cupom/${cupom}`);
-      console.log(cupomResponse);
+      try {
+        const { data: cupomResponse } = await api.get(`api/cupom/${cupom}`);
+      } catch (err) {
+        toast.error(err.response.data.error);
+      }
     }
     return;
     const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join('');
