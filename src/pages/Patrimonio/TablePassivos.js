@@ -47,8 +47,8 @@ const TablePassivos = ({
     e.preventDefault();
     if (!nomePassivo) return toast.error('Inclua um nome', { containerId: 'alerts' });
     if (!instituicao) return toast.error('Inclua um nome para Instituição', { containerId: 'alerts' });
-    if (pRestantes <= 0) return toast.error('Inclua um valor de parcelas restantes válido', { containerId: 'alerts' });
-    if (pmt <= 0) return toast.error('Inclua um valor de PMT válido', { containerId: 'alerts' });
+    if (pRestantes < 0) return toast.error('Inclua um valor de parcelas restantes válido', { containerId: 'alerts' });
+    if (pmt < 0) return toast.error('Inclua um valor de PMT válido', { containerId: 'alerts' });
     if (taxa < 0) return toast.error('Inclua um valor da taxa válido', { containerId: 'alerts' });
     if (aVista < 0) return toast.error('Inclua um valor à Vista válido', { containerId: 'alerts' });
     const data = moment();
@@ -73,7 +73,7 @@ const TablePassivos = ({
         data,
         dataFinal,
         taxa,
-        aVista,
+        aVista: aVista || 0,
       });
     }
 
@@ -171,7 +171,9 @@ const TablePassivos = ({
                               currency: 'BRL',
                             })}
                           </td>
-                          <td>{((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')}%</td>
+                          <td>{!!p.pmt || !!p.pRestantes ? (
+                            ((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')
+                          ): 0}%</td>
                           <td className="td-actions text-right">
                             <button
                               type="button"
@@ -279,9 +281,11 @@ const TablePassivos = ({
                             })}
                           </td>
                           <td className="text-center">
-                            {isNaN((1 - aVista / (pRestantes * pmt)) * 100)
-                              ? 0
-                              : Math.round((1 - aVista / (pRestantes * pmt)) * 100)}
+                            {!!pRestantes || !!pmt
+                              ? isNaN((1 - aVista / (pRestantes * pmt)) * 100)
+                                ? 0
+                                : Math.round((1 - aVista / (pRestantes * pmt)) * 100)
+                              : 0}
                             %
                           </td>
                           <td className="text-center">
@@ -378,9 +382,11 @@ const TablePassivos = ({
                         })}
                       </td>
                       <td className="text-center">
-                        {isNaN((1 - aVista / (pRestantes * pmt)) * 100)
-                          ? 0
-                          : Math.round((1 - aVista / (pRestantes * pmt)) * 100)}
+                        {!!pRestantes || !!pmt
+                          ? isNaN((1 - aVista / (pRestantes * pmt)) * 100)
+                            ? 0
+                            : Math.round((1 - aVista / (pRestantes * pmt)) * 100)
+                          : 0}
                         %
                       </td>
                       <td className="text-center">
