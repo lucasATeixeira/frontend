@@ -171,9 +171,12 @@ const TablePassivos = ({
                               currency: 'BRL',
                             })}
                           </td>
-                          <td>{!!p.pmt || !!p.pRestantes ? (
-                            ((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')
-                          ): 0}%</td>
+                          <td>
+                            {!!p.pmt || !!p.pRestantes
+                              ? ((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')
+                              : 0}
+                            %
+                          </td>
                           <td className="td-actions text-right">
                             <button
                               type="button"
