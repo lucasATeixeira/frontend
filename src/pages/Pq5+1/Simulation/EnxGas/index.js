@@ -10,7 +10,7 @@ const EnxGas = ({ orcamento }) => {
   const [enxugar, setEnxugar] = useState(false);
   const [listData, setListData] = useState(
     orcamento.categorias
-      .filter(c => c.tipo === 'gasto')
+      .filter(c => c.tipo === 'gasto' && c.nome !== 'DIVERSOS')
       .map(c => c.itens.map(i => ({
         ...i,
         quadrante: 3,

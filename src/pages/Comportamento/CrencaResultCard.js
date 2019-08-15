@@ -61,6 +61,7 @@ export default function CrencaResultCard({ crenca }) {
       position: 'bottom',
     },
   };
+
   const pizzaData = {
     labels: [firstHigher.cat.toUpperCase(), 'RESTANTE'],
     datasets: [

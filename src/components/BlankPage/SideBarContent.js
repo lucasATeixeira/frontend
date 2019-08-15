@@ -71,8 +71,8 @@ export default function SideBarContent({ setPage }) {
           },
           {
             href: '/acoes30d',
-            mini: 'A30',
-            title: 'Ações 30 Dias',
+            mini: 'RAC',
+            title: 'Alinhamento RAC',
           },
         ]}
         setPage={setPage}

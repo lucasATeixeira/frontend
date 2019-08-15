@@ -507,7 +507,7 @@ const formCrencas = [
     ress:
       'Ter muito dinheiro me permitir exercer ainda mais a minha generosidade e espiritualidade',
     score: 0,
-    pergunta: 'Ter muito dinheiro me fará sentir menos puro ou espiritualisado',
+    pergunta: 'Ter muito dinheiro me fará sentir menos puro ou espiritualizado',
   },
   {
     cat: 'espiritualidade',
