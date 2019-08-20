@@ -76,6 +76,7 @@ export default function CrencaResultCard({ crenca }) {
   return (
     <div className="card">
       <div className="card-header">
+        <h3 className="card-title">{crenca.name}</h3>
         <h4 className="card-title">
           Resultado do questionário de Crença: <strong>{crenca.cat.toUpperCase()}</strong>
         </h4>
