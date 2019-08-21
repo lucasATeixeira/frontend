@@ -485,7 +485,7 @@ const formCrencas = [
     cat: 'pertencimento',
     ress:
       'O que diferencia o investidor do endividado é a forma como cada um gasta o que ganha, e não a quantidade que cada um ganha.',
-    score: 0,
+    score: 0, 
     pergunta: 'Pessoas endividadas vem de famílias pobres',
   },
   {
@@ -553,7 +553,7 @@ const formCrencas = [
       'Quanto mais dinheiro eu tenho, mais eu posso contribuir com aqueles que necessitam e isso alimenta a minha fé.',
     score: 0,
     pergunta:
-      'É mais fácil um camelo passar pelo buraco de uma agulha que um rico entrar no reino dos céus',
+      'É mais fácil um camelo passar pelo buraco de uma agulha que um rico entrar no reino dos céus.',
   },
 ];
 
