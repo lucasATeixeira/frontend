@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import BlankPage from '../../components/BlankPage';
-import PersonResult from './PersonResult';
+import PersonResultCrenca from './PersonResultCrenca';
 
 export default function Comportamento() {
   const [firstCrencaResult, secondCrencaResult] = useSelector(state => state.crencas.answers);
@@ -10,12 +10,12 @@ export default function Comportamento() {
       <div className="row">
         {firstCrencaResult && (
           <div className="col-md-6">
-            <PersonResult crenca={firstCrencaResult} />
+            <PersonResultCrenca crenca={firstCrencaResult} />
           </div>
         )}
         {secondCrencaResult && (
           <div className="col-md-6">
-            <PersonResult crenca={secondCrencaResult} />
+            <PersonResultCrenca crenca={secondCrencaResult} />
           </div>
         )}
       </div>

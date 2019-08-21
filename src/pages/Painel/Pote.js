@@ -3,8 +3,14 @@ import { Bar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 
 const Pote = ({ orcamento, patrimonios }) => {
-  const maxOrcado = orcamento.gastosOrcados + orcamento.gastosRealizadosParcelados + patrimonios.passivos.pmt;
-  const maxRealizado = orcamento.gastosRealizados + orcamento.gastosRealizadosParcelados + patrimonios.passivos.pmt;
+  const maxOrcado = orcamento.gastosOrcados
+    + orcamento.recebimentosOrcados
+    + orcamento.gastosRealizadosParcelados
+    + patrimonios.passivos.pmt;
+  const maxRealizado = orcamento.gastosRealizados
+    + orcamento.recebimentosRealizados
+    + orcamento.gastosRealizadosParcelados
+    + patrimonios.passivos.pmt;
 
   const [barData, setBarData] = useState({});
   useEffect(() => {

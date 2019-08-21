@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CrencaResultCard from './CrencaResultCard';
 
-export default function PersonResult({ crenca }) {
+export default function PersonResultCrenca({ crenca }) {
   return (
     <>
       <div className="row">
@@ -14,6 +14,6 @@ export default function PersonResult({ crenca }) {
   );
 }
 
-PersonResult.propTypes = {
+PersonResultCrenca.propTypes = {
   crenca: PropTypes.shape().isRequired,
 };

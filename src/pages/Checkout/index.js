@@ -78,7 +78,8 @@ export default function Checkout({ history }) {
       try {
         await api.post('api/user', { email, cpf: cpfString });
         const checkout = new window.PagarMeCheckout.Checkout({
-          encryption_key: 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
+          encryption_key:
+            process.env.REACT_ENCRYPT_KEY_PAGARME || 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
           success: async (data) => {
             await api.post('api/checkout', {
               email,
@@ -98,8 +99,8 @@ export default function Checkout({ history }) {
               cupom: cupomName,
               payment_value: amount,
             });
-            setLoading(false);
             history.push('/');
+            setLoading(false);
           },
           error: (err) => {
             if (err) return toast.error('Tivemos um erro, tente novamente', { containerId: 'checkout' });
@@ -116,7 +117,8 @@ export default function Checkout({ history }) {
           createToken: 'true',
           paymentMethods: 'credit_card',
           maxInstallments: 12,
-          postbackUrl: process.env.REACT_APP_API_URL || 'https://api.ondazul.online/api/notification',
+          postbackUrl:
+            process.env.REACT_APP_API_URL || 'https://api.ondazul.online/api/notification',
           customer: {
             external_id: Math.random(),
             name: nome,
