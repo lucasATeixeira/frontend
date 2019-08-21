@@ -116,7 +116,7 @@ export default function Checkout({ history }) {
           createToken: 'true',
           paymentMethods: 'credit_card',
           maxInstallments: 12,
-          postbackUrl: 'https://api.ondazul.online/api/notification',
+          postbackUrl: process.env.REACT_APP_API_URL || 'https://api.ondazul.online/api/notification',
           customer: {
             external_id: Math.random(),
             name: nome,
