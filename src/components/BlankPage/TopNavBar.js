@@ -17,7 +17,7 @@ const style = {
 };
 
 const TopNavbar = ({
-  logout, history, page, categorias, fetchDataRequest,
+  logout, history, page, categorias, fetchDataRequest, user,
 }) => {
   const [checked, setChecked] = useState(categorias.periodo > 1);
   const [start, setStart] = useState(new Date(categorias.start));
@@ -84,6 +84,20 @@ const TopNavbar = ({
 
         <div className="collapse navbar-collapse justify-content-end">
           <ul className="navbar-nav">
+            <li className="nav-item" style={{ marginRight: '50px' }}>
+              <a
+                href={`https://api.whatsapp.com/send?phone=5562981073718&text=Olá, me chamo ${
+                  user.nome
+                } e estou querendo contratar seções avulsas para o Ondazul!!`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginLeft: '14px' }}
+                type="button"
+                className="btn btn-info"
+              >
+                <strong>Seções Avulsas</strong>
+              </a>
+            </li>
             {window.location.pathname !== '/pq5+1' ? (
               <>
                 {!checked && (
@@ -185,11 +199,13 @@ TopNavbar.propTypes = {
   logout: PropTypes.func.isRequired,
   page: PropTypes.string.isRequired,
   categorias: PropTypes.shape().isRequired,
+  user: PropTypes.shape().isRequired,
   fetchDataRequest: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   categorias: state.categorias,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ ...UserActions, ...DataActions }, dispatch);

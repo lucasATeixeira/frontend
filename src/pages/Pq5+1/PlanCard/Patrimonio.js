@@ -34,11 +34,13 @@ const Patrimonio = ({ content }) => {
       })}`;
     }
 
-    return `${ativos
-      + passivos}, você ainda teria um saldo de um saldo de ${content.saldo.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    })}`;
+    return `${ativos + passivos}, você ainda teria um saldo de ${content.saldo.toLocaleString(
+      'pt-br',
+      {
+        style: 'currency',
+        currency: 'BRL',
+      },
+    )}`;
   });
   return (
     <div className="col-lg-3 col-md-6 col-sm-12">

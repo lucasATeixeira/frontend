@@ -16,8 +16,13 @@ const Plano = ({ content }) => {
       }
       return `Vender o patrimônio "${content.patrimoniosRemovidos[0].nome}", remover ${
         content.itensRemovidos.length
-      } gastos do Orçamento, ${estrategia} e quitar ${content.patrimoniosRemovidos.length
-        - 1} dívida`;
+      } gastos do Orçamento, ${estrategia}${
+        content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+      } ${
+        content.patrimoniosRemovidos.length
+          ? `quitar ${content.patrimoniosRemovidos.length - 1} dívida`
+          : ''
+      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
     }
 
     if (content.type === 'eg') {
@@ -28,21 +33,31 @@ const Plano = ({ content }) => {
       return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString('pt-br', {
         style: 'currency',
         currency: 'BRL',
-      })} com o(a) ${content.patrimonios[0].instituicao} e quitar ${
+      })} com o(a) ${content.patrimonios[0].instituicao}${
+        content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+      } ${
         content.patrimoniosRemovidos.length
-      } dívida`;
+          ? `quitar ${content.patrimoniosRemovidos.length} dívida`
+          : ''
+      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
     }
 
     if (content.type === 're') {
-      return `Adquirir ${content.patrimonios[0].nome} de recebimento extra e quitar ${
+      return `Utilizar ${content.patrimonios[0].nome} de recebimento extra${
+        content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+      } ${
         content.patrimoniosRemovidos.length
-      } dívidas`;
+          ? `quitar ${content.patrimoniosRemovidos.length} dívidas`
+          : ''
+      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
     }
 
     if (content.type === 'cd') {
-      return `Contratar o novo empréstimo ${content.patrimonios[0].nome} para quitar ${
+      return `Contratar o novo empréstimo ${content.patrimonios[0].nome} ${
         content.patrimoniosRemovidos.length
-      } dívidas`;
+          ? `para quitar ${content.patrimoniosRemovidos.length} dívidas`
+          : ''
+      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
     }
 
     return '';

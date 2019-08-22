@@ -19,7 +19,8 @@ import Forgot from './Forgot';
 import Reset from './Reset';
 import Checkout from './Checkout';
 import ErrorPage from './ErrorPage';
-import Comportamento from './Comportamento'
+import Comportamento from './Comportamento';
+import Laudos from './Laudos';
 
 const Pages = () => (
   <BrowserRouter>
@@ -41,6 +42,7 @@ const Pages = () => (
       <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
       <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
       <PrivateRoute exact path="/comportamento" component={Comportamento} />
+      <PrivateRoute exact path="/laudos" component={Laudos} />
       {/* <PrivateRoute exact path="/crencas" component={Crencas} /> */}
       <Route component={ErrorPage} />
     </Switch>

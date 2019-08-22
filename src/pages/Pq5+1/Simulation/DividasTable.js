@@ -17,6 +17,10 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (valor === 'R$ 0,00') {
+      setInput('');
+      return;
+    }
     if (currentSimulation.saldo < valor) {
       return toast.error('Você não tem saldo suficente para amortizar este valor!', {
         containerId: 'alerts',
