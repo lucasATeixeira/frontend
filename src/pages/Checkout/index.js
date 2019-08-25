@@ -93,9 +93,7 @@ export default function Checkout({ history }) {
       try {
         await api.post("api/user", { email, cpf: cpfString });
         const checkout = new window.PagarMeCheckout.Checkout({
-          encryption_key:
-            process.env.REACT_ENCRYPT_KEY_PAGARME ||
-            "ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT",
+          encryption_key: "ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT",
           success: async data => {
             await api.post("api/checkout", {
               email,
@@ -137,8 +135,6 @@ export default function Checkout({ history }) {
           paymentMethods: "credit_card",
           maxInstallments: 12,
           postbackUrl: "https://ondazul-backend.herokuapp.com/api/notification",
-          // `${process.env.REACT_APP_API_URL}api/notification` ||
-          // "https://api.ondazul.online/api/notification",
           customer: {
             external_id: Math.random(),
             name: nome,
