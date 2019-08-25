@@ -1,34 +1,34 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-import api from '../../services/api';
-import Upper from './Upper';
-import { handleCpf, handleDate, handleTelefone } from '../../hooks/inputHooks';
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import api from "../../services/api";
+import Upper from "./Upper";
+import { handleCpf, handleDate, handleTelefone } from "../../hooks/inputHooks";
 
 export default function Checkout({ history }) {
   const [loading, setLoading] = useState(false);
-  const [nascimento, setNascimento] = useState('');
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [senha, setSenha] = useState('');
-  const [repeatSenha, setRepeatSenha] = useState('');
-  const [cep, setCep] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
-  const [neighborhood, setNeighborhood] = useState('');
-  const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [cupom, setCupom] = useState('');
+  const [nascimento, setNascimento] = useState("");
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [senha, setSenha] = useState("");
+  const [repeatSenha, setRepeatSenha] = useState("");
+  const [cep, setCep] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [street, setStreet] = useState("");
+  const [number, setNumber] = useState("");
+  const [cupom, setCupom] = useState("");
 
-  let amount = 57000;
+  let amount = 100; // 57000;
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://assets.pagar.me/checkout/1.1.0/checkout.js';
+    const script = document.createElement("script");
+    script.src = "https://assets.pagar.me/checkout/1.1.0/checkout.js";
     script.async = true;
     document.body.appendChild(script);
   }, []);
@@ -41,14 +41,16 @@ export default function Checkout({ history }) {
       setNeighborhood(data.bairro);
       return setStreet(data.logradouro);
     } catch (err) {
-      return toast.error('CEP não encontrado, insira um CEP Válido', { containerId: 'checkout' });
+      return toast.error("CEP não encontrado, insira um CEP Válido", {
+        containerId: "checkout"
+      });
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     let discount = 1;
-    let cupomName = 'null';
+    let cupomName = "null";
     if (cupom) {
       try {
         const { data: cupomResponse } = await api.get(`api/cupom/${cupom}`);
@@ -56,32 +58,46 @@ export default function Checkout({ history }) {
         cupomName = cupomResponse.name;
         amount *= discount;
       } catch (err) {
-        toast.error(`${err.response.data.error}, apague o cupom para continuar a compra`, {
-          containerId: 'checkout',
-        });
+        toast.error(
+          `${err.response.data.error}, apague o cupom para continuar a compra`,
+          {
+            containerId: "checkout"
+          }
+        );
       }
     }
-    const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join('');
-    const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(4, 9)}${telefone.slice(
-      10,
-      14,
-    )}`;
-    if (isNaN(telefoneString)) return toast.error('Telefone Inválido', { containerId: 'checkout' });
-    if (cpfString.length !== 11) return toast.error('CPF Inválido');
-    if (!nome || !cpf || !telefone || !nascimento || !email || !senha) return toast.error('Preencha todos os campos', { containerId: 'checkout' });
-    if (senha !== repeatSenha) return toast.error('Senhas devem ser iguais', { containerId: 'checkout' });
-    if (!neighborhood) return toast.error('Insira um CEP válido', { containerId: 'checkout' });
+    const cpfString = [...cpf.split("-")[0].split("."), cpf.split("-")[1]].join(
+      ""
+    );
+    const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(
+      4,
+      9
+    )}${telefone.slice(10, 14)}`;
+    if (isNaN(telefoneString))
+      return toast.error("Telefone Inválido", { containerId: "checkout" });
+    if (cpfString.length !== 11) return toast.error("CPF Inválido");
+    if (!nome || !cpf || !telefone || !nascimento || !email || !senha)
+      return toast.error("Preencha todos os campos", {
+        containerId: "checkout"
+      });
+    if (senha !== repeatSenha)
+      return toast.error("Senhas devem ser iguais", {
+        containerId: "checkout"
+      });
+    if (!neighborhood)
+      return toast.error("Insira um CEP válido", { containerId: "checkout" });
 
     setLoading(true);
 
     async function checkData() {
       try {
-        await api.post('api/user', { email, cpf: cpfString });
+        await api.post("api/user", { email, cpf: cpfString });
         const checkout = new window.PagarMeCheckout.Checkout({
           encryption_key:
-            process.env.REACT_ENCRYPT_KEY_PAGARME || 'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
-          success: async (data) => {
-            await api.post('api/checkout', {
+            process.env.REACT_ENCRYPT_KEY_PAGARME ||
+            "ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT",
+          success: async data => {
+            await api.post("api/checkout", {
               email,
               senha,
               token: data.token,
@@ -89,7 +105,7 @@ export default function Checkout({ history }) {
               telefone: telefoneString,
               cpf: cpfString,
               nascimento,
-              cep: cep.replace('-', ''),
+              cep: cep.replace("-", ""),
               state,
               city,
               neighborhood,
@@ -97,70 +113,74 @@ export default function Checkout({ history }) {
               number,
               amount,
               cupom: cupomName,
-              payment_value: amount,
+              payment_value: amount
             });
-            history.push('/');
+            history.push("/");
             setLoading(false);
           },
-          error: (err) => {
-            if (err) return toast.error('Tivemos um erro, tente novamente', { containerId: 'checkout' });
+          error: err => {
+            if (err)
+              return toast.error("Tivemos um erro, tente novamente", {
+                containerId: "checkout"
+              });
             return null;
           },
-          close: () => setLoading(false),
+          close: () => setLoading(false)
         });
 
         checkout.open({
           amount,
-          buttonText: 'Pagar',
-          buttonClass: 'botao-pagamento',
-          customerData: 'false',
-          createToken: 'true',
-          paymentMethods: 'credit_card',
+          buttonText: "Pagar",
+          buttonClass: "botao-pagamento",
+          customerData: "false",
+          createToken: "true",
+          paymentMethods: "credit_card",
           maxInstallments: 12,
           postbackUrl:
-            process.env.REACT_APP_API_URL || 'https://api.ondazul.online/api/notification',
+            `${process.env.REACT_APP_API_URL}api/notification` ||
+            "https://api.ondazul.online/api/notification",
           customer: {
             external_id: Math.random(),
             name: nome,
-            type: 'individual',
-            country: 'br',
+            type: "individual",
+            country: "br",
             email,
             documents: [
               {
-                type: 'cpf',
-                number: cpfString,
-              },
+                type: "cpf",
+                number: cpfString
+              }
             ],
             phone_numbers: [`+55${telefoneString}`],
-            birthday: `${nascimento.split('/')[2]}-${nascimento.split('/')[1]}-${
-              nascimento.split('/')[0]
-            }`,
+            birthday: `${nascimento.split("/")[2]}-${
+              nascimento.split("/")[1]
+            }-${nascimento.split("/")[0]}`
           },
           billing: {
             name: nome,
             address: {
-              country: 'br',
+              country: "br",
               state,
               city,
               neighborhood,
               street,
               street_number: number,
-              zipcode: cep.replace('-', ''),
-            },
+              zipcode: cep.replace("-", "")
+            }
           },
 
           items: [
             {
-              id: '1',
-              title: 'Ondazul',
+              id: "1",
+              title: "Ondazul",
               unit_price: amount,
               quantity: 1,
-              tangible: false,
-            },
-          ],
+              tangible: false
+            }
+          ]
         });
       } catch (err) {
-        toast.error(err.response.data.error, { containerId: 'checkout' });
+        toast.error(err.response.data.error, { containerId: "checkout" });
         setLoading(false);
       }
     }
@@ -169,7 +189,11 @@ export default function Checkout({ history }) {
   }
   return (
     <>
-      <ToastContainer enableMultiContainer containerId="checkout" autoClose={2000} />
+      <ToastContainer
+        enableMultiContainer
+        containerId="checkout"
+        autoClose={2000}
+      />
       <Upper />
       <div className="wrapper wrapper-full-page">
         <div
@@ -177,8 +201,8 @@ export default function Checkout({ history }) {
           filter-color="black"
           style={{
             backgroundImage: "url('assets/img/realeasy.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'top center',
+            backgroundSize: "cover",
+            backgroundPosition: "top center"
           }}
         >
           <div className="container">
@@ -237,7 +261,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">settings_cell</i>
+                                  <i className="material-icons">
+                                    settings_cell
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -254,7 +280,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">calendar_today</i>
+                                  <i className="material-icons">
+                                    calendar_today
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -328,7 +356,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">location_city</i>
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -346,7 +376,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">location_city</i>
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -363,7 +395,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">location_city</i>
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -380,7 +414,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">location_city</i>
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -396,7 +432,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">location_city</i>
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -412,7 +450,9 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">location_city</i>
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
                                 </span>
                               </div>
                               <br />
@@ -428,13 +468,17 @@ export default function Checkout({ history }) {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">shopping_basket</i>
+                                  <i className="material-icons">
+                                    shopping_basket
+                                  </i>
                                 </span>
                               </div>
                               <br />
                               <input
                                 value={cupom}
-                                onChange={e => setCupom(e.target.value.toUpperCase())}
+                                onChange={e =>
+                                  setCupom(e.target.value.toUpperCase())
+                                }
                                 className="form-control"
                                 placeholder="Cupom"
                                 maxLength={6}
