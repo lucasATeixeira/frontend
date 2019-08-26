@@ -16,15 +16,23 @@ function createAction(content) {
     if (content.estrategia === 'assinatura') {
       estrategia = 'fazer assinatura de um veículo';
     }
-    return `Vender o patrimônio "${content.patrimoniosRemovidos[0].nome}", remover ${
+    return `Vender o patrimônio "${
+      content.patrimoniosRemovidos[0].nome
+    }", remover ${
       content.itensRemovidos.length
     } gastos do Orçamento, ${estrategia}${
-      content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+      content.patrimoniosRemovidos.length && content.amortizacao.length
+        ? ','
+        : ' e'
     } ${
       content.patrimoniosRemovidos.length
         ? `quitar ${content.patrimoniosRemovidos.length - 1} dívida`
         : ''
-    } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+    } ${
+      content.amortizacao.length
+        ? `e amortizar ${content.amortizacao.length} dívida`
+        : ''
+    }`;
   }
 
   if (content.type === 'eg') {
@@ -32,26 +40,41 @@ function createAction(content) {
   }
 
   if (content.type === 'ea') {
-    return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    })} com o(a) ${content.patrimonios[0].instituicao}${
-      content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+    return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString(
+      'pt-br',
+      {
+        style: 'currency',
+        currency: 'BRL',
+      }
+    )} com o(a) ${content.patrimonios[0].instituicao}${
+      content.patrimoniosRemovidos.length && content.amortizacao.length
+        ? ','
+        : ' e'
     } ${
       content.patrimoniosRemovidos.length
         ? `quitar ${content.patrimoniosRemovidos.length} dívida`
         : ''
-    } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+    } ${
+      content.amortizacao.length
+        ? `e amortizar ${content.amortizacao.length} dívida`
+        : ''
+    }`;
   }
 
   if (content.type === 're') {
     return `Utilizar ${content.patrimonios[0].nome} de recebimento extra${
-      content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+      content.patrimoniosRemovidos.length && content.amortizacao.length
+        ? ','
+        : ' e'
     } ${
       content.patrimoniosRemovidos.length
         ? `quitar ${content.patrimoniosRemovidos.length} dívidas`
         : ''
-    } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+    } ${
+      content.amortizacao.length
+        ? `e amortizar ${content.amortizacao.length} dívida`
+        : ''
+    }`;
   }
 
   if (content.type === 'cd') {
@@ -59,7 +82,11 @@ function createAction(content) {
       content.patrimoniosRemovidos.length
         ? `para quitar ${content.patrimoniosRemovidos.length} dívidas`
         : ''
-    } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+    } ${
+      content.amortizacao.length
+        ? `e amortizar ${content.amortizacao.length} dívida`
+        : ''
+    }`;
   }
 
   return '';
@@ -97,7 +124,9 @@ export function* submitSimulationRequest(action) {
         recorrencia: e.recorrencia,
         valorEnxugado: e.valorEnxugado,
         mensal:
-          e.classificacao === 'Eventual' ? e.orcado / e.recorrencia : e.orcado * e.recorrencia,
+          e.classificacao === 'Eventual'
+            ? e.orcado / e.recorrencia
+            : e.orcado * e.recorrencia,
         valorEnxugadoMensal:
           e.classificacao === 'Eventual'
             ? e.valorEnxugado / e.recorrencia
@@ -126,89 +155,95 @@ export function* submitSimulationRequest(action) {
       recebimentos:
         (currentSimulation.itens[0]
           ? currentSimulation.itens
-            .map((r) => {
-              if (r.tipo === 'recebimento' && r.classificacao !== 'Eventual') return r.mensal;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
-          : 0)
-        - (currentSimulation.itensRemovidos[0]
+              .map(r => {
+                if (r.tipo === 'recebimento' && r.classificacao !== 'Eventual')
+                  return r.mensal;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
+          : 0) -
+        (currentSimulation.itensRemovidos[0]
           ? currentSimulation.itensRemovidos
-            .map((r) => {
-              if (r.tipo === 'recebimento' && r.classificacao !== 'Eventual') return r.mensal;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
+              .map(r => {
+                if (r.tipo === 'recebimento' && r.classificacao !== 'Eventual')
+                  return r.mensal;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
           : 0),
       gastos:
         (currentSimulation.itens[0]
           ? currentSimulation.itens
-            .map((r) => {
-              if (r.tipo === 'gasto') return r.mensal;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
-          : 0)
-        - ((currentSimulation.itensRemovidos[0]
+              .map(r => {
+                if (r.tipo === 'gasto') return r.mensal;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
+          : 0) -
+        ((currentSimulation.itensRemovidos[0]
           ? currentSimulation.itensRemovidos
-            .map((r) => {
-              if (r.tipo === 'gasto') return r.mensal;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
-          : 0)
-          + currentSimulation.enxugar.map(e => e.mensal).reduce((a, b) => a + b, 0)
-          - currentSimulation.enxugar.map(e => e.valorEnxugadoMensal).reduce((a, b) => a + b, 0)),
+              .map(r => {
+                if (r.tipo === 'gasto') return r.mensal;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
+          : 0) +
+          currentSimulation.enxugar
+            .map(e => e.mensal)
+            .reduce((a, b) => a + b, 0) -
+          currentSimulation.enxugar
+            .map(e => e.valorEnxugadoMensal)
+            .reduce((a, b) => a + b, 0)),
       ativos:
         (currentSimulation.patrimonios[0]
           ? currentSimulation.patrimonios
-            .map((a) => {
-              if (a.tipo === 'ativo') return a.valor;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
-          : 0)
-        - (currentSimulation.patrimoniosRemovidos[0]
+              .map(a => {
+                if (a.tipo === 'ativo') return a.valor;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
+          : 0) -
+        (currentSimulation.patrimoniosRemovidos[0]
           ? currentSimulation.patrimoniosRemovidos
-            .map((a) => {
-              if (a.tipo === 'ativo') return a.valor;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
+              .map(a => {
+                if (a.tipo === 'ativo') return a.valor;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
           : 0),
       passivos:
         (currentSimulation.patrimonios[0]
           ? currentSimulation.patrimonios
-            .map((a) => {
-              if (a.tipo === 'passivo') return a.total;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
-          : 0)
-        - (currentSimulation.patrimoniosRemovidos[0]
+              .map(a => {
+                if (a.tipo === 'passivo') return a.total;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
+          : 0) -
+        (currentSimulation.patrimoniosRemovidos[0]
           ? currentSimulation.patrimoniosRemovidos
-            .map((a) => {
-              if (a.tipo === 'passivo') return a.total;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
+              .map(a => {
+                if (a.tipo === 'passivo') return a.total;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
           : 0),
       pmt:
         (currentSimulation.patrimonios[0]
           ? currentSimulation.patrimonios
-            .map((a) => {
-              if (a.tipo === 'passivo') return a.pmt;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
-          : 0)
-        - (currentSimulation.patrimoniosRemovidos[0]
+              .map(a => {
+                if (a.tipo === 'passivo') return a.pmt;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
+          : 0) -
+        (currentSimulation.patrimoniosRemovidos[0]
           ? currentSimulation.patrimoniosRemovidos
-            .map((a) => {
-              if (a.tipo === 'passivo') return a.pmt;
-              return 0;
-            })
-            .reduce((a, b) => a + b)
+              .map(a => {
+                if (a.tipo === 'passivo') return a.pmt;
+                return 0;
+              })
+              .reduce((a, b) => a + b)
           : 0),
     };
 
@@ -227,7 +262,7 @@ export function* submitSimulationRequest(action) {
       A30dActions.addA30dRequest({
         acao: createAction(response),
         quando: moment().add('1', 'months'),
-      }),
+      })
     );
 
     yield put(SimulacaoActions.submitSimulationSuccess(response));

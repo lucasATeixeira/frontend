@@ -61,7 +61,10 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
               classificacao,
               orcado: fv,
               recorrencia,
-              mensal: classificacao === 'Eventual' ? fv / recorrencia : fv * recorrencia,
+              mensal:
+                classificacao === 'Eventual'
+                  ? fv / recorrencia
+                  : fv * recorrencia,
             },
           ],
         });
@@ -69,12 +72,15 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
       }
       saveSimulation({
         ...currentSimulation,
-        itens: currentSimulation.itens.map((e) => {
+        itens: currentSimulation.itens.map(e => {
           if (e.nome !== name) return e;
           return {
             ...e,
             orcado: fv,
-            mensal: e.classificacao === 'Eventual' ? fv / e.recorrencia : fv * e.recorrencia,
+            mensal:
+              e.classificacao === 'Eventual'
+                ? fv / e.recorrencia
+                : fv * e.recorrencia,
           };
         }),
       });
@@ -95,7 +101,7 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
           ],
           saldo: simulacao.saldo + currentSimulation.checked.valor - fv,
           patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
-            p => p._id === currentSimulation.checked._id,
+            p => p._id === currentSimulation.checked._id
           ),
         });
         return;
@@ -104,9 +110,9 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
         ...currentSimulation,
         saldo: simulacao.saldo + currentSimulation.checked.valor - fv,
         patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
-          p => p._id === currentSimulation.checked._id,
+          p => p._id === currentSimulation.checked._id
         ),
-        patrimonios: currentSimulation.patrimonios.map((e) => {
+        patrimonios: currentSimulation.patrimonios.map(e => {
           if (e.nome !== name) return e;
           return {
             ...e,
@@ -162,7 +168,7 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
               />
               <Input
                 currency
-                label="Contas da casa (água, luz, telefone)"
+                label="Total das nova contas de Água, Luz e Telefone."
                 value={contasAluguel}
                 onChange={(e, mv, fv) => {
                   setContasAluguel(fv);
@@ -266,7 +272,13 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
                 value={manutencaoOutro}
                 onChange={(e, mv, fv) => {
                   setManutencaoOutro(fv);
-                  handleChange(fv, 'item', 'Manutenções / Revisões', 'Eventual', 12);
+                  handleChange(
+                    fv,
+                    'item',
+                    'Manutenções / Revisões',
+                    'Eventual',
+                    12
+                  );
                 }}
               />
             </>
@@ -279,7 +291,13 @@ const CardOne = ({ simulacao, saveSimulation, select }) => {
                 value={assinatura}
                 onChange={(e, mv, fv) => {
                   setAssinatura(fv);
-                  handleChange(fv, 'item', 'Assinatura Veículo', 'Comprometido', 1);
+                  handleChange(
+                    fv,
+                    'item',
+                    'Assinatura Veículo',
+                    'Comprometido',
+                    1
+                  );
                 }}
               />
               <Input
@@ -330,9 +348,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulationActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulationActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CardOne);

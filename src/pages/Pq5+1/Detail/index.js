@@ -13,7 +13,11 @@ const Detail = ({ endDetails, content }) => (
   <>
     <div className="row">
       <div className="col-md-12">
-        <button onClick={() => endDetails()} className="btn btn-success" type="button">
+        <button
+          onClick={() => endDetails()}
+          className="btn btn-success"
+          type="button"
+        >
           <i className="fa fa-arrow-left" />
           <strong> Voltar</strong>
         </button>
@@ -23,12 +27,12 @@ const Detail = ({ endDetails, content }) => (
       {content.type === 'lp'
         ? 'Liquidação Patrimonial'
         : content.type === 'ea'
-          ? 'Empréstimo entre Amigos'
-          : content.type === 'cd'
-            ? 'Consolidação de dívidas'
-            : content.type === 'eg'
-              ? 'Enxugar Gastos'
-              : 'Recebimentos Extras'}
+        ? 'Empréstimo entre Amigos'
+        : content.type === 'cd'
+        ? 'Consolidação de dívidas'
+        : content.type === 'eg'
+        ? 'Enxugar Gastos'
+        : 'Recebimentos Extras'}
     </h2>
     {content.type === 'lp' && <LiqPat content={content} />}
     {content.type === 're' && <RecExt content={content} />}
@@ -47,9 +51,10 @@ const mapStateToProps = state => ({
   content: state.simulacao.currentDetail,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Detail);

@@ -22,14 +22,16 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
       return;
     }
     if (currentSimulation.saldo < valor) {
-      return toast.error('Você não tem saldo suficente para amortizar este valor!', {
+      toast.error('Você não tem saldo suficente para amortizar este valor!', {
         containerId: 'alerts',
       });
+      return;
     }
     if (valor >= currentDivida.aVista) {
-      return toast.error(
-        'O valor a se amortizar é igual ou superior ao saldo à vista da quitação, que tal quitar a dívida?',
+      toast.error(
+        'O valor a se amortizar é igual ou superior ao saldo à vista da quitação, que tal quitar a dívida?'
       );
+      return;
     }
 
     const j = currentDivida.taxa / 100;
@@ -49,19 +51,21 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     if (currentSimulation.amortizacao.find(a => a.divida === input)) {
       saveSimulation({
         ...currentSimulation,
-        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(pr => pr._id !== input),
+        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+          pr => pr._id !== input
+        ),
         saldo:
-          currentSimulation.saldo
-          + currentSimulation.amortizacao
+          currentSimulation.saldo +
+          currentSimulation.amortizacao
             .filter(a => a.divida === input)
-            .reduce((total, next) => total + next.valor, 0)
-          - valor
-          + (currentSimulation.patrimoniosRemovidos.find(a => a._id === input)
+            .reduce((total, next) => total + next.valor, 0) -
+          valor +
+          (currentSimulation.patrimoniosRemovidos.find(a => a._id === input)
             ? currentDivida.aVista
             : 0),
         amortizacao: currentSimulation.amortizacao
           .filter(a => !(a.divida === input && valor === 0))
-          .map((a) => {
+          .map(a => {
             if (a.divida !== input) return a;
             return {
               ...a,
@@ -77,11 +81,13 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     } else {
       saveSimulation({
         ...currentSimulation,
-        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(pr => pr._id !== input),
+        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+          pr => pr._id !== input
+        ),
         saldo:
-          currentSimulation.saldo
-          - valor
-          + (currentSimulation.patrimoniosRemovidos.find(a => a._id === input)
+          currentSimulation.saldo -
+          valor +
+          (currentSimulation.patrimoniosRemovidos.find(a => a._id === input)
             ? currentDivida.aVista
             : 0),
         amortizacao: [
@@ -102,10 +108,9 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     setCurrentDivida({});
     setInput('');
     setValor(0);
-    return null;
   }
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     if (e.keyCode !== 27) return;
     setValor(0);
     setCurrentDivida({});
@@ -125,17 +130,21 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
     if (checked) {
       saveSimulation({
         ...currentSimulation,
-        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(pr => pr._id !== p._id),
+        patrimoniosRemovidos: currentSimulation.patrimoniosRemovidos.filter(
+          pr => pr._id !== p._id
+        ),
         saldo:
-          currentSimulation.saldo
-          + p.aVista
-          + (currentSimulation.amortizacao.find(a => a.divida === p._id)
+          currentSimulation.saldo +
+          p.aVista +
+          (currentSimulation.amortizacao.find(a => a.divida === p._id)
             ? currentSimulation.amortizacao.reduce((total, next) => {
-              if (next.divida !== p._id) return total + 0;
-              return total + next.valor;
-            }, 0)
+                if (next.divida !== p._id) return total + 0;
+                return total + next.valor;
+              }, 0)
             : 0),
-        amortizacao: currentSimulation.amortizacao.filter(a => a.divida !== p._id),
+        amortizacao: currentSimulation.amortizacao.filter(
+          a => a.divida !== p._id
+        ),
       });
       return;
     }
@@ -143,7 +152,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
       if (currentSimulation.saldo < p.aVista) {
         toast.error(
           'Você não tem saldo suficente para quitar esta dívida, tente amortizar ou salve está estratégia para acumular saldo com as próximas!',
-          { containerId: 'alerts' },
+          { containerId: 'alerts' }
         );
         return;
       }
@@ -151,15 +160,17 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
         ...currentSimulation,
         patrimoniosRemovidos: [...currentSimulation.patrimoniosRemovidos, p],
         saldo:
-          currentSimulation.saldo
-          - p.aVista
-          + (currentSimulation.amortizacao.find(a => a.divida === p._id)
+          currentSimulation.saldo -
+          p.aVista +
+          (currentSimulation.amortizacao.find(a => a.divida === p._id)
             ? currentSimulation.amortizacao.reduce((total, next) => {
-              if (next.divida !== p._id) return total + 0;
-              return total + next.valor;
-            }, 0)
+                if (next.divida !== p._id) return total + 0;
+                return total + next.valor;
+              }, 0)
             : 0),
-        amortizacao: currentSimulation.amortizacao.filter(a => a.divida !== p._id),
+        amortizacao: currentSimulation.amortizacao.filter(
+          a => a.divida !== p._id
+        ),
       });
     }
   };
@@ -213,15 +224,26 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                   <tbody>
                     {passivos
                       .filter(
-                        p => !simulacao.patrimoniosRemovidos.map(pr => pr._id).includes(p._id),
+                        p =>
+                          !simulacao.patrimoniosRemovidos
+                            .map(pr => pr._id)
+                            .includes(p._id)
                       )
-                      .map((p) => {
+                      .map(p => {
                         let actualP = simulacao.amortizacao
                           .filter(a => a.divida === p._id)
-                          .sort((a, b) => (a.newTotal > b.newTotal ? 1 : -1))[0];
+                          .sort((a, b) =>
+                            a.newTotal > b.newTotal ? 1 : -1
+                          )[0];
 
-                        if (currentSimulation.amortizacao.find(a => a.divida === p._id)) {
-                          [actualP] = currentSimulation.amortizacao.filter(a => a.divida === p._id);
+                        if (
+                          currentSimulation.amortizacao.find(
+                            a => a.divida === p._id
+                          )
+                        ) {
+                          [actualP] = currentSimulation.amortizacao.filter(
+                            a => a.divida === p._id
+                          );
                         }
 
                         if (actualP) {
@@ -273,7 +295,10 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                                 <>
                                   {currentSimulation.amortizacao
                                     .filter(a => a.divida === p._id)
-                                    .reduce((total, next) => total + next.valor, 0)
+                                    .reduce(
+                                      (total, next) => total + next.valor,
+                                      0
+                                    )
                                     .toLocaleString('pt-br', {
                                       style: 'currency',
                                       currency: 'BRL',
@@ -281,18 +306,24 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                                   <button
                                     onClick={() => {
                                       if (input !== '') {
-                                        return toast.error('Salve a última Edição', {
-                                          containerId: 'alerts',
-                                        });
+                                        return toast.error(
+                                          'Salve a última Edição',
+                                          {
+                                            containerId: 'alerts',
+                                          }
+                                        );
                                       }
                                       setValor(
                                         currentSimulation.amortizacao
                                           .filter(a => a.divida === p._id)
-                                          .reduce((total, next) => total + next.valor, 0)
+                                          .reduce(
+                                            (total, next) => total + next.valor,
+                                            0
+                                          )
                                           .toLocaleString('pt-br', {
                                             style: 'currency',
                                             currency: 'BRL',
-                                          }),
+                                          })
                                       );
                                       setCurrentDivida(p);
                                       return setInput(p._id);
@@ -317,20 +348,24 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                               }}
                             >
                               <div className="form-check">
-                                <label htmlFor={p._id} className="form-check-label">
+                                <label
+                                  htmlFor={p._id}
+                                  className="form-check-label"
+                                >
                                   <input
                                     id={p._id}
                                     className="form-check-input"
                                     type="checkbox"
                                     checked={simulacao.currentSimulation.patrimoniosRemovidos.includes(
-                                      p,
+                                      p
                                     )}
-                                    onChange={() => handleChange(
-                                      p,
-                                      simulacao.currentSimulation.patrimoniosRemovidos.includes(
+                                    onChange={() =>
+                                      handleChange(
                                         p,
-                                      ),
-                                    )
+                                        simulacao.currentSimulation.patrimoniosRemovidos.includes(
+                                          p
+                                        )
+                                      )
                                     }
                                   />
                                   <span className="form-check-sign">
@@ -364,9 +399,10 @@ const mapStateToProps = state => ({
   passivos: state.patrimonios.passivos.list,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CardTwo);

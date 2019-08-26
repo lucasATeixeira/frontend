@@ -14,13 +14,13 @@ import A30d from './A30d';
 import Aatuar30d from './Aatuar30d';
 import Aatuar7d from './Aatuar7d';
 import Aatuar1d from './Aatuar1d';
-// import Crencas from './Crencas';
 import Forgot from './Forgot';
 import Reset from './Reset';
 import Checkout from './Checkout';
 import ErrorPage from './ErrorPage';
 import Comportamento from './Comportamento';
 import Laudos from './Laudos';
+import FreeMmd from './FreeMmd';
 
 const Pages = () => (
   <BrowserRouter>
@@ -29,6 +29,7 @@ const Pages = () => (
       <Route exact path="/esqueci_minha_senha" component={Forgot} />
       <Route exact path="/reset_password" component={Reset} />
       <Route exact path="/checkout" component={Checkout} />
+      <Route exact path="/mmd" component={FreeMmd} />
       <PrivateRoute exact path="/painel" component={Painel} />
       <PrivateRoute exact path="/orcamento" component={Orcamento} />
       <PrivateRoute exact path="/extrato" component={Extrato} />

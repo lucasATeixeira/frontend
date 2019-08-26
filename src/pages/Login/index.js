@@ -9,9 +9,7 @@ import { Creators as UserActions } from '../../store/ducks/user';
 import Upper from './Upper';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = ({
-  loginRequest, loading, err, success, history,
-}) => {
+const Login = ({ loginRequest, loading, err, success, history }) => {
   useEffect(() => {
     if (err) toast.error(err);
     if (success) {
@@ -22,7 +20,7 @@ const Login = ({
       }
     }
   }, [err, success, history]);
-  const handleSubmit = (data) => {
+  const handleSubmit = data => {
     const { email, senha } = data;
     loginRequest(email, senha);
   };
@@ -68,7 +66,11 @@ const Login = ({
                           </div>
                           <br />
                           <div className="unform">
-                            <Input name="email" className="form-control" placeholder="Email..." />
+                            <Input
+                              name="email"
+                              className="form-control"
+                              placeholder="Email..."
+                            />
                           </div>
                         </div>
                       </span>
@@ -129,9 +131,10 @@ const mapStateToProps = state => ({
   success: state.user.success,
   err: state.user.err,
 });
-const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(UserActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Login);

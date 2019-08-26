@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CardStats = ({
-  color, faIcon, title, info, textColor, footer,
-}) => (
+const CardStats = ({ color, faIcon, title, info, textColor, footer }) => (
   <div role="button" tabIndex="0" className="card card-stats">
     <div className={`card-header card-header-icon card-header-${color}`}>
       <div className="card-icon">

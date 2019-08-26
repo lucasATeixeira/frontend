@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function UpperNavbar() {
   return (
@@ -26,14 +27,14 @@ export default function UpperNavbar() {
           </button>
 
           <div className="collapse navbar-collapse justify-content-end">
-            {/* <ul className="navbar-nav">
+            <ul className="navbar-nav">
               <li className="nav-item ">
-                <Link className="nav-link" to="/esqueci_minha_senha">
+                <Link className="nav-link" to="/">
                   <i className="material-icons">lock</i>
-                  ESQUECI MINHA SENHA
+                  Login
                 </Link>
               </li>
-            </ul> */}
+            </ul>
           </div>
         </div>
       </nav>

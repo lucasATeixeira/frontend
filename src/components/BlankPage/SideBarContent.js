@@ -10,8 +10,18 @@ export default function SideBarContent({ setPage }) {
     <ul className="nav">
       <ButtonPainel />
       <ItemLancamento />
-      <Item href="/painel" title="Painel de Controle" icon="assessment" setPage={setPage} />
-      <Item icon="local_printshop" title="Extrato" href="/extrato" setPage={setPage} />
+      <Item
+        href="/painel"
+        title="Painel de Controle"
+        icon="assessment"
+        setPage={setPage}
+      />
+      <Item
+        icon="local_printshop"
+        title="Extrato"
+        href="/extrato"
+        setPage={setPage}
+      />
       <CollapsedItem
         setPage={setPage}
         title="Mapear"
@@ -41,6 +51,11 @@ export default function SideBarContent({ setPage }) {
         idColapse="almejar"
         itens={[
           {
+            href: '/Ressignificacao',
+            mini: 'RC',
+            title: 'Ressignificação',
+          },
+          {
             href: '/V5ANos',
             mini: 'V5A',
             title: 'Visão 5 anos',
@@ -49,12 +64,6 @@ export default function SideBarContent({ setPage }) {
             href: '/V1Ano',
             mini: 'V1A',
             title: 'Visão 1 ano',
-          },
-
-          {
-            href: '/Ressignificacao',
-            mini: 'RC',
-            title: 'Ressignificação',
           },
         ]}
         setPage={setPage}

@@ -5,14 +5,18 @@ import PropTypes from 'prop-types';
 const Pote = ({ orcamento, patrimonios }) => {
   const [barData, setBarData] = useState({});
   const [gastosData, setGastosData] = useState(false);
-  const maxOrcado = orcamento.gastosOrcados
-    + orcamento.recebimentosOrcados
-    + orcamento.gastosRealizadosParcelados
-    + patrimonios.passivos.pmt;
-  const maxRealizado = orcamento.gastosRealizados
-    + orcamento.recebimentosRealizados
-    + orcamento.gastosRealizadosParcelados
-    + patrimonios.passivos.pmt;
+  const maxOrcado =
+    orcamento.gastosOrcados +
+    orcamento.recebimentosOrcados +
+    orcamento.gastosRealizadosParcelados +
+    patrimonios.passivos.pmt;
+
+  const maxRealizado =
+    orcamento.gastosRealizados +
+    orcamento.recebimentosRealizados +
+    orcamento.gastosRealizadosParcelados +
+    patrimonios.passivos.pmt;
+
   const barOptions = {
     legend: {
       position: 'bottom',
@@ -21,6 +25,19 @@ const Pote = ({ orcamento, patrimonios }) => {
     tooltips: {
       mode: 'index',
       intersect: false,
+      bodySpacing: 12,
+      bodyFontSize: 15,
+      callbacks: {
+        label({ datasetIndex, yLabel }, { datasets }) {
+          return `${datasets[datasetIndex].label}: ${yLabel.toLocaleString(
+            'pt-br',
+            {
+              style: 'currency',
+              currency: 'BRL',
+            }
+          )}`;
+        },
+      },
     },
     scales: {
       xAxes: [
@@ -66,6 +83,21 @@ const Pote = ({ orcamento, patrimonios }) => {
       ],
     },
   };
+
+  const itens = orcamento.categorias
+    .reduce((total, next) => total.concat(next.itens), [])
+    .filter(item => item.tipo === 'gasto');
+
+  const gastosComprometidos = itens
+    .filter(item => item.classificacao === 'Comprometido')
+    .reduce((total, next) => total + next.mensal, 0);
+  const gastosFlexiveis = itens
+    .filter(item => item.classificacao === 'Flexível')
+    .reduce((total, next) => total + next.mensal, 0);
+  const gastosEventuais = itens
+    .filter(item => item.classificacao === 'Eventual')
+    .reduce((total, next) => total + next.mensal, 0);
+
   useEffect(() => {
     setBarData({
       labels: ['Orçado', 'Realizado'],
@@ -73,8 +105,10 @@ const Pote = ({ orcamento, patrimonios }) => {
         {
           label: 'Recebimentos',
           data: [
-            orcamento.recebimentosOrcados + orcamento.recebimentosRealizadosParcelados,
-            orcamento.recebimentosRealizados + orcamento.recebimentosRealizadosParcelados,
+            orcamento.recebimentosOrcados +
+              orcamento.recebimentosRealizadosParcelados,
+            orcamento.recebimentosRealizados +
+              orcamento.recebimentosRealizadosParcelados,
           ],
           backgroundColor: 'transparent',
           borderColor: 'rgb(63, 76, 107)',
@@ -109,7 +143,10 @@ const Pote = ({ orcamento, patrimonios }) => {
         datasets: [
           {
             label: 'Recebimentos',
-            data: [orcamento.recebimentosOrcados + orcamento.recebimentosRealizadosParcelados],
+            data: [
+              orcamento.recebimentosOrcados +
+                orcamento.recebimentosRealizadosParcelados,
+            ],
             backgroundColor: 'transparent',
             borderColor: 'rgb(63, 76, 107)',
             borderWidth: 3,
@@ -117,15 +154,31 @@ const Pote = ({ orcamento, patrimonios }) => {
           },
           {
             label: 'Dívidas',
-            data: [patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados],
+            data: [
+              patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados,
+            ],
             backgroundColor: 'rgb(218, 68, 83)',
             borderColor: 'transparent',
             borderWidth: 3,
           },
           {
-            label: 'Gastos',
-            data: [orcamento.gastosOrcados],
+            label: 'Comprometidos',
+            data: [gastosComprometidos],
             backgroundColor: 'rgb(0, 87, 156)',
+            borderColor: 'transparent',
+            borderWidth: 3,
+          },
+          {
+            label: 'Flexíveis',
+            data: [gastosFlexiveis],
+            backgroundColor: '#4DA9FF',
+            borderColor: 'transparent',
+            borderWidth: 3,
+          },
+          {
+            label: 'Eventuais',
+            data: [gastosEventuais],
+            backgroundColor: '#73C0FF',
             borderColor: 'transparent',
             borderWidth: 3,
           },
@@ -138,8 +191,10 @@ const Pote = ({ orcamento, patrimonios }) => {
           {
             label: 'Recebimentos',
             data: [
-              orcamento.recebimentosOrcados + orcamento.recebimentosRealizadosParcelados,
-              orcamento.recebimentosRealizados + orcamento.recebimentosRealizadosParcelados,
+              orcamento.recebimentosOrcados +
+                orcamento.recebimentosRealizadosParcelados,
+              orcamento.recebimentosRealizados +
+                orcamento.recebimentosRealizadosParcelados,
             ],
             backgroundColor: 'transparent',
             borderColor: 'rgb(63, 76, 107)',
@@ -166,12 +221,36 @@ const Pote = ({ orcamento, patrimonios }) => {
         ],
       });
     }
-  }, [gastosData]);
+  }, [
+    gastosData,
+    orcamento.gastosOrcados,
+    orcamento.gastosRealizados,
+    orcamento.gastosRealizadosParcelados,
+    orcamento.recebimentosOrcados,
+    orcamento.recebimentosRealizados,
+    orcamento.recebimentosRealizadosParcelados,
+    patrimonios.passivos.pmt,
+  ]);
 
   return (
     <div className="card">
-      <button type="button" onClick={() => setGastosData(!gastosData)}>
-        Flip
+      <button
+        style={{
+          border: 'none',
+          outline: 'none',
+          cursor: 'pointer',
+          position: 'relative',
+          width: '40px',
+          height: '40px',
+          right: '-590px',
+          top: '10px',
+          background: 'none',
+          color: '#00B4DB',
+        }}
+        type="button"
+        onClick={() => setGastosData(!gastosData)}
+      >
+        <i className="material-icons">info</i>
       </button>
       <div className="card-header card-header-text card-header-info">
         <div className="card-text">
@@ -179,7 +258,7 @@ const Pote = ({ orcamento, patrimonios }) => {
         </div>
       </div>
       <div className="card-body">
-        <Bar height={220} data={barData} options={barOptions} />
+        <Bar redraw height={220} data={barData} options={barOptions} />
       </div>
     </div>
   );

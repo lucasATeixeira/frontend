@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import One from './One';
-import Two from './Two';
+import DividasTable from '../DividasTable';
 
 const RecExt = ({ content }) => (
   <div className="row">
@@ -9,7 +9,7 @@ const RecExt = ({ content }) => (
       <One content={content} />
     </div>
     <div className="col-lg-6 col-md-12 col-sm-12">
-      <Two content={content} />
+      <DividasTable content={content} />
     </div>
   </div>
 );

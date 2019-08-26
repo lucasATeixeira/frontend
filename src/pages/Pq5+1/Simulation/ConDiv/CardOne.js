@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-alert */
@@ -12,7 +13,7 @@ import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao'
 
 const CardOne = ({ simulacao, saveSimulation }) => {
   const { currentSimulation } = simulacao;
-  const [nome, setNome] = useState('');
+  const [nome, setNome] = useState('Consignado');
   const [necessario, setNecessario] = useState(0);
   const [newFinanciamento, setNewFinanciamento] = useState(true);
   const [instituicao, setInstituicao] = useState('');
@@ -24,19 +25,19 @@ const CardOne = ({ simulacao, saveSimulation }) => {
   useEffect(() => {
     setPmt(
       isNaN(
-        (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
-          / (1 - (1 + taxa / 100) ** -parcelas),
+        (necessario * (1 + taxa / 100) ** carencia * (taxa / 100)) /
+          (1 - (1 + taxa / 100) ** -parcelas)
       )
         ? isFinite(necessario / parcelas)
           ? necessario / parcelas
           : 0
         : isFinite(
-          (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
-              / (1 - (1 + taxa / 100) ** -parcelas),
-        )
-          ? (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
-          / (1 - (1 + taxa / 100) ** -parcelas)
-          : 0,
+            (necessario * (1 + taxa / 100) ** carencia * (taxa / 100)) /
+              (1 - (1 + taxa / 100) ** -parcelas)
+          )
+        ? (necessario * (1 + taxa / 100) ** carencia * (taxa / 100)) /
+          (1 - (1 + taxa / 100) ** -parcelas)
+        : 0
     );
   }, [necessario, taxa, parcelas, carencia]);
 
@@ -45,17 +46,22 @@ const CardOne = ({ simulacao, saveSimulation }) => {
     if (currentSimulation.patrimonios.length) setNewFinanciamento(false);
   }, [currentSimulation.patrimonios]);
 
-  const handleDelete = () => saveSimulation({
-    ...currentSimulation,
-    patrimonios: [],
-    patrimoniosRemovidos: [],
-    saldo: simulacao.saldo,
-  });
+  const handleDelete = () =>
+    saveSimulation({
+      ...currentSimulation,
+      patrimonios: [],
+      patrimoniosRemovidos: [],
+      saldo: simulacao.saldo,
+    });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (parcelas <= 0) return toast.error('Parcelas deve ser maior que zero', { containerId: 'alerts' });
-    if (!instituicao) return toast.error('Coloque um Nome', { containerId: 'alerts' });
+    if (parcelas <= 0)
+      return toast.error('Parcelas deve ser maior que zero', {
+        containerId: 'alerts',
+      });
+    if (!instituicao)
+      return toast.error('Coloque um Nome', { containerId: 'alerts' });
     const id = Math.random();
     saveSimulation({
       ...currentSimulation,
@@ -258,7 +264,10 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           })}
                         </td>
                         <td className="text-center">
-                          <button type="submit" className="btn btn-success btn-sm">
+                          <button
+                            type="submit"
+                            className="btn btn-success btn-sm"
+                          >
                             <i className="material-icons">add_circle_outline</i>
                             <strong>Adicionar</strong>
                           </button>
@@ -285,9 +294,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CardOne);

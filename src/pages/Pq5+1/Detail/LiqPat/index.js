@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import One from './One';
 import Two from './Two';
 import Three from './Three';
-import Four from './Four';
+import DividasTable from '../DividasTable';
 
 const LiqPat = ({ content }) => (
   <>
@@ -20,7 +20,7 @@ const LiqPat = ({ content }) => (
         <Three content={content} />
       </div>
       <div className="col-lg-7 col-md-12 col-sm-12">
-        <Four content={content} />
+        <DividasTable content={content} />
       </div>
     </div>
   </>

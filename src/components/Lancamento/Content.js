@@ -14,9 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('ptBR', ptBR);
 
-const Content = ({
-  active, categorias, lancamentoRequest, success, err,
-}) => {
+const Content = ({ active, categorias, lancamentoRequest, success, err }) => {
   const [idCategoria, setIdCategoria] = useState('categoria');
   const [idItem, setIdItem] = useState('item');
   const [formaPagamento, setFormaPagamento] = useState('À Vista');
@@ -32,8 +30,12 @@ const Content = ({
   }, [idCategoria, idItem]);
 
   useEffect(() => {
-    if (success) toast.success('Lançamento Realizado', { containerId: 'lancamento' });
-    if (err) toast.error('Ocorreu um erro com o lançamento', { containerId: 'lancamento' });
+    if (success)
+      toast.success('Lançamento Realizado', { containerId: 'lancamento' });
+    if (err)
+      toast.error('Ocorreu um erro com o lançamento', {
+        containerId: 'lancamento',
+      });
   }, [success, err]);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const Content = ({
     setDescricao('');
   }, [active]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (idCategoria === 'categoria') {
       return toast.error('Escolha uma categoria');
@@ -116,7 +118,7 @@ const Content = ({
                     data-live-search="true"
                   >
                     <option value="item">ITEM</option>
-                    {categorias.map((c) => {
+                    {categorias.map(c => {
                       if (!(c._id === idCategoria)) return null;
                       return c.itens.map(i => (
                         <option key={i._id} value={i._id}>
@@ -212,12 +214,19 @@ const Content = ({
             >
               Fechar
             </button>
-            <button type="submit" className="btn btn-info btn-link btn-wd btn-lg">
+            <button
+              type="submit"
+              className="btn btn-info btn-link btn-wd btn-lg"
+            >
               Lançar
             </button>
           </div>
         </div>
-        <ToastContainer enableMultiContainer containerId="lancamento" autoClose={2000} />
+        <ToastContainer
+          enableMultiContainer
+          containerId="lancamento"
+          autoClose={2000}
+        />
       </form>
     </>
   );
@@ -241,9 +250,10 @@ const mapStateToProps = state => ({
   err: state.categorias.err,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CategoriasActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CategoriasActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Content);

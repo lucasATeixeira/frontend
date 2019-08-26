@@ -11,7 +11,10 @@ import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao'
 const ConDiv = ({ simulacao, submitSimulationRequest }) => {
   const { currentSimulation } = simulacao;
   const handleClick = () => {
-    if (!currentSimulation.patrimonios.length) return toast.error('Adicione uma consolidação', { containerId: 'alerts' });
+    if (!currentSimulation.patrimonios.length)
+      return toast.error('Adicione uma consolidação', {
+        containerId: 'alerts',
+      });
     return submitSimulationRequest(currentSimulation);
   };
   return (
@@ -54,9 +57,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ConDiv);
