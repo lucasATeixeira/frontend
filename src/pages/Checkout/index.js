@@ -116,7 +116,7 @@ export default function Checkout({ history }) {
 
         const checkout = new window.PagarMeCheckout.Checkout({
           encryption_key:
-            process.env.REACT_ENCRYPT_KEY_PAGARME ||
+            process.env.REACT_APP_ENCRYPT_KEY_PAGARME ||
             'ek_test_uRsAQpNQjSiFAlBjcgElcJ468bG6tT',
           success: async data => {
             await api.post('api/checkout', {
