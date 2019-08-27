@@ -6,13 +6,14 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import api from '../../services/api';
 import Upper from './Upper';
-import { handleCpf } from '../../hooks/inputHooks';
+import { handleCpf, handleTelefone } from '../../hooks/inputHooks';
 
 export default function Checkout({ history }) {
   const [loading, setLoading] = useState(false);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
+  const [telefone, setTelefone] = useState('');
   const [senha, setSenha] = useState('');
   const [repeatSenha, setRepeatSenha] = useState('');
   const [cep, setCep] = useState('');
@@ -68,11 +69,21 @@ export default function Checkout({ history }) {
       }
     }
 
+    const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(
+      4,
+      9
+    )}${telefone.slice(10, 14)}`;
+
+    if (isNaN(telefoneString)) {
+      toast.error('Telefone Inválido', { containerId: 'checkout' });
+      return;
+    }
+
     const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join(
       ''
     );
 
-    if (!nome || !cpf || !email || !senha) {
+    if (!nome || !cpf || !email || !senha || !telefone || !cep) {
       toast.error('Preencha todos os campos', {
         containerId: 'checkout',
       });
@@ -113,6 +124,7 @@ export default function Checkout({ history }) {
               senha,
               token: data.token,
               nome,
+              telefone: telefoneString,
               cpf: cpfString,
               cep: cep.replace('-', ''),
               state,
@@ -157,6 +169,7 @@ export default function Checkout({ history }) {
                 number: cpfString,
               },
             ],
+            phone_numbers: [`+55${telefoneString}`],
           },
           billing: {
             name: nome,
@@ -254,6 +267,24 @@ export default function Checkout({ history }) {
                                 onChange={e => handleCpf(e, setCpf)}
                                 className="form-control"
                                 placeholder="CPF..."
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    settings_cell
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={telefone}
+                                onChange={e => handleTelefone(e, setTelefone)}
+                                className="form-control"
+                                placeholder="Celular..."
                               />
                             </div>
                           </span>
