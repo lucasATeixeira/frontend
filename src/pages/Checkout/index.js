@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf } from '../../hooks/inputHooks';
@@ -14,6 +15,11 @@ export default function Checkout({ history }) {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
   const [repeatSenha, setRepeatSenha] = useState('');
+  const [cep, setCep] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [street, setStreet] = useState('');
 
   const [cupom, setCupom] = useState('');
 
@@ -25,6 +31,20 @@ export default function Checkout({ history }) {
     script.async = true;
     document.body.appendChild(script);
   }, []);
+
+  async function handleBlur() {
+    try {
+      const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      setState(data.uf);
+      setCity(data.localidade);
+      setNeighborhood(data.bairro);
+      return setStreet(data.logradouro);
+    } catch (err) {
+      return toast.error('CEP não encontrado, insira um CEP Válido', {
+        containerId: 'checkout',
+      });
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -72,6 +92,11 @@ export default function Checkout({ history }) {
       });
       return;
     }
+
+    if (!neighborhood) {
+      toast.error('Insira um CEP válido', { containerId: 'checkout' });
+      return;
+    }
     setLoading(true);
 
     async function checkData() {
@@ -89,6 +114,11 @@ export default function Checkout({ history }) {
               token: data.token,
               nome,
               cpf: cpfString,
+              cep: cep.replace('-', ''),
+              state,
+              city,
+              neighborhood,
+              street,
               amount,
               cupom: cupomName,
               payment_value: amount,
@@ -132,6 +162,12 @@ export default function Checkout({ history }) {
             name: nome,
             address: {
               country: 'br',
+              state,
+              city,
+              neighborhood,
+              street,
+              street_number: 's/n',
+              zipcode: cep.replace('-', ''),
             },
           },
 
@@ -218,6 +254,25 @@ export default function Checkout({ history }) {
                                 onChange={e => handleCpf(e, setCpf)}
                                 className="form-control"
                                 placeholder="CPF..."
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={cep}
+                                onChange={e => setCep(e.target.value)}
+                                onBlur={handleBlur}
+                                className="form-control"
+                                placeholder="CEP (apenas números)"
                               />
                             </div>
                           </span>

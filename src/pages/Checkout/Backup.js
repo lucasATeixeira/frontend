@@ -2,28 +2,27 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Upper from './Upper';
-import { handleCpf } from '../../hooks/inputHooks';
-// handleDate
-// handleTelefone
+import { handleCpf, handleDate, handleTelefone } from '../../hooks/inputHooks';
 
 export default function Checkout({ history }) {
   const [loading, setLoading] = useState(false);
-  // const [nascimento, setNascimento] = useState('');
+  const [nascimento, setNascimento] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
-  // const [telefone, setTelefone] = useState('');
+  const [telefone, setTelefone] = useState('');
   const [senha, setSenha] = useState('');
   const [repeatSenha, setRepeatSenha] = useState('');
-  // const [cep, setCep] = useState('');
-  // const [state, setState] = useState('');
-  // const [city, setCity] = useState('');
-  // const [neighborhood, setNeighborhood] = useState('');
-  // const [street, setStreet] = useState('');
-  // const [number, setNumber] = useState('');
+  const [cep, setCep] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [street, setStreet] = useState('');
+  const [number, setNumber] = useState('');
   const [cupom, setCupom] = useState('');
 
   let amount = 100; // 57000;
@@ -35,13 +34,24 @@ export default function Checkout({ history }) {
     document.body.appendChild(script);
   }, []);
 
+  async function handleBlur() {
+    try {
+      const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      setState(data.uf);
+      setCity(data.localidade);
+      setNeighborhood(data.bairro);
+      return setStreet(data.logradouro);
+    } catch (err) {
+      return toast.error('CEP não encontrado, insira um CEP Válido', {
+        containerId: 'checkout',
+      });
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-
     let discount = 1;
-
     let cupomName = 'null';
-
     if (cupom) {
       try {
         const { data: cupomResponse } = await api.get(`api/cupom/${cupom}`);
@@ -57,28 +67,27 @@ export default function Checkout({ history }) {
         );
       }
     }
-
     const cpfString = [...cpf.split('-')[0].split('.'), cpf.split('-')[1]].join(
       ''
     );
-
-    if (cpfString.length !== 11) {
-      toast.error('CPF Inválido');
-      return;
-    }
-
-    if (!nome || !cpf || !email || !senha) {
-      toast.error('Preencha todos os campos', {
+    const telefoneString = `${telefone.slice(1, 3)}${telefone.slice(
+      4,
+      9
+    )}${telefone.slice(10, 14)}`;
+    if (isNaN(telefoneString))
+      return toast.error('Telefone Inválido', { containerId: 'checkout' });
+    if (cpfString.length !== 11) return toast.error('CPF Inválido');
+    if (!nome || !cpf || !telefone || !nascimento || !email || !senha)
+      return toast.error('Preencha todos os campos', {
         containerId: 'checkout',
       });
-      return;
-    }
-    if (senha !== repeatSenha) {
-      toast.error('Senhas devem ser iguais', {
+    if (senha !== repeatSenha)
+      return toast.error('Senhas devem ser iguais', {
         containerId: 'checkout',
       });
-      return;
-    }
+    if (!neighborhood)
+      return toast.error('Insira um CEP válido', { containerId: 'checkout' });
+
     setLoading(true);
 
     async function checkData() {
@@ -94,15 +103,15 @@ export default function Checkout({ history }) {
               senha,
               token: data.token,
               nome,
-              // telefone: telefoneString,
+              telefone: telefoneString,
               cpf: cpfString,
-              // nascimento,
-              // cep: cep.replace('-', ''),
-              // state,
-              // city,
-              // neighborhood,
-              // street,
-              // number,
+              nascimento,
+              cep: cep.replace('-', ''),
+              state,
+              city,
+              neighborhood,
+              street,
+              number,
               amount,
               cupom: cupomName,
               payment_value: amount,
@@ -143,21 +152,21 @@ export default function Checkout({ history }) {
                 number: cpfString,
               },
             ],
-            // phone_numbers: [`+55${telefoneString}`],
-            // birthday: `${nascimento.split('/')[2]}-${
-            //   nascimento.split('/')[1]
-            // }-${nascimento.split('/')[0]}`,
+            phone_numbers: [`+55${telefoneString}`],
+            birthday: `${nascimento.split('/')[2]}-${
+              nascimento.split('/')[1]
+            }-${nascimento.split('/')[0]}`,
           },
           billing: {
             name: nome,
             address: {
               country: 'br',
-              // state,
-              // city,
-              // neighborhood,
-              // street,
-              // street_number: number,
-              // zipcode: cep.replace('-', ''),
+              state,
+              city,
+              neighborhood,
+              street,
+              street_number: number,
+              zipcode: cep.replace('-', ''),
             },
           },
 
@@ -199,7 +208,7 @@ export default function Checkout({ history }) {
         >
           <div className="container">
             <div className="row">
-              <div className="col-lg-4 col-md-4 col-sm-4 ml-auto mr-auto">
+              <div className="col-lg-9 col-md-9 col-sm-9 ml-auto mr-auto">
                 <div className="card card-login">
                   <div className="card-header card-header-info text-center">
                     <h4 className="card-title">ONDAZUL</h4>
@@ -214,7 +223,7 @@ export default function Checkout({ history }) {
                       <div className="card-footer justify-content-center" />
 
                       <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
@@ -249,7 +258,7 @@ export default function Checkout({ history }) {
                             </div>
                           </span>
 
-                          {/* <span className="bmd-form-group">
+                          <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
@@ -285,7 +294,7 @@ export default function Checkout({ history }) {
                                 placeholder="Data de Nascimento..."
                               />
                             </div>
-                          </span> */}
+                          </span>
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
@@ -339,6 +348,120 @@ export default function Checkout({ history }) {
                                 type="password"
                                 className="form-control"
                                 placeholder="Confirme sua senha..."
+                              />
+                            </div>
+                          </span>
+                        </div>
+                        <div className="col-md-6">
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={cep}
+                                onChange={e => setCep(e.target.value)}
+                                onBlur={handleBlur}
+                                className="form-control"
+                                placeholder="CEP (apenas números)"
+                              />
+                            </div>
+                          </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={state}
+                                disabled
+                                className="form-control"
+                                placeholder="Estado"
+                              />
+                            </div>
+                          </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={city}
+                                disabled
+                                className="form-control"
+                                placeholder="Cidade"
+                              />
+                            </div>
+                          </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={street}
+                                disabled
+                                className="form-control"
+                                placeholder="Rua"
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={neighborhood}
+                                disabled
+                                className="form-control"
+                                placeholder="Bairro"
+                              />
+                            </div>
+                          </span>
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    location_city
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={number}
+                                onChange={e => setNumber(e.target.value)}
+                                className="form-control"
+                                placeholder="Número"
                               />
                             </div>
                           </span>
