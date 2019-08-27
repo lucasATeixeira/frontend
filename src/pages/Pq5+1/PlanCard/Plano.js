@@ -14,15 +14,23 @@ const Plano = ({ content }) => {
       if (content.estrategia === 'assinatura') {
         estrategia = 'fazer assinatura de um veículo';
       }
-      return `Vender o patrimônio "${content.patrimoniosRemovidos[0].nome}", remover ${
+      return `Vender o patrimônio "${
+        content.patrimoniosRemovidos[0].nome
+      }", remover ${
         content.itensRemovidos.length
       } gastos do Orçamento, ${estrategia}${
-        content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+        content.patrimoniosRemovidos.length && content.amortizacao.length
+          ? ','
+          : ' e'
       } ${
         content.patrimoniosRemovidos.length
           ? `quitar ${content.patrimoniosRemovidos.length - 1} dívida`
           : ''
-      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+      } ${
+        content.amortizacao.length
+          ? `e amortizar ${content.amortizacao.length} dívida`
+          : ''
+      }`;
     }
 
     if (content.type === 'eg') {
@@ -30,26 +38,43 @@ const Plano = ({ content }) => {
     }
 
     if (content.type === 'ea') {
-      return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL',
-      })} com o(a) ${content.patrimonios[0].instituicao}${
-        content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+      return `Fazer um empréstimo de ${content.patrimonios[0].necessario.toLocaleString(
+        'pt-br',
+        {
+          style: 'currency',
+          currency: 'BRL',
+        }
+      )} com o(a) ${content.patrimonios[0].instituicao}${
+        content.patrimoniosRemovidos.length && content.amortizacao.length
+          ? ','
+          : content.amortizacao.length
+          ? ' e'
+          : null
       } ${
         content.patrimoniosRemovidos.length
           ? `quitar ${content.patrimoniosRemovidos.length} dívida`
           : ''
-      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+      } ${
+        content.amortizacao.length
+          ? `e amortizar ${content.amortizacao.length} dívida`
+          : ''
+      }`;
     }
 
     if (content.type === 're') {
       return `Utilizar ${content.patrimonios[0].nome} de recebimento extra${
-        content.patrimoniosRemovidos.length && content.amortizacao.length ? ',' : ' e'
+        content.patrimoniosRemovidos.length && content.amortizacao.length
+          ? ','
+          : ' e'
       } ${
         content.patrimoniosRemovidos.length
           ? `quitar ${content.patrimoniosRemovidos.length} dívidas`
           : ''
-      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+      } ${
+        content.amortizacao.length
+          ? `e amortizar ${content.amortizacao.length} dívida`
+          : ''
+      }`;
     }
 
     if (content.type === 'cd') {
@@ -57,7 +82,11 @@ const Plano = ({ content }) => {
         content.patrimoniosRemovidos.length
           ? `para quitar ${content.patrimoniosRemovidos.length} dívidas`
           : ''
-      } ${content.amortizacao.length ? `e amortizar ${content.amortizacao.length} dívida` : ''}`;
+      } ${
+        content.amortizacao.length
+          ? `e amortizar ${content.amortizacao.length} dívida`
+          : ''
+      }`;
     }
 
     return '';

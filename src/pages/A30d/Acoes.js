@@ -6,28 +6,29 @@ import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { Creators as A30dActions } from '../../store/ducks/a30d';
 
-const Acoes = ({
-  a30d, addA30dRequest, removeA30dRequest, crencas,
-}) => {
+const Acoes = ({ a30d, addA30dRequest, removeA30dRequest, crencas }) => {
   const crencasList = crencas.map(a => a.crencas).flat();
   const [newLine, setNewLine] = useState(false);
   const [crenca, setCrenca] = useState('Seleciona uma Crença');
   const [acao, setAcao] = useState('');
 
-  const handleDelete = (body) => {
+  const handleDelete = body => {
     removeA30dRequest(body);
   };
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     if (e.keyCode !== 27) return;
     setNewLine(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (!acao) toast.error('Insira uma Ação', { containerId: 'alerts' });
-    if (crenca === 'Seleciona uma Crença') return toast.error('Seleciona uma Crença', { containerId: 'alerts' });
-    addA30dRequest({ acao, crenca });
+
+    addA30dRequest({
+      acao,
+      crenca: crenca === 'Seleciona uma Crença' ? '' : crenca,
+    });
     setCrenca('Seleciona uma Crença');
     setNewLine(false);
     return setAcao('');
@@ -51,7 +52,11 @@ const Acoes = ({
                           type="button"
                           className="btn btn-danger btn-link btn-just-icon btn-sm"
                         >
-                          <i className="material-icons" role="button" tabIndex="0">
+                          <i
+                            className="material-icons"
+                            role="button"
+                            tabIndex="0"
+                          >
                             close
                           </i>
                         </button>
@@ -81,7 +86,7 @@ const Acoes = ({
                             name="estrategia"
                           >
                             <option>Qual será sua crença fortalecedora?</option>
-                            {crencasList.map((a) => {
+                            {crencasList.map(a => {
                               if (!a.ress) return null;
                               return <option key={a._id}>{a.ress}</option>;
                             })}
@@ -104,7 +109,8 @@ const Acoes = ({
                 className="btn btn-success btn-sm"
               >
                 <strong>
-                  <i className="material-icons">add_circle_outline</i> Adicionar nova Ação
+                  <i className="material-icons">add_circle_outline</i> Adicionar
+                  nova Ação
                 </strong>
               </button>
             ) : (
@@ -112,7 +118,8 @@ const Acoes = ({
                 <div>
                   <button type="submit" className="btn btn-success btn-sm">
                     <strong>
-                      <i className="material-icons">add_circle_outline</i> Adicionar nova Ação
+                      <i className="material-icons">add_circle_outline</i>{' '}
+                      Adicionar nova Ação
                     </strong>
                   </button>
                   <button
@@ -144,9 +151,10 @@ const mapStateToProps = state => ({
   crencas: state.crencas.answers,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(A30dActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(A30dActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Acoes);

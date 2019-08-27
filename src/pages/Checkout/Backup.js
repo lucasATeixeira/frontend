@@ -6,15 +6,24 @@ import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf } from '../../hooks/inputHooks';
+// handleDate
+// handleTelefone
 
 export default function Checkout({ history }) {
   const [loading, setLoading] = useState(false);
+  // const [nascimento, setNascimento] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
+  // const [telefone, setTelefone] = useState('');
   const [senha, setSenha] = useState('');
   const [repeatSenha, setRepeatSenha] = useState('');
-
+  // const [cep, setCep] = useState('');
+  // const [state, setState] = useState('');
+  // const [city, setCity] = useState('');
+  // const [neighborhood, setNeighborhood] = useState('');
+  // const [street, setStreet] = useState('');
+  // const [number, setNumber] = useState('');
   const [cupom, setCupom] = useState('');
 
   let amount = 100; // 57000;
@@ -30,6 +39,7 @@ export default function Checkout({ history }) {
     e.preventDefault();
 
     let discount = 1;
+
     let cupomName = 'null';
 
     if (cupom) {
@@ -52,20 +62,17 @@ export default function Checkout({ history }) {
       ''
     );
 
+    if (cpfString.length !== 11) {
+      toast.error('CPF Inválido');
+      return;
+    }
+
     if (!nome || !cpf || !email || !senha) {
       toast.error('Preencha todos os campos', {
         containerId: 'checkout',
       });
       return;
     }
-
-    if (cpfString.length !== 11) {
-      toast.error('CPF Inválido', {
-        containerId: 'checkout',
-      });
-      return;
-    }
-
     if (senha !== repeatSenha) {
       toast.error('Senhas devem ser iguais', {
         containerId: 'checkout',
@@ -77,7 +84,6 @@ export default function Checkout({ history }) {
     async function checkData() {
       try {
         await api.post('api/user', { email, cpf: cpfString });
-
         const checkout = new window.PagarMeCheckout.Checkout({
           encryption_key:
             process.env.REACT_ENCRYPT_KEY_PAGARME ||
@@ -88,7 +94,15 @@ export default function Checkout({ history }) {
               senha,
               token: data.token,
               nome,
+              // telefone: telefoneString,
               cpf: cpfString,
+              // nascimento,
+              // cep: cep.replace('-', ''),
+              // state,
+              // city,
+              // neighborhood,
+              // street,
+              // number,
               amount,
               cupom: cupomName,
               payment_value: amount,
@@ -114,7 +128,9 @@ export default function Checkout({ history }) {
           createToken: 'true',
           paymentMethods: 'credit_card',
           maxInstallments: 12,
-          postbackUrl: `${process.env.REACT_APP_API_URL}api/notification`,
+          postbackUrl:
+            `${process.env.REACT_APP_API_URL}api/notification` ||
+            'https://api.ondazul.online/api/notification',
           customer: {
             external_id: Math.random(),
             name: nome,
@@ -127,11 +143,21 @@ export default function Checkout({ history }) {
                 number: cpfString,
               },
             ],
+            // phone_numbers: [`+55${telefoneString}`],
+            // birthday: `${nascimento.split('/')[2]}-${
+            //   nascimento.split('/')[1]
+            // }-${nascimento.split('/')[0]}`,
           },
           billing: {
             name: nome,
             address: {
               country: 'br',
+              // state,
+              // city,
+              // neighborhood,
+              // street,
+              // street_number: number,
+              // zipcode: cep.replace('-', ''),
             },
           },
 
@@ -151,6 +177,7 @@ export default function Checkout({ history }) {
       }
     }
     await checkData();
+    return null;
   }
   return (
     <>
@@ -221,6 +248,44 @@ export default function Checkout({ history }) {
                               />
                             </div>
                           </span>
+
+                          {/* <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    settings_cell
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={telefone}
+                                onChange={e => handleTelefone(e, setTelefone)}
+                                className="form-control"
+                                placeholder="Celular..."
+                              />
+                            </div>
+                          </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">
+                                    calendar_today
+                                  </i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={nascimento}
+                                onChange={e => handleDate(e, setNascimento)}
+                                className="form-control"
+                                placeholder="Data de Nascimento..."
+                              />
+                            </div>
+                          </span> */}
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
@@ -237,6 +302,7 @@ export default function Checkout({ history }) {
                               />
                             </div>
                           </span>
+
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
@@ -256,6 +322,7 @@ export default function Checkout({ history }) {
                               />
                             </div>
                           </span>
+
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
@@ -264,6 +331,7 @@ export default function Checkout({ history }) {
                                 </span>
                               </div>
                               <br />
+
                               <input
                                 value={repeatSenha}
                                 onChange={e => setRepeatSenha(e.target.value)}

@@ -1,7 +1,8 @@
 const formCrencas = [
   {
     cat: 'ambiente',
-    ress: 'Eu atraio mais dinheiro à medida que aprendo a cuidar melhor do que já tenho',
+    ress:
+      'Eu atraio mais dinheiro à medida que aprendo a cuidar melhor do que já tenho',
     score: 0,
     pergunta: 'Dinheiro que vem fácil, vai fácil',
   },
@@ -20,9 +21,11 @@ const formCrencas = [
   },
   {
     cat: 'ambiente',
-    ress: 'O quanto antes iniciar, mais próximo estarei da minha independência financeira',
+    ress:
+      'O quanto antes iniciar, mais próximo estarei da minha independência financeira',
     score: 0,
-    pergunta: 'Agora não é o momento certo "para ir atrás" de riqueza financeira',
+    pergunta:
+      'Agora não é o momento certo "para ir atrás" de riqueza financeira',
   },
   {
     cat: 'ambiente',
@@ -39,7 +42,8 @@ const formCrencas = [
   },
   {
     cat: 'ambiente',
-    ress: 'A quantia de dinheiro que ganharei no meu futuro depende das minhas ações no presente',
+    ress:
+      'A quantia de dinheiro que ganharei no meu futuro depende das minhas ações no presente',
     score: 0,
     pergunta: 'Dado meu passado, seria muito difícil ficar rico.',
   },
@@ -57,9 +61,11 @@ const formCrencas = [
   },
   {
     cat: 'ambiente',
-    ress: 'Segurança financeira é algo que eu posso construir com qualquer tipo de trabalho',
+    ress:
+      'Segurança financeira é algo que eu posso construir com qualquer tipo de trabalho',
     score: 0,
-    pergunta: 'Segurança financeira vem de um bom emprego e de um salário garantido',
+    pergunta:
+      'Segurança financeira vem de um bom emprego e de um salário garantido',
   },
   {
     cat: 'ambiente',
@@ -69,7 +75,8 @@ const formCrencas = [
   },
   {
     cat: 'ambiente',
-    ress: 'Quanto antes eu começar a investir mais fácil será ser financeiramente livre',
+    ress:
+      'Quanto antes eu começar a investir mais fácil será ser financeiramente livre',
     score: 0,
     pergunta: 'Posso gastar hoje, pois amanhã eu recupero tudo novamente',
   },
@@ -112,7 +119,8 @@ const formCrencas = [
   },
   {
     cat: 'causa e efeito',
-    ress: 'A conquista do dinheiro me trará ainda mais tempo para curtir com qualidade minha vida',
+    ress:
+      'A conquista do dinheiro me trará ainda mais tempo para curtir com qualidade minha vida',
     score: 0,
     pergunta:
       'O esforço para ganhar dinheiro de verdade, não me dará tempo livre para mais nada na vida',
@@ -128,7 +136,8 @@ const formCrencas = [
     ress:
       'Prefiro pagar mais imposto porque estou ganhando muito, que pouco imposto porque não ganho nada.',
     score: 0,
-    pergunta: 'Não adianta ganhar muito dinheiro porque terei que pagar muito mais impostos',
+    pergunta:
+      'Não adianta ganhar muito dinheiro porque terei que pagar muito mais impostos',
   },
   {
     cat: 'causa e efeito',
@@ -140,7 +149,8 @@ const formCrencas = [
   },
   {
     cat: 'causa e efeito',
-    ress: 'Se tenho tempo para ganhar dinheiro eu encontro tempo para gerir meu dinheiro',
+    ress:
+      'Se tenho tempo para ganhar dinheiro eu encontro tempo para gerir meu dinheiro',
     score: 0,
     pergunta:
       'Sou muito ocupado para colocar tanto tempo em energia para aprender a gerir melhor meu dinheiro',
@@ -149,11 +159,13 @@ const formCrencas = [
     cat: 'causa e efeito',
     ress: 'Uma nova dívida via me distanciar do meu sucesso financeiro',
     score: 0,
-    pergunta: 'Se eu tenho várias dívidas, uma nova dívida pequena não fará diferença',
+    pergunta:
+      'Se eu tenho várias dívidas, uma nova dívida pequena não fará diferença',
   },
   {
     cat: 'causa e efeito',
-    ress: 'Quando pesquiso preço estou valorizando o meu dinheiro, meu trabalho e minha dedicação;',
+    ress:
+      'Quando pesquiso preço estou valorizando o meu dinheiro, meu trabalho e minha dedicação;',
     score: 0,
     pergunta: 'Só pesquisa preço quem ganha pouco ou precisa economizar',
   },
@@ -173,13 +185,15 @@ const formCrencas = [
   },
   {
     cat: 'capacidade',
-    ress: 'Posso desenvolver hoje os conhecimentos e as habilidades para ficar rico',
+    ress:
+      'Posso desenvolver hoje os conhecimentos e as habilidades para ficar rico',
     score: 0,
     pergunta: 'Não tive uma boa educação para poder ficar rico',
   },
   {
     cat: 'capacidade',
-    ress: 'Quando faço o que amo minhas chances de ganhar dinheiro aumentam ainda mais',
+    ress:
+      'Quando faço o que amo minhas chances de ganhar dinheiro aumentam ainda mais',
     score: 0,
     pergunta: 'Não dá para ficar rico fazendo exatamente o que você ama',
   },
@@ -191,7 +205,8 @@ const formCrencas = [
   },
   {
     cat: 'capacidade',
-    ress: 'Quando eu tiver muito dinheiro, serei capaz de mantê-lo e aumentá-lo',
+    ress:
+      'Quando eu tiver muito dinheiro, serei capaz de mantê-lo e aumentá-lo',
     score: 0,
     pergunta: 'Se eu tiver muito dinehiro, provavelmente vou perdê-lo',
   },
@@ -205,7 +220,8 @@ const formCrencas = [
   },
   {
     cat: 'capacidade',
-    ress: 'A forma mais eficiente de ter as coisas que desejo é investindo todos os meses',
+    ress:
+      'A forma mais eficiente de ter as coisas que desejo é investindo todos os meses',
     score: 0,
     pergunta: 'Se eu for esperar ter dinheiro nunca terei nada',
   },
@@ -227,11 +243,13 @@ const formCrencas = [
     ress:
       'A melhor forma de comprar algo é investindo uma parte todos os meses, recebendo juros ao invés de pagar para alguém',
     score: 0,
-    pergunta: 'Só consigo comprar algo de maior valor se for financiado ou parcelando',
+    pergunta:
+      'Só consigo comprar algo de maior valor se for financiado ou parcelando',
   },
   {
     cat: 'capacidade',
-    ress: 'Sou 100% de aprender a cuidar melhor do meu dinheiro e das minhas finanças',
+    ress:
+      'Sou 100% de aprender a cuidar melhor do meu dinheiro e das minhas finanças',
     score: 0,
     pergunta: 'Eu naõ sou bom em matéria de dinheiro e finanças',
   },
@@ -250,9 +268,11 @@ const formCrencas = [
   },
   {
     cat: 'valor',
-    ress: 'Quando faço o que amo tenho ainda mais chances de ganhar muito dinheiro',
+    ress:
+      'Quando faço o que amo tenho ainda mais chances de ganhar muito dinheiro',
     score: 0,
-    pergunta: 'Não dá para lutar para ser rico e ser feliz e realizado ao mesmo tempo',
+    pergunta:
+      'Não dá para lutar para ser rico e ser feliz e realizado ao mesmo tempo',
   },
   {
     cat: 'valor',
@@ -274,7 +294,8 @@ const formCrencas = [
     ress:
       'Dinheiro é tão importante para a minha qualidade de vida quanto amor, saúde e felicidade.',
     score: 0,
-    pergunta: 'Se vocë for rico em amor, saúde e felicidade, vocë não precisará de dinheiro',
+    pergunta:
+      'Se vocë for rico em amor, saúde e felicidade, vocë não precisará de dinheiro',
   },
   {
     cat: 'valor',
@@ -285,15 +306,18 @@ const formCrencas = [
   },
   {
     cat: 'valor',
-    ress: 'Dinheiro é importante para atender minhas necessidades e realizar os meus objetivos',
+    ress:
+      'Dinheiro é importante para atender minhas necessidades e realizar os meus objetivos',
     score: 0,
     pergunta: 'Dinheiro não é assim tão importante',
   },
   {
     cat: 'valor',
-    ress: 'Tenho segurança quando utilizo meu dinheiro com inteligência e planejamento',
+    ress:
+      'Tenho segurança quando utilizo meu dinheiro com inteligência e planejamento',
     score: 0,
-    pergunta: 'Assim que eu tiver bastante dinheiro, vou finalmente estar seguro',
+    pergunta:
+      'Assim que eu tiver bastante dinheiro, vou finalmente estar seguro',
   },
   {
     cat: 'valor',
@@ -307,7 +331,8 @@ const formCrencas = [
     ress:
       'Para ser rico terei que contar com o apoio de outras pessoas e agregar valor à vida delas',
     score: 0,
-    pergunta: 'Para ser rico, você terá que usar as pessoas e tirar vantagem delas',
+    pergunta:
+      'Para ser rico, você terá que usar as pessoas e tirar vantagem delas',
   },
   {
     cat: 'valor',
@@ -330,20 +355,23 @@ const formCrencas = [
   },
   {
     cat: 'valor',
-    ress: 'Posso utilizar meu empenho artístico e criativo para ganhar dinheiro',
+    ress:
+      'Posso utilizar meu empenho artístico e criativo para ganhar dinheiro',
     score: 0,
     pergunta: 'Quando você pensa muito em dinheiro você se esquece das pessoas',
   },
   // IDENTIDADE
   {
     cat: 'identidade',
-    ress: 'Ser rico é uma questão de aprendizado e eu posso aprender a ganhar muito dinheiro',
+    ress:
+      'Ser rico é uma questão de aprendizado e eu posso aprender a ganhar muito dinheiro',
     score: 0,
     pergunta: 'Não "fui feito" para ser rico',
   },
   {
     cat: 'identidade',
-    ress: 'Pessoas ricas podem ter a vida que desejam, isso significa que podem ser felizes',
+    ress:
+      'Pessoas ricas podem ter a vida que desejam, isso significa que podem ser felizes',
     score: 0,
     pergunta: 'Pessoas ricas não são felizes',
   },
@@ -361,14 +389,15 @@ const formCrencas = [
   },
   {
     cat: 'identidade',
-    ress: 'Uma mulher é capaz de aprender o se tornar o que quiser, assim como um homem.',
+    ress:
+      'Uma mulher é capaz de aprender o se tornar o que quiser, assim como um homem.',
     score: 0,
     pergunta:
       'Uma mulher para ficar rica, ou precisa receber uma herança ou se casar com um homem rico',
   },
   {
     cat: 'identidade',
-    ress: 'Eu sou plenajemente capaz para ganhar muito dinheiro',
+    ress: 'Eu sou plenamente capaz para ganhar muito dinheiro',
     score: 0,
     pergunta: 'Não me sinto "bom" o suficiente para ficar rico',
   },
@@ -390,7 +419,8 @@ const formCrencas = [
     cat: 'identidade',
     ress: 'Posso ter dinheiro e ser simples e humilde ao mesmo tempo.',
     score: 0,
-    pergunta: 'Prefiro ser uma pessoa simples e humilde que alguém com dinheiro',
+    pergunta:
+      'Prefiro ser uma pessoa simples e humilde que alguém com dinheiro',
   },
   {
     cat: 'identidade',
@@ -401,7 +431,8 @@ const formCrencas = [
   },
   {
     cat: 'identidade',
-    ress: 'Tenho a força necessária para assumir minhas fraquezas e pedir ajuda.',
+    ress:
+      'Tenho a força necessária para assumir minhas fraquezas e pedir ajuda.',
     score: 0,
     pergunta: 'Se eu pedir ajuda, vão me achar fraco',
   },
@@ -435,7 +466,8 @@ const formCrencas = [
   },
   {
     cat: 'pertencimento',
-    ress: 'Meus pais fizeram o melhor que pudiam. Acredito que posso traçar meu próprio caminho.',
+    ress:
+      'Meus pais fizeram o melhor que pudiam. Acredito que posso traçar meu próprio caminho.',
     score: 0,
     pergunta: 'No fundo acredito que vou acabar como os meus pais',
   },
@@ -485,12 +517,13 @@ const formCrencas = [
     cat: 'pertencimento',
     ress:
       'O que diferencia o investidor do endividado é a forma como cada um gasta o que ganha, e não a quantidade que cada um ganha.',
-    score: 0, 
+    score: 0,
     pergunta: 'Pessoas endividadas vem de famílias pobres',
   },
   {
     cat: 'pertencimento',
-    ress: 'Meus amigos verdadeiros conhecem minha realidade e também em acompanham ',
+    ress:
+      'Meus amigos verdadeiros conhecem minha realidade e também em acompanham ',
     score: 0,
     pergunta: 'Preciso acompanhar o estilo de vida dos meus amigos e parentes',
   },
@@ -532,7 +565,8 @@ const formCrencas = [
     ress:
       'Acumular patrimônio é importante pra ter a vida que desejo, afinal não sei até quando vou viver',
     score: 0,
-    pergunta: 'Juntar patrimônio é bobagem, pois quando eu morrer não levarei nada',
+    pergunta:
+      'Juntar patrimônio é bobagem, pois quando eu morrer não levarei nada',
   },
   {
     cat: 'espiritualidade',
