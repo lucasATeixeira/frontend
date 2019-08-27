@@ -24,7 +24,7 @@ export default function Checkout({ history }) {
 
   const [cupom, setCupom] = useState('');
 
-  let amount = 100; // 57000;
+  let amount = 89000;
 
   useEffect(() => {
     const script = document.createElement('script');
