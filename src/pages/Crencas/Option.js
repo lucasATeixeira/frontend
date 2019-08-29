@@ -6,66 +6,74 @@ import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
 import { Creators as CrencasActions } from '../../store/ducks/crencas';
 
-const Option = ({
-  content, peso, next, crencas, saveRequest, name,
-}) => {
+const Option = ({ content, peso, next, crencas, saveRequest, name }) => {
   const question = crencas.questions[crencas.current];
   const handleChange = () => {
-    if (!name) return toast.error('Preencha um Nome antes de continuar!', { containerId: 'alerts' });
+    if (!name)
+      return toast.error('Preencha um Nome antes de continuar!', {
+        containerId: 'alerts',
+      });
     if (crencas.current >= crencas.total - 1) {
-      const ambiente = (crencas.ambiente
-          / (crencas.total * 4)
-          / (crencas.questions
+      const ambiente =
+        (crencas.ambiente /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'ambiente' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
-      const causaEfeito = (crencas.causaEfeito
-          / (crencas.total * 4)
-          / (crencas.questions
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
+      const causaEfeito =
+        (crencas.causaEfeito /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'causa e efeito' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
-      const capacidade = (crencas.capacidade
-          / (crencas.total * 4)
-          / (crencas.questions
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
+      const capacidade =
+        (crencas.capacidade /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'capacidade' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
-      const valor = (crencas.valor
-          / (crencas.total * 4)
-          / (crencas.questions
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
+      const valor =
+        (crencas.valor /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'valor' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
-      const identidade = (crencas.identidade
-          / (crencas.total * 4)
-          / (crencas.questions
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
+      const identidade =
+        (crencas.identidade /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'identidade' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
-      const pertencimento = (crencas.pertencimento
-          / (crencas.total * 4)
-          / (crencas.questions
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
+      const pertencimento =
+        (crencas.pertencimento /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'pertencimento' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
-      const espiritualidade = (crencas.espiritualidade
-          / (crencas.total * 4)
-          / (crencas.questions
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
+      const espiritualidade =
+        (crencas.espiritualidade /
+          (crencas.total * 4) /
+          (crencas.questions
             .map(q => (q.cat === 'espiritualidade' ? 1 : 0))
-            .reduce((total, prox) => total + prox)
-            / crencas.total))
-        * 100;
+            .reduce((total, prox) => total + prox) /
+            crencas.total)) *
+        100;
 
       const { cat } = [
         { score: ambiente, cat: 'ambiente' },
-        { score: causaEfeito, cat: 'cause e efeito' },
+        { score: causaEfeito, cat: 'causa e efeito' },
         { score: capacidade, cat: 'capacidade' },
         { score: valor, cat: 'valor' },
         { score: identidade, cat: 'identidade' },
@@ -98,7 +106,7 @@ const Option = ({
     }
     next({
       ...crencas,
-      questions: crencas.questions.map((a) => {
+      questions: crencas.questions.map(a => {
         if (a.pergunta !== question.pergunta) return a;
         return {
           ...a,
@@ -106,12 +114,18 @@ const Option = ({
         };
       }),
       ambiente: crencas.ambiente + (question.cat === 'ambiente' ? peso : 0),
-      causaEfeito: crencas.causaEfeito + (question.cat === 'causa e efeito' ? peso : 0),
-      capacidade: crencas.capacidade + (question.cat === 'capacidade' ? peso : 0),
+      causaEfeito:
+        crencas.causaEfeito + (question.cat === 'causa e efeito' ? peso : 0),
+      capacidade:
+        crencas.capacidade + (question.cat === 'capacidade' ? peso : 0),
       valor: crencas.valor + (question.cat === 'valor' ? peso : 0),
-      identidade: crencas.identidade + (question.cat === 'identidade' ? peso : 0),
-      pertencimento: crencas.pertencimento + (question.cat === 'pertencimento' ? peso : 0),
-      espiritualidade: crencas.espiritualidade + (question.cat === 'espiritualidade' ? peso : 0),
+      identidade:
+        crencas.identidade + (question.cat === 'identidade' ? peso : 0),
+      pertencimento:
+        crencas.pertencimento + (question.cat === 'pertencimento' ? peso : 0),
+      espiritualidade:
+        crencas.espiritualidade +
+        (question.cat === 'espiritualidade' ? peso : 0),
     });
   };
   return (
@@ -145,9 +159,10 @@ const mapStateToProps = state => ({
   crencas: state.crencas,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CrencasActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CrencasActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Option);

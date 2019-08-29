@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export default function CrencaResultCard({ crenca }) {
   const [firstHigher, secondHigher] = [
     { score: crenca.ambiente, cat: 'ambiente' },
-    { score: crenca.causaEfeito, cat: 'cause e efeito' },
+    { score: crenca.causaEfeito, cat: 'causa e efeito' },
     { score: crenca.capacidade, cat: 'capacidade' },
     { score: crenca.valor, cat: 'valor' },
     { score: crenca.identidade, cat: 'identidade' },
@@ -45,7 +45,10 @@ export default function CrencaResultCard({ crenca }) {
   };
 
   const barData = {
-    labels: [firstHigher.cat.toLocaleUpperCase(), secondHigher.cat.toUpperCase()],
+    labels: [
+      firstHigher.cat.toLocaleUpperCase(),
+      secondHigher.cat.toUpperCase(),
+    ],
     datasets: [
       {
         label: 'Dois Maiores resultados',
@@ -64,11 +67,14 @@ export default function CrencaResultCard({ crenca }) {
   };
 
   const pizzaData = {
-    labels: [firstHigher.cat.toUpperCase(), 'RESTANTE'],
+    labels: [firstHigher.cat.toUpperCase(), '-'],
     datasets: [
       {
         label: 'My First Dataset',
-        data: [Math.round(firstHigher.score), 100 - Math.round(firstHigher.score)],
+        data: [
+          Math.round(firstHigher.score),
+          100 - Math.round(firstHigher.score),
+        ],
         backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 255, 255)'],
         borderColor: ['#eee', '#eee'],
       },
@@ -77,14 +83,10 @@ export default function CrencaResultCard({ crenca }) {
   return (
     <div className="card">
       <div className="card-header">
-        <h3 className="card-title">{crenca.name}</h3>
+        <h3 className="card-title">CRENÇA - {crenca.name}</h3>
         <h4 className="card-title">
-          Resultado do questionário de Crença: <strong>{crenca.cat.toUpperCase()}</strong>
+          Resultado: <strong>{crenca.cat.toUpperCase()}</strong>
         </h4>
-
-        <Link to={`/laudos?result=${crenca.cat}`} className="btn btn-info btn-sm">
-          Ver Laudo
-        </Link>
       </div>
       <div className="card-body">
         {/* <ProgressBar resultContent={firstHigher} />
@@ -98,7 +100,16 @@ export default function CrencaResultCard({ crenca }) {
           </div>
         </div>
         <br />
-        <br />
+        <div className="row">
+          <div className="col-md-12">
+            <Link
+              to={`/laudos?result=${crenca.cat}`}
+              className="btn btn-info btn-sm"
+            >
+              Ver Laudo {firstHigher.cat}
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

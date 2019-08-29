@@ -3,7 +3,7 @@ const laudos = {
     phrase: 'A culpa é minha e eu coloco onde eu quiser',
     abstract:
       'O nível de crença de Ambiente define as crenças sobre dinheiro relacionadas ao meio externo. São crenças que buscam explicar a situação ou realidade financeira através de tudo que não é o indivíduo.',
-    content: `Por exemplo, a crença de que “se não fosse a crise eu estaria bem melhor financeiramente” ou “dinheiro causa muitos problemas” deixa claro que a pessoa atribui 100% dos seus resultados a outra coisa que não a si mesmo; bastante diferente de crenças como “eu não sei gerir dinheiro” ou “eu não consigo sair das dívidas”, que se relacionam totalmente com a pessoa e não à causas externas.
+    content: `     Por exemplo, a crença de que “se não fosse a crise eu estaria bem melhor financeiramente” ou “dinheiro causa muitos problemas” deixa claro que a pessoa atribui 100% dos seus resultados a outra coisa que não a si mesmo; bastante diferente de crenças como “eu não sei gerir dinheiro” ou “eu não consigo sair das dívidas”, que se relacionam totalmente com a pessoa e não à causas externas.
     A pessoa com muitas crenças sobre dinheiro no Nível de Ambiente deixa de lado a auto responsabilidade e tende, com muita frequência, a culpar tudo e todos pelos seus próprios resultados insatisfatórios. Pode responsabilizar o(a) parceiro(a), crise, o emprego, a renda atual, etc…mas com dificuldade, conseguem se lembrar de momentos em que assumiu a responsabilidade integral pelos resultados financeiros. Em casos mais extremos, podem adotar uma postura vitimista diante dos fatos, onde “o mundo conspira contra mim, e se não fosse por isso, eu estaria muito melhor”.
     Com frequência, a pessoa com o MMD enraizado nas crenças de Nível de Ambiente espera que “o mundo que me colocou nessa situação, também vai me tirar”, ou seja, normalmente essa pessoa aguarda que tudo ao seu redor melhore para ela finalmente se julgue capaz de resolver seus próprios problemas financeiros e quando não se resolvem, procura logo uma justificativa externa para isso.
     É muito comum a pessoa com um grau elevado de crenças no Nível de Ambiente adotar postura reativa diante dos acontecimentos e da própria vida, afinal “porque fazer algo, se é tudo ao meu redor que define meus resultados?”. Preferem esperar que as coisas aconteçam para só então se protegerem ou tomarem alguma outra atitude. Podem deixar para depois decisões importantes aguardando sempre “o melhor momento”, que muitas vezes, segundo a pessoa com muitas dessas crenças, “já passou”, se colocando muitas vezes como refém de um passado ideal e de um futuro incerto.
@@ -21,7 +21,8 @@ const laudos = {
     ],
   },
   causaEfeito: {
-    phrase: 'Quem quer resolver um problema encontra uma solução, quem não quer, acha uma desculpa',
+    phrase:
+      'Quem quer resolver um problema encontra uma solução, quem não quer, acha uma desculpa',
     abstract:
       'O nível de crença de Causa e Efeito agrupa as crenças que tratam o dinheiro como a causa que leva a efeitos negativos para a vida das pessoas.  Essas crenças vinculam a ideia de ganhar dinheiro como algo penoso ou que promove sofrimento. Em sua maioria, se assemelham à “justificativas” para que a pessoa não busque a prosperidade financeira.',
     content: `A pessoa com esse tipo de crença está sempre pronta para justificar o porquê de “não buscar intencionalmente a abundância financeira” ou de forma inconsciente, a razão “porque ela sempre se endivida”. Essa pessoa com muita frequência, associa o dinheiro à coisas ruins ou desagradáveis que acontecem com outras pessoas que, na mente dela, tem vários problemas decorrentes do dinheiro na conta bancária, de stress a problemas de saúde.

@@ -7,7 +7,9 @@ import api from '../../services/api';
 import PersonResultMmd from './PersonResultMmd';
 
 export default function Comportamento() {
-  const [firstCrencaResult, secondCrencaResult] = useSelector(state => state.crencas.answers);
+  const [firstCrencaResult, secondCrencaResult] = useSelector(
+    state => state.crencas.answers
+  );
   const [firstMmdResult, setFirstMmdResult] = useState(undefined);
   const [secondMmdResult, setSecondMmdResult] = useState(undefined);
 
@@ -33,16 +35,16 @@ export default function Comportamento() {
             <PersonResultCrenca crenca={firstCrencaResult} />
           </div>
         )}
-        {secondCrencaResult && (
+        {firstMmdResult && (
           <div className="col-md-6">
-            <PersonResultCrenca crenca={secondCrencaResult} />
+            <PersonResultMmd mmd={firstMmdResult} />
           </div>
         )}
       </div>
       <div className="row">
-        {firstMmdResult && (
+        {secondCrencaResult && (
           <div className="col-md-6">
-            <PersonResultMmd mmd={firstMmdResult} />
+            <PersonResultCrenca crenca={secondCrencaResult} />
           </div>
         )}
         {secondMmdResult && (

@@ -4,22 +4,23 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default function MmdResultCard({ mmd }) {
-  const [firstHigher, secondHigher] = [
+  const [firstMmd] = [
     { score: mmd.conjuntural, cat: 'conjuntural' },
     { score: mmd.estrutural, cat: 'estrutural' },
     { score: mmd.oportunidade, cat: 'oportunidade' },
+  ].sort((a, b) => (a.score > b.score ? -1 : 1));
+
+  const [firstHigher, secondHigher] = [
     { score: mmd.esperanca, cat: 'esperanca' },
     { score: mmd.reatividade, cat: 'reatividade' },
     { score: mmd.inseguranca, cat: 'inseguranca' },
-    { score: mmd.carenciaEmocional, cat: 'carenciaEmocional' },
-    { score: mmd.insatisfacaoPessoal, cat: 'insatisfacaoPessoal' },
-    { score: mmd.identificacaoExterna, cat: 'identificacaoExterna' },
+    { score: mmd.carenciaEmocional, cat: 'carencia emocional' },
+    { score: mmd.insatisfacaoPessoal, cat: 'insatisfação pessoal' },
+    { score: mmd.identificacaoExterna, cat: 'identificação externa' },
     { score: mmd.negligencia, cat: 'negligencia' },
     { score: mmd.impulsividade, cat: 'impulsividade' },
     { score: mmd.otimismo, cat: 'otimismo' },
-  ]
-    .sort((a, b) => (a.score > b.score ? -1 : 1))
-    .slice(0, 3);
+  ].sort((a, b) => (a.score > b.score ? -1 : 1));
 
   const barOptions = {
     legend: {
@@ -43,13 +44,16 @@ export default function MmdResultCard({ mmd }) {
   };
 
   const barData = {
-    labels: [firstHigher.cat.toLocaleUpperCase(), secondHigher.cat.toUpperCase()],
+    labels: [
+      firstHigher.cat.toLocaleUpperCase(),
+      secondHigher.cat.toUpperCase(),
+    ],
     datasets: [
       {
         label: 'Dois Maiores resultados',
-        data: [firstHigher.score, secondHigher.score],
-        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgb(255, 99, 132)', 'rgb(255, 99, 132)'],
+        data: [firstHigher.score.toFixed(2), secondHigher.score.toFixed(2)],
+        backgroundColor: ['rgba(29, 233, 182, 0.4)', 'rgba(29, 233, 182, 0.2)'],
+        borderColor: ['rgb(29, 233, 182)', 'rgb(29, 233, 182)'],
         borderWidth: 1,
       },
     ],
@@ -59,15 +63,23 @@ export default function MmdResultCard({ mmd }) {
     legend: {
       position: 'bottom',
     },
+    // tooltips: {
+    //   callbacks: {
+    //     label(data, data2) {
+    //       console.log(data, data2);
+    //       return data;
+    //     },
+    //   },
+    // },
   };
 
   const pizzaData = {
-    labels: ['TOTAL', 'RESTANTE'],
+    labels: ['GRAU DE ENDIVIDAMENTO', '-'],
     datasets: [
       {
         label: 'My First Dataset',
-        data: [Math.round(mmd.total), 100 - Math.round(mmd.total)],
-        backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 255, 255)'],
+        data: [Math.round(mmd.total * 100), 100 - Math.round(mmd.total * 100)],
+        backgroundColor: ['rgb(29, 233, 182)', 'rgb(255, 255, 255)'],
         borderColor: ['#eee', '#eee'],
       },
     ],
@@ -75,14 +87,13 @@ export default function MmdResultCard({ mmd }) {
   return (
     <div className="card">
       <div className="card-header">
-        <h3 className="card-title">{mmd.name}</h3>
+        <h3 className="card-title">MMD - {mmd.name}</h3>
         <h4 className="card-title">
-          Resultado do questionário de MMD: <strong>{firstHigher.cat.toUpperCase()}</strong>
+          Tipo de dívida: <strong>{firstMmd.cat.toUpperCase()}</strong>
         </h4>
-
-        <Link to={`/laudos?result=${firstHigher.cat}`} className="btn btn-info btn-sm">
-          Ver Laudo
-        </Link>
+        <h4 className="card-title">
+          Motivação: <strong>{firstHigher.cat.toUpperCase()}</strong>
+        </h4>
       </div>
       <div className="card-body">
         {/* <ProgressBar resultContent={firstHigher} />
@@ -96,7 +107,22 @@ export default function MmdResultCard({ mmd }) {
           </div>
         </div>
         <br />
-        <br />
+        <div className="row">
+          <div className="col-md-12">
+            <Link
+              to={`/laudos?result=${firstMmd.cat}`}
+              className="btn btn-info btn-sm pull-left"
+            >
+              Ver Laudo {firstMmd.cat}
+            </Link>
+            <Link
+              to={`/laudos?result=${firstHigher.cat}`}
+              className="btn btn-info btn-sm pull-right"
+            >
+              Ver Laudo {firstHigher.cat}
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
