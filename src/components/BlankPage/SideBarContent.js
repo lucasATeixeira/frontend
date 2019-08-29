@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Item from './Item';
 import ItemLancamento from './ItemLancamento';
 import CollapsedItem from './CollapsedItem';
 import ButtonPainel from './ButtonPainel';
 
 export default function SideBarContent({ setPage }) {
+  const user = useSelector(state => state.user);
+
   return (
     <ul className="nav">
       <ButtonPainel />
-      <ItemLancamento />
+      {user.user.userType !== 'cliente' && <ItemLancamento />}
+
       <Item
         href="/painel"
         title="Painel de Controle"

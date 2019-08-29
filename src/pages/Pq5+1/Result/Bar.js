@@ -21,14 +21,20 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
         },
         {
           label: 'Dívidas',
-          data: [patrimonios.passivos.pmt, patrimonios.passivos.pmt + simulacao.pmt],
+          data: [
+            patrimonios.passivos.pmt,
+            patrimonios.passivos.pmt + simulacao.pmt,
+          ],
           backgroundColor: 'rgb(218, 68, 83)',
           borderColor: 'transparent',
           borderWidth: 3,
         },
         {
           label: 'Gastos',
-          data: [orcamento.gastosOrcados, orcamento.gastosOrcados + simulacao.gastos],
+          data: [
+            orcamento.gastosOrcados,
+            orcamento.gastosOrcados + simulacao.gastos,
+          ],
           backgroundColor: 'rgb(0, 87, 156)',
           borderColor: 'transparent',
           borderWidth: 3,
@@ -71,7 +77,10 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
               },
               ticks: {
                 beginAtZero: true,
-                max: orcamento.gastosOrcados + patrimonios.passivos.pmt,
+                max:
+                  orcamento.gastosOrcados +
+                  patrimonios.passivos.pmt +
+                  orcamento.recebimentosOrcados,
                 callback(value) {
                   return value.toLocaleString('pt-BR');
                 },
@@ -85,7 +94,10 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
               },
               ticks: {
                 beginAtZero: true,
-                max: orcamento.gastosOrcados + patrimonios.passivos.pmt,
+                max:
+                  orcamento.gastosOrcados +
+                  patrimonios.passivos.pmt +
+                  orcamento.recebimentosOrcados,
                 callback(value) {
                   return value.toLocaleString('pt-BR');
                 },

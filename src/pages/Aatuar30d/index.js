@@ -1,21 +1,38 @@
 /* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import BlankPage from '../../components/BlankPage';
+import { connect, useDispatch } from 'react-redux';
+import api from '../../services/api';
 import { Creators as A30dActions } from '../../store/ducks/a30d';
+
+import BlankPage from '../../components/BlankPage';
+
 import 'react-datepicker/dist/react-datepicker.css';
 
 const Aatuar30d = ({
-  a30d, updateA30dRequest, addA30dRequest, removeA30dRequest,
+  a30d,
+  updateA30dRequest,
+  addA30dRequest,
+  removeA30dRequest,
 }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await api.get('api/a30d');
+      dispatch(A30dActions.fetchDataA30d(data));
+    }
+
+    fetchData();
+  }, [dispatch]);
+
   const pStyle = { position: 'absolute', top: '10px' };
   const [newCard, setNewCard] = useState(false);
   const [acao, setAcao] = useState('');
@@ -26,13 +43,16 @@ const Aatuar30d = ({
   const [quem, setQuem] = useState('');
   const [como, setComo] = useState('');
 
-  const handleDelete = (a) => {
+  const handleDelete = a => {
     removeA30dRequest(a);
   };
 
-  const handleNewSubmit = (e) => {
+  const handleNewSubmit = e => {
     e.preventDefault();
-    if (!acao) return toast.error('Adicione pelo menos um nome a ação', { containerId: 'alerts' });
+    if (!acao)
+      return toast.error('Adicione pelo menos um nome a ação', {
+        containerId: 'alerts',
+      });
     addA30dRequest({
       acao,
       onde,
@@ -48,7 +68,7 @@ const Aatuar30d = ({
     return setNewCard(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     updateA30dRequest({
       body: {
@@ -63,7 +83,7 @@ const Aatuar30d = ({
     return setInput('');
   };
 
-  const handleEdit = (a) => {
+  const handleEdit = a => {
     setNewCard(false);
     setInput(a._id);
     setId(a._id);
@@ -158,9 +178,13 @@ const Aatuar30d = ({
                   <div className="row pull-right">
                     <div className="col-md-12">
                       <div>
-                        <button type="submit" className="btn btn-success btn-sm">
+                        <button
+                          type="submit"
+                          className="btn btn-success btn-sm"
+                        >
                           <strong>
-                            <i className="material-icons">add_circle_outline</i> Adicionar nova Ação
+                            <i className="material-icons">add_circle_outline</i>{' '}
+                            Adicionar nova Ação
                           </strong>
                         </button>
                         <button
@@ -233,7 +257,9 @@ const Aatuar30d = ({
                     ) : (
                       <>
                         <span style={pStyle}>
-                          {a.quando ? moment(a.quando).format('DD [de] MMMM [de] YYYY') : ''}
+                          {a.quando
+                            ? moment(a.quando).format('DD [de] MMMM [de] YYYY')
+                            : ''}
                         </span>
                       </>
                     )}
@@ -285,15 +311,22 @@ const Aatuar30d = ({
                           className="btn btn-success btn-sm btn-link"
                         >
                           <strong>
-                            <i className="material-icons">add_circle_outline</i> Editar
+                            <i className="material-icons">add_circle_outline</i>{' '}
+                            Editar
                           </strong>
                         </button>
                       ) : (
                         <>
                           <div>
-                            <button type="submit" className="btn btn-success btn-sm">
+                            <button
+                              type="submit"
+                              className="btn btn-success btn-sm"
+                            >
                               <strong>
-                                <i className="material-icons">add_circle_outline</i> Realizar Edição
+                                <i className="material-icons">
+                                  add_circle_outline
+                                </i>{' '}
+                                Realizar Edição
                               </strong>
                             </button>
                             <button
@@ -332,9 +365,10 @@ const mapStateToProps = state => ({
   a30d: state.a30d,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(A30dActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(A30dActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Aatuar30d);

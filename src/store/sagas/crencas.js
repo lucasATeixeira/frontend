@@ -9,7 +9,7 @@ export function* updateRequest(action) {
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
     local.crencas = {
       ...local.crencas,
-      answers: local.crencas.answers.map((a) => {
+      answers: local.crencas.answers.map(a => {
         if (a._id !== response.data._id) return a;
         return response.data;
       }),
@@ -36,7 +36,7 @@ export function* saveRequest(action) {
         ...local.crencas,
         done: true,
         coupleDone: action.payload.coupleDone,
-      }),
+      })
     );
   } catch (err) {
     yield put(CrencaActions.saveFailure(err));

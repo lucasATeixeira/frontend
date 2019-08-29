@@ -230,6 +230,9 @@ const Pote = ({ orcamento, patrimonios }) => {
     orcamento.recebimentosRealizados,
     orcamento.recebimentosRealizadosParcelados,
     patrimonios.passivos.pmt,
+    gastosComprometidos,
+    gastosEventuais,
+    gastosFlexiveis,
   ]);
 
   return (

@@ -12,7 +12,9 @@ export const Types = {
   UPDATE_SUCCESS: 'crencas/UPDATE_SUCCESS',
 };
 
-const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || { crencas: {} };
+const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
+  crencas: {},
+};
 
 const INITIAL_STATE = {
   answers: [],

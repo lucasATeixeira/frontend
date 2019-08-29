@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import BlankPage from '../../components/BlankPage';
 import PersonResultCrenca from './PersonResultCrenca';
 import api from '../../services/api';
 import PersonResultMmd from './PersonResultMmd';
+import { Creators as CrencaActions } from '../../store/ducks/crencas';
 
 export default function Comportamento() {
+  const dispatch = useDispatch();
+
   const [firstCrencaResult, secondCrencaResult] = useSelector(
     state => state.crencas.answers
   );
@@ -14,25 +17,27 @@ export default function Comportamento() {
   const [secondMmdResult, setSecondMmdResult] = useState(undefined);
 
   useEffect(() => {
-    async function fetchMmdData() {
+    async function fetchData() {
       try {
-        const { data } = await api.get('api/mmd');
-        setFirstMmdResult(data[0]);
-        setSecondMmdResult(data[1]);
+        const { data: mmd } = await api.get('api/mmd');
+        const { data: crenca } = await api.get('api/crenca');
+        setFirstMmdResult(mmd[0]);
+        setSecondMmdResult(mmd[1]);
+        dispatch(CrencaActions.fetchCrenca(crenca));
         return;
       } catch (err) {
         toast.error('Ocorreu um erro', { contaierId: 'alerts' });
       }
     }
-    fetchMmdData();
-  }, []);
+    fetchData();
+  }, [dispatch]);
 
   return (
     <BlankPage>
       <div className="row">
-        {firstCrencaResult && (
+        {secondMmdResult && (
           <div className="col-md-6">
-            <PersonResultCrenca crenca={firstCrencaResult} />
+            <PersonResultMmd mmd={secondMmdResult} />
           </div>
         )}
         {firstMmdResult && (
@@ -42,14 +47,14 @@ export default function Comportamento() {
         )}
       </div>
       <div className="row">
+        {firstCrencaResult && (
+          <div className="col-md-6">
+            <PersonResultCrenca crenca={firstCrencaResult} />
+          </div>
+        )}
         {secondCrencaResult && (
           <div className="col-md-6">
             <PersonResultCrenca crenca={secondCrencaResult} />
-          </div>
-        )}
-        {secondMmdResult && (
-          <div className="col-md-6">
-            <PersonResultMmd mmd={secondMmdResult} />
           </div>
         )}
       </div>

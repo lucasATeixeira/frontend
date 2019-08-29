@@ -22,7 +22,11 @@ const BlankPage = ({ children, fetchDataRequest, data }) => {
   return (
     <>
       <Wrapper>
-        <ToastContainer autoClose={2000} enableMultiContainer containerId="alerts" />
+        <ToastContainer
+          autoClose={2000}
+          enableMultiContainer
+          containerId="alerts"
+        />
         <SideBar setPage={setPage} />
         <MainPanel>
           <TopNavBar page={page} />
@@ -67,9 +71,10 @@ const mapStateToProps = state => ({
   data: state.data,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(DataActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(DataActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(BlankPage);
