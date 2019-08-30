@@ -171,14 +171,14 @@ const Pote = ({ orcamento, patrimonios }) => {
           {
             label: 'Flexíveis',
             data: [gastosFlexiveis],
-            backgroundColor: '#4DA9FF',
+            backgroundColor: 'rgba(0, 87, 156, 0.5)',
             borderColor: 'transparent',
             borderWidth: 3,
           },
           {
             label: 'Eventuais',
             data: [gastosEventuais],
-            backgroundColor: '#73C0FF',
+            backgroundColor: 'rgba(0, 87, 156, 0.2)',
             borderColor: 'transparent',
             borderWidth: 3,
           },

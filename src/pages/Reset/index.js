@@ -16,10 +16,12 @@ const Reset = ({ location }) => {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    if (!password || !repeatPassword) return toast.error('Preencha todos os campos');
-    if (password !== repeatPassword) return toast.error('As Senhas não são iguais');
+    if (!password || !repeatPassword)
+      return toast.error('Preencha todos os campos');
+    if (password !== repeatPassword)
+      return toast.error('As Senhas não são iguais');
     try {
       setLoading(true);
       await api.post('api/reset_password', { email, password, token });
@@ -71,7 +73,9 @@ const Reset = ({ location }) => {
                                 <div className="input-group">
                                   <div className="input-group-prepend">
                                     <span className="input-group-text">
-                                      <i className="material-icons">lock_outline</i>
+                                      <i className="material-icons">
+                                        lock_outline
+                                      </i>
                                     </span>
                                   </div>
                                   <br />
@@ -79,7 +83,9 @@ const Reset = ({ location }) => {
                                     <input
                                       type="password"
                                       value={password}
-                                      onChange={e => setPassword(e.target.value)}
+                                      onChange={e =>
+                                        setPassword(e.target.value)
+                                      }
                                       className="form-control"
                                       placeholder="Nova Senha..."
                                     />
@@ -90,7 +96,9 @@ const Reset = ({ location }) => {
                                 <div className="input-group">
                                   <div className="input-group-prepend">
                                     <span className="input-group-text">
-                                      <i className="material-icons">lock_outline</i>
+                                      <i className="material-icons">
+                                        lock_outline
+                                      </i>
                                     </span>
                                   </div>
                                   <br />
@@ -98,7 +106,9 @@ const Reset = ({ location }) => {
                                     <input
                                       type="password"
                                       value={repeatPassword}
-                                      onChange={e => setRepeatPassword(e.target.value)}
+                                      onChange={e =>
+                                        setRepeatPassword(e.target.value)
+                                      }
                                       className="form-control"
                                       placeholder="Confirme sua nova Senha"
                                     />
@@ -117,7 +127,10 @@ const Reset = ({ location }) => {
 
                         <div className="card-footer justify-content-center">
                           {!success ? (
-                            <button type="submit" className="btn btn-info btn-lg">
+                            <button
+                              type="submit"
+                              className="btn btn-info btn-lg"
+                            >
                               {loading ? (
                                 <i className="fa fa-spinner fa-pulse" />
                               ) : (
