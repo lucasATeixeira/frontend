@@ -90,7 +90,7 @@ const TableAtivos = ({
                       <strong>Valor</strong>
                     </th>
                     <th className="text-right text-success">
-                      <strong>Actions</strong>
+                      <strong>Ações</strong>
                     </th>
                   </tr>
                 </thead>

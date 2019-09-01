@@ -33,24 +33,41 @@ const TablePassivos = ({
     setAVista(q);
   }, [pRestantes, pmt, taxa]);
 
-  const handleDelete = (patrimonio) => {
-    if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;
+  const handleDelete = patrimonio => {
+    if (!window.confirm('Tem certeza que deseja excluir este patrimônio?'))
+      return;
     removePatrimonioRequest(patrimonio);
   };
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     if (e.keyCode !== 27) return;
     setNewPassivo(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (!nomePassivo) return toast.error('Inclua um nome', { containerId: 'alerts' });
-    if (!instituicao) return toast.error('Inclua um nome para Instituição', { containerId: 'alerts' });
-    if (pRestantes < 0) return toast.error('Inclua um valor de parcelas restantes válido', { containerId: 'alerts' });
-    if (pmt < 0) return toast.error('Inclua um valor de PMT válido', { containerId: 'alerts' });
-    if (taxa < 0) return toast.error('Inclua um valor da taxa válido', { containerId: 'alerts' });
-    if (aVista < 0) return toast.error('Inclua um valor à Vista válido', { containerId: 'alerts' });
+    if (!nomePassivo)
+      return toast.error('Inclua um nome', { containerId: 'alerts' });
+    if (!instituicao)
+      return toast.error('Inclua um nome para Instituição', {
+        containerId: 'alerts',
+      });
+    if (pRestantes < 0)
+      return toast.error('Inclua um valor de parcelas restantes válido', {
+        containerId: 'alerts',
+      });
+    if (pmt < 0)
+      return toast.error('Inclua um valor de PMT válido', {
+        containerId: 'alerts',
+      });
+    if (taxa < 0)
+      return toast.error('Inclua um valor da taxa válido', {
+        containerId: 'alerts',
+      });
+    if (aVista < 0)
+      return toast.error('Inclua um valor à Vista válido', {
+        containerId: 'alerts',
+      });
     const data = moment();
     const dataFinal = moment()
       .add(pRestantes, 'months')
@@ -143,7 +160,7 @@ const TablePassivos = ({
                       <strong>Desconto</strong>
                     </th>
                     <th className="text-right text-danger">
-                      <strong>Actions</strong>
+                      <strong>Ações</strong>
                     </th>
                   </tr>
                 </thead>
@@ -155,7 +172,10 @@ const TablePassivos = ({
                           <td>{p.nome}</td>
                           <td>{p.instituicao}</td>
                           <td className="text-right">
-                            {p.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                            {p.pmt.toLocaleString('pt-br', {
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
                           </td>
                           <td>{p.parcelas}</td>
                           <td>{p.taxa}%</td>
@@ -173,7 +193,9 @@ const TablePassivos = ({
                           </td>
                           <td>
                             {!!p.pmt || !!p.pRestantes
-                              ? ((1 - p.aVista / p.total) * 100).toLocaleString('pt-br')
+                              ? ((1 - p.aVista / p.total) * 100).toLocaleString(
+                                  'pt-br'
+                                )
                               : 0}
                             %
                           </td>
@@ -287,14 +309,21 @@ const TablePassivos = ({
                             {!!pRestantes || !!pmt
                               ? isNaN((1 - aVista / (pRestantes * pmt)) * 100)
                                 ? 0
-                                : Math.round((1 - aVista / (pRestantes * pmt)) * 100)
+                                : Math.round(
+                                    (1 - aVista / (pRestantes * pmt)) * 100
+                                  )
                               : 0}
                             %
                           </td>
                           <td className="text-center">
                             <div>
-                              <button type="submit" className="btn btn-success btn-sm">
-                                <i className="material-icons">add_circle_outline</i>
+                              <button
+                                type="submit"
+                                className="btn btn-success btn-sm"
+                              >
+                                <i className="material-icons">
+                                  add_circle_outline
+                                </i>
                                 <strong>Adicionar</strong>
                               </button>
                             </div>
@@ -388,12 +417,17 @@ const TablePassivos = ({
                         {!!pRestantes || !!pmt
                           ? isNaN((1 - aVista / (pRestantes * pmt)) * 100)
                             ? 0
-                            : Math.round((1 - aVista / (pRestantes * pmt)) * 100)
+                            : Math.round(
+                                (1 - aVista / (pRestantes * pmt)) * 100
+                              )
                           : 0}
                         %
                       </td>
                       <td className="text-center">
-                        <button type="submit" className="btn btn-success btn-sm">
+                        <button
+                          type="submit"
+                          className="btn btn-success btn-sm"
+                        >
                           <i className="material-icons">add_circle_outline</i>
                           <strong>Adicionar</strong>
                         </button>
@@ -413,7 +447,8 @@ const TablePassivos = ({
               className="btn btn-danger btn-sm"
             >
               <strong>
-                <i className="material-icons">add_circle_outline</i> Adicionar passivo
+                <i className="material-icons">add_circle_outline</i> Adicionar
+                passivo
               </strong>
             </button>
           </div>
@@ -437,9 +472,10 @@ TablePassivos.defaultProps = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators(PatrimoniosActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PatrimoniosActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TablePassivos);

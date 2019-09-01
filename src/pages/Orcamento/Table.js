@@ -84,7 +84,7 @@ const Table = ({
                   <th className="text-right">Orçado</th>
                   <th>Recorrência</th>
                   <th className="text-right">Valor Período</th>
-                  <th className="text-right">Actions</th>
+                  <th className="text-right">Ações</th>
                 </tr>
               </thead>
               <tbody>

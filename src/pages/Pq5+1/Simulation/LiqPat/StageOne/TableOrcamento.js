@@ -51,7 +51,7 @@ const TableOrcamento = ({ simulacao, saveSimulation, categorias }) => {
                         <strong>Valor Mensal</strong>
                       </th>
                       <th className="text-right text-info">
-                        <strong>Actions</strong>
+                        <strong>Ações</strong>
                       </th>
                     </tr>
                   </thead>

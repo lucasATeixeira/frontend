@@ -14,7 +14,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
   const [nome, setNome] = useState('');
   const [orcado, setOrcado] = useState(0);
   const [recorrencia, setRecorrencia] = useState(1);
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (recorrencia <= 0) {
       return toast.error('Recorrência não pode ser igual ou menor que zero', {
@@ -115,45 +115,57 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
                       <th>Nome</th>
                       <th>Orçado</th>
                       <th>Recorrência</th>
-                      <th className="text-right">Actions</th>
+                      <th className="text-right">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
                     {categorias
                       .filter(c => c.tipo === 'recebimento')
-                      .map(c => c.itens
-                        .filter(
-                          i => i.classificacao === 'Eventual'
-                              && !simulacao.itensRemovidos.map(ir => ir._id).includes(i._id),
-                        )
-                        .map(i => (
-                          <tr key={i._id}>
-                            <td>{i.nome}</td>
-                            <td>
-                              {i.orcado.toLocaleString('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              })}
-                            </td>
-                            <td>{i.recorrencia}</td>
-                            <td className="td-actions text-right">
-                              <div className="form-check">
-                                <label htmlFor={i._id} className="form-check-label">
-                                  <input
-                                    id={i._id}
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={currentSimulation.itensRemovidos.includes(i)}
-                                    onChange={() => handleChange(i, 'removidos')}
-                                  />
-                                  <span className="form-check-sign">
-                                    <span className="check" />
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                          </tr>
-                        )))}
+                      .map(c =>
+                        c.itens
+                          .filter(
+                            i =>
+                              i.classificacao === 'Eventual' &&
+                              !simulacao.itensRemovidos
+                                .map(ir => ir._id)
+                                .includes(i._id)
+                          )
+                          .map(i => (
+                            <tr key={i._id}>
+                              <td>{i.nome}</td>
+                              <td>
+                                {i.orcado.toLocaleString('pt-br', {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                })}
+                              </td>
+                              <td>{i.recorrencia}</td>
+                              <td className="td-actions text-right">
+                                <div className="form-check">
+                                  <label
+                                    htmlFor={i._id}
+                                    className="form-check-label"
+                                  >
+                                    <input
+                                      id={i._id}
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      checked={currentSimulation.itensRemovidos.includes(
+                                        i
+                                      )}
+                                      onChange={() =>
+                                        handleChange(i, 'removidos')
+                                      }
+                                    />
+                                    <span className="form-check-sign">
+                                      <span className="check" />
+                                    </span>
+                                  </label>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                      )}
                     {currentSimulation.itens.map(i => (
                       <tr key={i._id}>
                         <td>{i.nome}</td>
@@ -220,7 +232,10 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
                           </span>
                         </td>
                         <td className="text-center">
-                          <button type="submit" className="btn btn-success btn-sm">
+                          <button
+                            type="submit"
+                            className="btn btn-success btn-sm"
+                          >
                             <i className="material-icons">add_circle_outline</i>
                             <strong>Adicionar</strong>
                           </button>
@@ -237,7 +252,8 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
               className="btn btn-grafit btn-sm"
             >
               <strong>
-                <i className="material-icons">add_circle_outline</i> Adicionar Recebimento
+                <i className="material-icons">add_circle_outline</i> Adicionar
+                Recebimento
               </strong>
             </button>
           </div>
@@ -258,9 +274,10 @@ const mapStateToProps = state => ({
   categorias: state.categorias.categorias,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CardOne);

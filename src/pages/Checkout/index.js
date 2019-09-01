@@ -2,13 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf, handleTelefone } from '../../hooks/inputHooks';
 
-export default function Checkout({ history }) {
+export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -24,7 +23,7 @@ export default function Checkout({ history }) {
 
   const [cupom, setCupom] = useState('');
 
-  let amount = 100; // 89000;
+  let amount = 75650; // 89000;
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -133,7 +132,8 @@ export default function Checkout({ history }) {
               cupom: cupomName,
               payment_value: amount,
             });
-            history.push('/');
+            // history.push('/');
+            window.location.href('https://plataforma.ondazul.online/parabens');
             setLoading(false);
           },
           error: err => {
@@ -154,6 +154,8 @@ export default function Checkout({ history }) {
           createToken: 'true',
           paymentMethods: 'credit_card',
           maxInstallments: 12,
+          headerText: 'Bem vindo',
+          interestRate: 1.16,
           postbackUrl: `${process.env.REACT_APP_API_URL}api/notification`,
           customer: {
             external_id: Math.random(),
@@ -406,10 +408,10 @@ export default function Checkout({ history }) {
   );
 }
 
-Checkout.propTypes = {
-  history: PropTypes.shape(),
-};
+// Checkout.propTypes = {
+//   history: PropTypes.shape(),
+// };
 
-Checkout.defaultProps = {
-  history: {},
-};
+// Checkout.defaultProps = {
+//   history: {},
+// };

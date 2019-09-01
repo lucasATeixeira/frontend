@@ -24,19 +24,19 @@ const CardOne = ({ simulacao, saveSimulation }) => {
   useEffect(() => {
     setPmt(
       isNaN(
-        (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
-          / (1 - (1 + taxa / 100) ** -parcelas),
+        (necessario * (1 + taxa / 100) ** carencia * (taxa / 100)) /
+          (1 - (1 + taxa / 100) ** -parcelas)
       )
         ? isFinite(necessario / parcelas)
           ? necessario / parcelas
           : 0
         : isFinite(
-          (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
-              / (1 - (1 + taxa / 100) ** -parcelas),
-        )
-          ? (necessario * (1 + taxa / 100) ** carencia * (taxa / 100))
-          / (1 - (1 + taxa / 100) ** -parcelas)
-          : 0,
+            (necessario * (1 + taxa / 100) ** carencia * (taxa / 100)) /
+              (1 - (1 + taxa / 100) ** -parcelas)
+          )
+        ? (necessario * (1 + taxa / 100) ** carencia * (taxa / 100)) /
+          (1 - (1 + taxa / 100) ** -parcelas)
+        : 0
     );
   }, [necessario, taxa, parcelas, carencia]);
 
@@ -49,17 +49,22 @@ const CardOne = ({ simulacao, saveSimulation }) => {
     setParcelas(1);
   }, [isValorUnico]);
 
-  const handleDelete = () => saveSimulation({
-    ...currentSimulation,
-    patrimonios: [],
-    patrimoniosRemovidos: [],
-    saldo: simulacao.saldo,
-  });
+  const handleDelete = () =>
+    saveSimulation({
+      ...currentSimulation,
+      patrimonios: [],
+      patrimoniosRemovidos: [],
+      saldo: simulacao.saldo,
+    });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (parcelas <= 0) return toast.error('Parcelas deve ser maior que zero', { containerId: 'alerts' });
-    if (!instituicao) return toast.error('Coloque um Nome', { containerId: 'alerts' });
+    if (parcelas <= 0)
+      return toast.error('Parcelas deve ser maior que zero', {
+        containerId: 'alerts',
+      });
+    if (!instituicao)
+      return toast.error('Coloque um Nome', { containerId: 'alerts' });
     const id = Math.random();
     saveSimulation({
       ...currentSimulation,
@@ -132,7 +137,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                         <strong>Total com Juros</strong>
                       </th>
                       <th className="text-right text-success">
-                        <strong>Actions</strong>
+                        <strong>Ações</strong>
                       </th>
                     </tr>
                   </thead>
@@ -145,9 +150,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           {c.parcelas === 1
                             ? '-'
                             : c.necessario.toLocaleString('pt-br', {
-                              style: 'currency',
-                              currency: 'BRL',
-                            })}
+                                style: 'currency',
+                                currency: 'BRL',
+                              })}
                         </td>
                         <td>{c.parcelas === 1 ? '-' : c.parcelas}</td>
                         <td>{c.taxa}%</td>
@@ -156,9 +161,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           {c.parcelas === 1
                             ? '-'
                             : c.pmt.toLocaleString('pt-br', {
-                              style: 'currency',
-                              currency: 'BRL',
-                            })}
+                                style: 'currency',
+                                currency: 'BRL',
+                              })}
                         </td>
                         <td>
                           {c.total.toLocaleString('pt-br', {
@@ -181,7 +186,10 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                       <tr>
                         <td className="td-actions ">
                           <div className="form-check">
-                            <label htmlFor="isValorUnico" className="form-check-label">
+                            <label
+                              htmlFor="isValorUnico"
+                              className="form-check-label"
+                            >
                               <input
                                 id="isValorUnico"
                                 className="form-check-input"
@@ -263,9 +271,9 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           {isValorUnico
                             ? '-'
                             : pmt.toLocaleString('pt-br', {
-                              style: 'currency',
-                              currency: 'BRL',
-                            })}
+                                style: 'currency',
+                                currency: 'BRL',
+                              })}
                         </td>
                         <td>
                           {(pmt * parcelas).toLocaleString('pt-br', {
@@ -274,7 +282,10 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           })}
                         </td>
                         <td className="text-center">
-                          <button type="submit" className="btn btn-success btn-sm">
+                          <button
+                            type="submit"
+                            className="btn btn-success btn-sm"
+                          >
                             <i className="material-icons">add_circle_outline</i>
                             <strong>Pegar Empréstimo</strong>
                           </button>
@@ -301,9 +312,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CardOne);

@@ -78,7 +78,7 @@ const Table = ({
                   <th>Total Parcelas</th>
                   <th className="text-right">Valor Parcela</th>
                   <th className="text-right">Valor Restante da Dívida</th>
-                  <th className="text-right">Actions</th>
+                  <th className="text-right">Ações</th>
                 </tr>
               </thead>
               <tbody>

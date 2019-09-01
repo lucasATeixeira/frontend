@@ -20,7 +20,7 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
       saldo: simulacao.saldo + p.valor,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     const id = Math.random();
     saveSimulation({
@@ -72,14 +72,17 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                           <strong>Valor</strong>
                         </th>
                         <th className="text-right text-success">
-                          <strong>Actions</strong>
+                          <strong>Ações</strong>
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {ativos
                         .filter(
-                          a => !simulacao.patrimoniosRemovidos.map(pr => pr._id).includes(a._id),
+                          a =>
+                            !simulacao.patrimoniosRemovidos
+                              .map(pr => pr._id)
+                              .includes(a._id)
                         )
                         .map(a => (
                           <tr key={a._id}>
@@ -92,13 +95,20 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                             </td>
                             <td className="td-actions text-right">
                               <div className="form-check">
-                                <label htmlFor={a._id} className="form-check-label">
+                                <label
+                                  htmlFor={a._id}
+                                  className="form-check-label"
+                                >
                                   <input
                                     id={a._id}
                                     className="form-check-input"
                                     type="checkbox"
-                                    checked={currentSimulation.patrimoniosRemovidos.includes(a)}
-                                    onChange={() => handleChange('removidos', a)}
+                                    checked={currentSimulation.patrimoniosRemovidos.includes(
+                                      a
+                                    )}
+                                    onChange={() =>
+                                      handleChange('removidos', a)
+                                    }
                                   />
                                   <span className="form-check-sign">
                                     <span className="check" />
@@ -119,12 +129,17 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                           </td>
                           <td className="td-actions text-right">
                             <div className="form-check">
-                              <label htmlFor={p._id} className="form-check-label">
+                              <label
+                                htmlFor={p._id}
+                                className="form-check-label"
+                              >
                                 <input
                                   id={p._id}
                                   className="form-check-input"
                                   type="checkbox"
-                                  checked={simulacao.currentSimulation.patrimonios.includes(p)}
+                                  checked={simulacao.currentSimulation.patrimonios.includes(
+                                    p
+                                  )}
                                   onChange={() => handleChange('add', p)}
                                 />
                                 <span className="form-check-sign">
@@ -163,8 +178,13 @@ const TableAtivos = ({ ativos, saveSimulation, simulacao }) => {
                             </span>
                           </td>
                           <td className="text-center">
-                            <button type="submit" className="btn btn-success btn-sm">
-                              <i className="material-icons">add_circle_outline</i>
+                            <button
+                              type="submit"
+                              className="btn btn-success btn-sm"
+                            >
+                              <i className="material-icons">
+                                add_circle_outline
+                              </i>
                               <strong>Adicionar</strong>
                             </button>
                           </td>
@@ -203,9 +223,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoAction, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoAction, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TableAtivos);
