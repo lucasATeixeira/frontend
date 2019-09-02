@@ -78,7 +78,7 @@ export default function crencas(state = INITIAL_STATE, action) {
     case Types.FETCH_CRENCA:
       return {
         ...state,
-        ...action.payload.data,
+        answers: [...action.payload.data],
       };
     case Types.SAVE_REQUEST:
       return {
