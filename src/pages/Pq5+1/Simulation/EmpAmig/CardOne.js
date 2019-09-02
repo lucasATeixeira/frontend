@@ -155,7 +155,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                               })}
                         </td>
                         <td>{c.parcelas === 1 ? '-' : c.parcelas}</td>
-                        <td>{c.taxa}%</td>
+                        <td>{c.taxa}% a.m</td>
                         <td>{c.carencia}</td>
                         <td>
                           {c.parcelas === 1

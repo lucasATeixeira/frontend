@@ -57,15 +57,15 @@ const One = ({ content }) => (
                         })}
                       </td>
                       <td>{p.parcelas === 1 ? '-' : p.parcelas}</td>
-                      <td>{p.taxa}%</td>
+                      <td>{p.taxa}% a.m</td>
                       <td>{p.carencia}</td>
                       <td>
                         {p.parcelas === 1
                           ? '-'
                           : p.pmt.toLocaleString('pt-br', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          })}
+                              style: 'currency',
+                              currency: 'BRL',
+                            })}
                       </td>
                       <td>
                         {p.total.toLocaleString('pt-br', {

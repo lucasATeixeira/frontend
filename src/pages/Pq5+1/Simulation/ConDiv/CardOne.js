@@ -150,7 +150,7 @@ const CardOne = ({ simulacao, saveSimulation }) => {
                           })}
                         </td>
                         <td>{c.parcelas}</td>
-                        <td>{c.taxa}%</td>
+                        <td>{c.taxa}% a.m</td>
                         <td>{c.carencia}</td>
                         <td>
                           {c.pmt.toLocaleString('pt-br', {

@@ -60,7 +60,7 @@ export default function DividasTable({ content }) {
                               currency: 'BRL',
                             })}
                           </td>
-                          <td>{p.taxa}%</td>
+                          <td>{p.taxa}% a.m</td>
                           <td>
                             {p.total.toLocaleString('pt-br', {
                               style: 'currency',
@@ -105,7 +105,7 @@ export default function DividasTable({ content }) {
                                 currency: 'BRL',
                               })}
                             </td>
-                            <td>{p.taxa}%</td>
+                            <td>{p.taxa}% a.m</td>
                             <td>
                               {p.total.toLocaleString('pt-br', {
                                 style: 'currency',

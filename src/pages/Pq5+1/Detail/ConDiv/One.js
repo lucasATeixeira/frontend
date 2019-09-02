@@ -57,7 +57,7 @@ const One = ({ content }) => (
                         })}
                       </td>
                       <td>{p.parcelas}</td>
-                      <td>{p.taxa}%</td>
+                      <td>{p.taxa}% a.m</td>
                       <td>{p.carencia}</td>
                       <td>
                         {p.pmt.toLocaleString('pt-br', {

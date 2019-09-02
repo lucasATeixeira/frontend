@@ -265,7 +265,7 @@ const CardTwo = ({ simulacao, saveSimulation, passivos }) => {
                               })}
                             </td>
                             <td>{p.parcelas}</td>
-                            <td>{p.taxa}%</td>
+                            <td>{p.taxa}% a.m</td>
                             <td>
                               {p.total.toLocaleString('pt-br', {
                                 style: 'currency',

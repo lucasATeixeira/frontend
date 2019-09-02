@@ -23,9 +23,19 @@ const TableDividas = ({ patrimonios }) => (
                 <td>{p.nome}</td>
                 <td>{p.instituicao}</td>
                 <td>{p.parcelas}</td>
-                <td>{p.taxa}%</td>
-                <td>{p.pmt.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
-                <td>{p.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
+                <td>{p.taxa}% a.m</td>
+                <td>
+                  {p.pmt.toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </td>
+                <td>
+                  {p.total.toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </td>
               </tr>
             ))}
           </tbody>

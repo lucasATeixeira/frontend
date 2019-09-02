@@ -178,7 +178,7 @@ const TablePassivos = ({
                             })}
                           </td>
                           <td>{p.parcelas}</td>
-                          <td>{p.taxa}%</td>
+                          <td>{p.taxa}% a.m</td>
                           <td className="text-right">
                             {p.aVista.toLocaleString('pt-br', {
                               style: 'currency',
