@@ -13,7 +13,11 @@ const Answer = ({ crencas, newQuiz }) => (
       {crencas.coupleDone ? (
         <h2>{crencas.answers[1].name}, Resposta do Quiz</h2>
       ) : (
-        <button onClick={() => newQuiz()} className="btn btn-round btn-info" type="button">
+        <button
+          onClick={() => newQuiz()}
+          className="btn btn-round btn-info"
+          type="button"
+        >
           <strong>Fazer Quiz do cônjuge</strong>
         </button>
       )}
@@ -30,9 +34,10 @@ const mapStateToProps = state => ({
   crencas: state.crencas,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CrencaActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CrencaActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Answer);

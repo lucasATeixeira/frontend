@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import Upper from './Upper';
+import Quiz from './Quiz';
+import './index.css';
+import questoes from './QuestoesMMD';
+import StartQuizOptions from './StartQuizOptions';
 
 export default function FreeMmd() {
+  const [mmdState, setMmdState] = useState({
+    id: null,
+    answers: [],
+    current: 0,
+    questoes,
+    total: questoes.length,
+    pesos: {
+      pesoEsperanca: 1.0582,
+      pesoReatividade: 0.9661,
+      pesoInseguranca: 1.0582,
+      pesoCarencia: 1.0101,
+      pesoInsatisfacao: 0.9259,
+      pesoIdentificacao: 0.9876,
+      pesoNegligencia: 0.9259,
+      pesoImpulsividade: 1.0335,
+      pesoOtimismo: 1.0582,
+    },
+    done: false,
+    doing: false,
+    name: null,
+    email: null,
+  });
   return (
     <>
       <Upper />
+      <ToastContainer />
       <div className="wrapper wrapper-full-page">
         <div
           className="page-header login-page header-filter"
@@ -16,75 +44,30 @@ export default function FreeMmd() {
           }}
         >
           <div className="container">
-            <div className="row">
-              <div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-                <form>
-                  <div className="card card-login">
-                    <div className="card-header card-header-info text-center">
-                      <h4 className="card-title">ONDAZUL</h4>
-                    </div>
-                    <br />
-
-                    <div className="card-body">
-                      <p className="card-description text-center">
-                        <strong>INSIRA A NOVA SENHA DESEJADA</strong>
-                      </p>
-                      <div className="card-footer justify-content-center" />
-                      <>
-                        <span className="bmd-form-group">
-                          <div className="input-group">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text">
-                                <i className="material-icons">lock_outline</i>
-                              </span>
-                            </div>
-                            <br />
-                            <div className="unform">
-                              <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Nova Senha..."
-                              />
-                            </div>
-                          </div>
-                        </span>
-                        <span className="bmd-form-group">
-                          <div className="input-group">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text">
-                                <i className="material-icons">lock_outline</i>
-                              </span>
-                            </div>
-                            <br />
-                            <div className="unform">
-                              <input
-                                type="password"
-                                className="form-control"
-                                placeholder="Confirme sua nova Senha"
-                              />
-                            </div>
-                          </div>
-                        </span>
-                      </>
-                      ) : (
-                      <h5 className="text-center">
-                        <strong>SENHA ALTERADA COM SUCESSO</strong>
-                      </h5>
-                    </div>
-
-                    <br />
-
-                    <div className="card-footer justify-content-center">
-                      <button type="submit" className="btn btn-info btn-lg">
-                        <i className="fa fa-spinner fa-pulse" />
-                        <strong>REDEFINA SUA SENHA</strong>
-                      </button>
-                    </div>
-
-                    <br />
-                  </div>
-                </form>
-              </div>
+            <div className="card">
+              {mmdState.done ? (
+                <>
+                  <h2 style={{ marginTop: '50px' }} className="text-center">
+                    Tudo certo, {mmdState.name}!!
+                  </h2>
+                  <br />
+                  <h4 style={{ marginBottom: '50px' }} className="text-center">
+                    Enviamos o Laudo com sua resposta para {mmdState.email}
+                  </h4>
+                </>
+              ) : (
+                <>
+                  {!mmdState.doing && (
+                    <StartQuizOptions
+                      mmdState={mmdState}
+                      setMmdState={setMmdState}
+                    />
+                  )}
+                  {mmdState.doing && (
+                    <Quiz mmd={mmdState} setMmdState={setMmdState} />
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
