@@ -89,10 +89,13 @@ export default function MmdResultCard({ mmd }) {
       <div className="card-header">
         <h3 className="card-title">MMD - {mmd.name}</h3>
         <h4 className="card-title">
-          Tipo de dívida: <strong>{firstMmd.cat.toUpperCase()}</strong>
+          <strong> Tipo de dívida: {firstMmd.cat.toUpperCase()}</strong>
         </h4>
         <h4 className="card-title">
-          Motivação: <strong>{firstHigher.cat.toUpperCase()}</strong>
+          <strong> Motivação: {firstHigher.cat.toUpperCase()}</strong>
+        </h4>
+        <h4 className="card-title">
+          <strong>Grau de Endividamento: {Math.round(mmd.total * 100)}%</strong>
         </h4>
       </div>
       <div className="card-body">

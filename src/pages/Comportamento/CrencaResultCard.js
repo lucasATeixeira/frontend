@@ -85,7 +85,13 @@ export default function CrencaResultCard({ crenca }) {
       <div className="card-header">
         <h3 className="card-title">CRENÇA - {crenca.name}</h3>
         <h4 className="card-title">
-          Resultado: <strong>{crenca.cat.toUpperCase()}</strong>
+          <strong>Resultado: {crenca.cat.toUpperCase()}</strong>
+        </h4>
+        <h4 className="card-title">
+          <strong>
+            {' '}
+            Grau de crença limitante: {Math.round(firstHigher.score)}%
+          </strong>
         </h4>
       </div>
       <div className="card-body">

@@ -43,7 +43,7 @@ export default function StartQuizOptions({ mmdState, setMmdState }) {
             <>
               <br />
               <input
-                type="text"
+                type="email"
                 value={email}
                 className="form-control"
                 onChange={e => setEmail(e.target.value)}
