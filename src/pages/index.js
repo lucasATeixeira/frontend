@@ -21,6 +21,7 @@ import ErrorPage from './ErrorPage';
 import Comportamento from './Comportamento';
 import Laudos from './Laudos';
 import FreeMmd from './FreeMmd';
+import Parabens from './Parabens';
 
 const Pages = () => (
   <BrowserRouter>
@@ -30,6 +31,7 @@ const Pages = () => (
       <Route exact path="/reset_password" component={Reset} />
       <Route exact path="/checkout" component={Checkout} />
       <Route exact path="/mmd" component={FreeMmd} />
+      <Route exact path="/parabens" component={Parabens} />
       <PrivateRoute exact path="/painel" component={Painel} />
       <PrivateRoute exact path="/orcamento" component={Orcamento} />
       <PrivateRoute exact path="/extrato" component={Extrato} />

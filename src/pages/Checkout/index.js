@@ -125,8 +125,7 @@ export default function Checkout() {
               cupom: cupomName,
               payment_value: amount,
             });
-            // history.push('/');
-            window.location.href('https://plataforma.ondazul.online/parabens');
+            history.push('/parabens');
             setLoading(false);
           },
           error: err => {
