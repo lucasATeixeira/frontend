@@ -13,8 +13,6 @@ export default function Checkout() {
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [senha, setSenha] = useState('');
-  const [repeatSenha, setRepeatSenha] = useState('');
   const [cep, setCep] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
@@ -23,7 +21,8 @@ export default function Checkout() {
 
   const [cupom, setCupom] = useState('');
 
-  let amount = 75650; // 89000;
+  const originalAmount = 75650; // 89000;
+  let amount = originalAmount;
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -65,6 +64,7 @@ export default function Checkout() {
             containerId: 'checkout',
           }
         );
+        return;
       }
     }
 
@@ -82,7 +82,7 @@ export default function Checkout() {
       ''
     );
 
-    if (!nome || !cpf || !email || !senha || !telefone || !cep) {
+    if (!nome || !cpf || !email || !telefone || !cep) {
       toast.error('Preencha todos os campos', {
         containerId: 'checkout',
       });
@@ -91,13 +91,6 @@ export default function Checkout() {
 
     if (cpfString.length !== 11) {
       toast.error('CPF Inválido', {
-        containerId: 'checkout',
-      });
-      return;
-    }
-
-    if (senha !== repeatSenha) {
-      toast.error('Senhas devem ser iguais', {
         containerId: 'checkout',
       });
       return;
@@ -118,7 +111,7 @@ export default function Checkout() {
           success: async data => {
             await api.post('api/checkout', {
               email,
-              senha,
+              senha: cpfString,
               token: data.token,
               nome,
               telefone: telefoneString,
@@ -155,7 +148,7 @@ export default function Checkout() {
           paymentMethods: 'credit_card',
           maxInstallments: 12,
           headerText: 'Bem vindo',
-          interestRate: 1.16,
+          // interestRate: 1.25,
           postbackUrl: `${process.env.REACT_APP_API_URL}api/notification`,
           customer: {
             external_id: Math.random(),
@@ -230,6 +223,15 @@ export default function Checkout() {
 
                   <form onSubmit={handleSubmit}>
                     <div className="card-body">
+                      <h4 className=" text-center">
+                        <strong>
+                          12x de{' '}
+                          {(originalAmount / 12 / 100).toLocaleString('pt-br', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </strong>
+                      </h4>
                       <p className="card-description text-center">
                         <strong>INFORME SEUS DADOS</strong>
                       </p>
@@ -323,43 +325,7 @@ export default function Checkout() {
                               />
                             </div>
                           </span>
-                          <span className="bmd-form-group">
-                            <div className="input-group">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">
-                                  <i className="material-icons">lock_outline</i>
-                                </span>
-                              </div>
-                              <br />
 
-                              <input
-                                value={senha}
-                                onChange={e => setSenha(e.target.value)}
-                                name="senha"
-                                type="password"
-                                className="form-control"
-                                placeholder="Senha..."
-                              />
-                            </div>
-                          </span>
-                          <span className="bmd-form-group">
-                            <div className="input-group">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">
-                                  <i className="material-icons">lock_outline</i>
-                                </span>
-                              </div>
-                              <br />
-                              <input
-                                value={repeatSenha}
-                                onChange={e => setRepeatSenha(e.target.value)}
-                                name="senha"
-                                type="password"
-                                className="form-control"
-                                placeholder="Confirme sua senha..."
-                              />
-                            </div>
-                          </span>
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">

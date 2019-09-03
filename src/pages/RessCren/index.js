@@ -12,16 +12,16 @@ const RessCren = ({ crencas, updateRequest }) => {
   const [parent, setParent] = useState({});
   const [child, setChild] = useState({});
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     if (e.keyCode !== 27) return;
     setInput('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     updateRequest({
       _id: parent._id,
-      crencas: parent.crencas.map((a) => {
+      crencas: parent.crencas.map(a => {
         if (a._id !== child._id) return a;
         return {
           ...a,
@@ -37,76 +37,90 @@ const RessCren = ({ crencas, updateRequest }) => {
     <BlankPage>
       <h2>Ressignificação de Crenças</h2>
       <div className="row">
-        {crencas.answers.map(b => b.crencas.map(a => (
-          <div key={a._id} className="col-md-4">
-            <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
-              <div className="card">
-                <div
-                  className={`card-header card-header-text card-header-${
-                    a.ress ? 'success' : 'danger'
-                  }`}
-                >
-                  <div className="card-text">
-                    <h4 className="card-title">
-                      <strong>{b.name}</strong>
-                    </h4>
+        {crencas.answers.map(b =>
+          b.crencas.map(a => (
+            <div key={a._id} className="col-md-4">
+              <form onSubmit={handleSubmit} onKeyUp={handleKeyUp}>
+                <div className="card">
+                  <div
+                    className={`card-header card-header-text card-header-${
+                      a.ress ? 'success' : 'danger'
+                    }`}
+                  >
+                    <div className="card-text">
+                      <h4 className="card-title">
+                        <strong>{b.name}</strong>
+                      </h4>
+                    </div>
                   </div>
-                </div>
-                <div className="card-body">
-                  {a.ress ? (
-                    <strike>
+                  <div className="card-body">
+                    {a.ress ? (
+                      <strike>
+                        <blockquote className="blockquote">
+                          <p className="mb-0">&quot;{a.crenca}&quot;</p>
+                        </blockquote>
+                      </strike>
+                    ) : (
                       <blockquote className="blockquote">
                         <p className="mb-0">&quot;{a.crenca}&quot;</p>
                       </blockquote>
-                    </strike>
-                  ) : (
-                    <blockquote className="blockquote">
-                      <p className="mb-0">&quot;{a.crenca}&quot;</p>
-                    </blockquote>
-                  )}
-                  {input === a._id ? (
-                    <div>
-                      <textarea
-                        wrap="hard"                        
-                        type="text"
-                        className="form-control"
-                        value={ress}
-                        onChange={e => setRess(e.target.value)}
-                      />
-                    </div>
-                  ) : (
-                    <blockquote className="blockquote">
-                      {a.ress ? <p className="mb-0">&quot;{a.ress}&quot;</p> : <p />}
-                    </blockquote>
-                  )}
-                  {input !== a._id ? (
-                    <button
-                      onClick={() => {
-                        setInput(a._id);
-                        setParent(b);
-                        setChild(a);
-                        setRess(
-                          a.ress
-                            ? a.ress
-                            : formCrencas.filter(f => f.pergunta === a.crenca)[0].ress,
-                        );
-                      }}
-                      type="button"
-                      className="btn btn-success btn-sm btn-link pull-right"
-                    >
-                      <strong>
-                        <i className="material-icons">add_circle_outline</i> Ressignificar
-                      </strong>
-                    </button>
-                  ) : (
-                    <>
-                      <div className="pull-right">
-                        <button type="submit" className="btn btn-success btn-sm">
+                    )}
+                    {input === a._id ? (
+                      <div>
+                        <textarea
+                          wrap="hard"
+                          type="text"
+                          className="form-control"
+                          value={ress}
+                          onChange={e => setRess(e.target.value)}
+                        />
+                      </div>
+                    ) : (
+                      <blockquote className="blockquote">
+                        {a.ress ? (
+                          <p className="mb-0">&quot;{a.ress}&quot;</p>
+                        ) : (
+                          <p />
+                        )}
+                      </blockquote>
+                    )}
+                    {input !== a._id ? (
+                      <button
+                        onClick={() => {
+                          setInput(a._id);
+                          setParent(b);
+                          setChild(a);
+                          setRess(
+                            a.ress
+                              ? a.ress
+                              : formCrencas.filter(
+                                  f => f.pergunta === a.crenca
+                                )[0].ress
+                          );
+                        }}
+                        type="button"
+                        className="btn btn-success btn-sm btn-link pull-right"
+                      >
+                        <strong>
+                          <i className="material-icons">add_circle_outline</i>{' '}
+                          Ressignificar
+                        </strong>
+                      </button>
+                    ) : (
+                      <>
+                        <div className="pull-right">
+                          <button
+                            type="submit"
+                            className="btn btn-success btn-sm"
+                          >
                             <strong>
-                              <i className="material-icons">add_circle_outline</i> Salvar
+                              <i className="material-icons">
+                                add_circle_outline
+                              </i>{' '}
+                              Salvar
                             </strong>
                           </button>
-                        <button
+                          <button
                             onClick={() => {
                               setInput('');
                               setParent({});
@@ -117,14 +131,15 @@ const RessCren = ({ crencas, updateRequest }) => {
                           >
                             <i className="material-icons">close</i>
                           </button>
-                      </div>
-                    </>
-                  )}
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
-        )))}
+              </form>
+            </div>
+          ))
+        )}
       </div>
     </BlankPage>
   );
@@ -139,9 +154,10 @@ const mapStateToProps = state => ({
   crencas: state.crencas,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CrencaActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CrencaActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(RessCren);
