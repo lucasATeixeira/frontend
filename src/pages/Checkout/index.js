@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf, handleTelefone } from '../../hooks/inputHooks';
 
-export default function Checkout() {
+export default function Checkout({ history }) {
   const [loading, setLoading] = useState(false);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -373,10 +374,10 @@ export default function Checkout() {
   );
 }
 
-// Checkout.propTypes = {
-//   history: PropTypes.shape(),
-// };
+Checkout.propTypes = {
+  history: PropTypes.shape(),
+};
 
-// Checkout.defaultProps = {
-//   history: {},
-// };
+Checkout.defaultProps = {
+  history: {},
+};
