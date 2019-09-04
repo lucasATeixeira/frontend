@@ -20,81 +20,99 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
   useEffect(() => {
     setLancamentosGastos(
       categorias.categorias
-        .map((c) => {
+        .map(c => {
           if (c.tipo !== 'gasto') return [];
-          return c.itens.map(i => i.lancamentos.map(l => ({
-            ...l,
-            valor: l.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
-            valorMensal: l.mensal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
-            data: new Intl.DateTimeFormat('pt-br').format(new Date(l.data)),
-            vezes: `x ${l.vezes}`,
-            nomeItem: i.nome,
-            nomeCategoria: c.nome,
-            actions: (
-              <div className="pull-right">
-                <button
-                  type="button"
-                  className="btn btn-success btn-link btn-just-icon btn-sm"
-                  data-toggle="modal"
-                  data-target="#edit"
-                  onClick={() => setEdit(l)}
-                >
-                  <i className="material-icons">edit</i>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!window.confirm('Tem certeza que deseja excluir')) return null;
-                    return removeLancamentoRequest(l);
-                  }}
-                  className="btn btn-danger btn-link btn-just-icon btn-sm"
-                >
-                  <i className="material-icons">close</i>
-                </button>
-              </div>
-            ),
-          })));
+          return c.itens.map(i =>
+            i.lancamentos.map(l => ({
+              ...l,
+              valor: l.valor.toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              }),
+              valorMensal: l.mensal.toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              }),
+              data: new Intl.DateTimeFormat('pt-br').format(new Date(l.data)),
+              vezes: `x ${l.vezes}`,
+              nomeItem: i.nome,
+              nomeCategoria: c.nome,
+              actions: (
+                <div className="pull-right">
+                  <button
+                    type="button"
+                    className="btn btn-success btn-link btn-just-icon btn-sm"
+                    data-toggle="modal"
+                    data-target="#edit"
+                    onClick={() => setEdit(l)}
+                  >
+                    <i className="material-icons">edit</i>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!window.confirm('Tem certeza que deseja excluir'))
+                        return null;
+                      return removeLancamentoRequest(l);
+                    }}
+                    className="btn btn-danger btn-link btn-just-icon btn-sm"
+                  >
+                    <i className="material-icons">close</i>
+                  </button>
+                </div>
+              ),
+            }))
+          );
         })
         .flat(2)
-        .sort((a, b) => (a.data > b.data ? 1 : -1)),
+        .sort((a, b) => (a.data > b.data ? 1 : -1))
     );
     setLancamentosRecebimentos(
       categorias.categorias
-        .map((c) => {
+        .map(c => {
           if (c.tipo !== 'recebimento') return [];
-          return c.itens.map(i => i.lancamentos.map(l => ({
-            ...l,
-            valor: l.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
-            valorMensal: l.mensal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }),
-            data: new Intl.DateTimeFormat('pt-br').format(new Date(l.data)),
-            vezes: `x ${l.vezes}`,
-            nomeItem: i.nome,
-            nomeCategoria: c.nome,
-            actions: (
-              <div className="pull-right">
-                <button
-                  type="button"
-                  onClick={() => handleEdit(l._id)}
-                  className="btn btn-success btn-link btn-just-icon btn-sm"
-                >
-                  <i className="material-icons">edit</i>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!window.confirm('Tem certeza que deseja excluir')) return null;
-                    return removeLancamentoRequest(l);
-                  }}
-                  className="btn btn-danger btn-link btn-just-icon btn-sm"
-                >
-                  <i className="material-icons">close</i>
-                </button>
-              </div>
-            ),
-          })));
+          return c.itens.map(i =>
+            i.lancamentos.map(l => ({
+              ...l,
+              valor: l.valor.toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              }),
+              valorMensal: l.mensal.toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              }),
+              data: new Intl.DateTimeFormat('pt-br').format(new Date(l.data)),
+              vezes: `x ${l.vezes}`,
+              nomeItem: i.nome,
+              nomeCategoria: c.nome,
+              actions: (
+                <div className="pull-right">
+                  <button
+                    type="button"
+                    onClick={() => handleEdit(l._id)}
+                    className="btn btn-success btn-link btn-just-icon btn-sm"
+                  >
+                    <i className="material-icons">edit</i>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!window.confirm('Tem certeza que deseja excluir'))
+                        return null;
+                      return removeLancamentoRequest(l);
+                    }}
+                    className="btn btn-danger btn-link btn-just-icon btn-sm"
+                  >
+                    <i className="material-icons">close</i>
+                  </button>
+                </div>
+              ),
+            }))
+          );
         })
         .flat(2)
-        .sort((a, b) => (a.data > b.data ? 1 : -1)),
+        .sort((a, b) => (a.data > b.data ? 1 : -1))
     );
   }, [categorias, removeLancamentoRequest]);
 
@@ -106,7 +124,10 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
             <HeaderIcon color="info" materialIcon="assignment">
               <div className="social-line">
                 <div className="page-categories">
-                  <ul className="nav nav-pills justify-content-center" role="tablist">
+                  <ul
+                    className="nav nav-pills justify-content-center"
+                    role="tablist"
+                  >
                     <li className="nav-item">
                       <a
                         onClick={() => setActive('recebimento')}
@@ -115,7 +136,8 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
                         href="/painel"
                         role="tablist"
                       >
-                        <i className="material-icons">attach_money</i> <strong>Recebimentos</strong>
+                        <i className="material-icons">attach_money</i>{' '}
+                        <strong>Recebimentos</strong>
                       </a>
                     </li>
                     <li className="nav-item">
@@ -126,7 +148,8 @@ const Extrato = ({ categorias, removeLancamentoRequest }) => {
                         href="/painel"
                         role="tablist"
                       >
-                        <i className="material-icons">shopping_cart</i> <strong>Gastos</strong>
+                        <i className="material-icons">shopping_cart</i>{' '}
+                        <strong>Gastos</strong>
                       </a>
                     </li>
                   </ul>
@@ -251,9 +274,10 @@ const mapStateToProps = state => ({
   categorias: state.categorias,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CategoriasActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CategoriasActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Extrato);

@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import Item from './Item';
 import ItemLancamento from './ItemLancamento';
 import CollapsedItem from './CollapsedItem';
 import ButtonPainel from './ButtonPainel';
 
 export default function SideBarContent({ setPage }) {
-  const user = useSelector(state => state.user);
+  const adm = localStorage.getItem('@Ondazul: adm');
 
   return (
     <ul className="nav">
       <ButtonPainel />
-      {user.user.userType !== 'cliente' && <ItemLancamento />}
+      {adm && <ItemLancamento />}
 
       <Item
         href="/painel"

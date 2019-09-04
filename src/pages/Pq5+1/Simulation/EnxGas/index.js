@@ -11,62 +11,78 @@ const EnxGas = ({ orcamento }) => {
   const [listData, setListData] = useState(
     orcamento.categorias
       .filter(c => c.tipo === 'gasto' && c.nome !== 'DIVERSOS')
-      .map(c => c.itens.map(i => ({
-        ...i,
-        quadrante: 3,
-        nomeCategoria: c.nome,
-        orcadoLocale: i.orcado.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
-        }),
-        mensalLocale: i.mensal.toLocaleString('pt-br', {
-          style: 'currency',
-          currency: 'BRL',
-        }),
-        prioridadeValue: false,
-        substituivelValue: false,
-        media: (
-          <div className="text-center">
-            <i
-              className={` text-${
-                i.mensal <= orcamento.mediaGastos ? 'success' : 'danger'
-              } fa fa-arrow-${i.mensal <= orcamento.mediaGastos ? 'down' : 'up'}`}
-            />
-          </div>
-        ),
-      })))
-      .flat(),
+      .map(c =>
+        c.itens.map(i => ({
+          ...i,
+          quadrante: 3,
+          nomeCategoria: c.nome,
+          orcadoLocale: i.orcado.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          }),
+          mensalLocale: i.mensal.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          }),
+          prioridadeValue: false,
+          substituivelValue: false,
+          media: (
+            <div className="text-center">
+              <i
+                className={` text-${
+                  i.mensal <= orcamento.mediaGastos ? 'success' : 'danger'
+                } fa fa-arrow-${
+                  i.mensal <= orcamento.mediaGastos ? 'down' : 'up'
+                }`}
+              />
+            </div>
+          ),
+        }))
+      )
+      .flat()
   );
   const handlePrioridadeChange = (e, id, mediaMenor) => {
     setListData(
-      listData.map((l) => {
+      listData.map(l => {
         if (l._id !== id) return l;
         let quadrante = 0;
-        if (!e.target.checked && !l.substituivelValue && !mediaMenor) quadrante = 1; // sem
-        if (!e.target.checked && !l.substituivelValue && mediaMenor) quadrante = 2; // sem
-        if (!e.target.checked && l.substituivelValue && !mediaMenor) quadrante = 3;
-        if (e.target.checked && !l.substituivelValue && !mediaMenor) quadrante = 4; // sem
-        if (e.target.checked && !l.substituivelValue && mediaMenor) quadrante = 5; // sem
-        if (!e.target.checked && l.substituivelValue && mediaMenor) quadrante = 6;
-        if (e.target.checked && l.substituivelValue && !mediaMenor) quadrante = 7;
-        if (e.target.checked && l.substituivelValue && mediaMenor) quadrante = 8;
+        if (!e.target.checked && !l.substituivelValue && !mediaMenor)
+          quadrante = 1; // sem
+        if (!e.target.checked && !l.substituivelValue && mediaMenor)
+          quadrante = 2; // sem
+        if (!e.target.checked && l.substituivelValue && !mediaMenor)
+          quadrante = 3;
+        if (e.target.checked && !l.substituivelValue && !mediaMenor)
+          quadrante = 4; // sem
+        if (e.target.checked && !l.substituivelValue && mediaMenor)
+          quadrante = 5; // sem
+        if (!e.target.checked && l.substituivelValue && mediaMenor)
+          quadrante = 6;
+        if (e.target.checked && l.substituivelValue && !mediaMenor)
+          quadrante = 7;
+        if (e.target.checked && l.substituivelValue && mediaMenor)
+          quadrante = 8;
         return {
           ...l,
           prioridadeValue: e.target.checked,
           quadrante,
         };
-      }),
+      })
     );
   };
   const handleSubstituivelChange = (e, id, mediaMenor) => {
     setListData(
-      listData.map((l) => {
+      listData.map(l => {
         if (l._id !== id) return l;
         let quadrante = 0;
-        if (!l.prioridadeValue && !e.target.checked && !mediaMenor) quadrante = 1; // sem
-        if (!l.prioridadeValue && !e.target.checked && mediaMenor) quadrante = 2; // sem
-        if (!l.prioridadeValue && e.target.checked && !mediaMenor) quadrante = 3;
-        if (l.prioridadeValue && !e.target.checked && !mediaMenor) quadrante = 4; // sem
+        if (!l.prioridadeValue && !e.target.checked && !mediaMenor)
+          quadrante = 1; // sem
+        if (!l.prioridadeValue && !e.target.checked && mediaMenor)
+          quadrante = 2; // sem
+        if (!l.prioridadeValue && e.target.checked && !mediaMenor)
+          quadrante = 3;
+        if (l.prioridadeValue && !e.target.checked && !mediaMenor)
+          quadrante = 4; // sem
         if (l.prioridadeValue && !e.target.checked && mediaMenor) quadrante = 5; // sem
         if (!l.prioridadeValue && e.target.checked && mediaMenor) quadrante = 6;
         if (l.prioridadeValue && e.target.checked && !mediaMenor) quadrante = 7;
@@ -76,7 +92,7 @@ const EnxGas = ({ orcamento }) => {
           substituivelValue: e.target.checked,
           quadrante,
         };
-      }),
+      })
     );
   };
 
@@ -107,9 +123,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(EnxGas);

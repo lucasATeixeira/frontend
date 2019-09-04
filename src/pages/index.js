@@ -38,6 +38,7 @@ const Pages = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       localStorage.setItem('@Ondazul: user', JSON.stringify(user));
+      localStorage.setItem('@Ondazul: adm', true);
       localStorage.setItem('@Ondazul: token', token);
       window.location.assign('/');
     }

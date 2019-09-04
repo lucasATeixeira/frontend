@@ -30,7 +30,12 @@ const One = ({
                         <label htmlFor={i._id}>
                           N
                           <input
-                            onChange={e => handlePrioridadeChange(e, i._id, i.mensal <= orcamento.mediaGastos)
+                            onChange={e =>
+                              handlePrioridadeChange(
+                                e,
+                                i._id,
+                                i.mensal <= orcamento.mediaGastos
+                              )
                             }
                             id={i._id}
                             type="checkbox"
@@ -44,7 +49,12 @@ const One = ({
                         <label htmlFor={i._id + i._id}>
                           N
                           <input
-                            onChange={e => handleSubstituivelChange(e, i._id, i.mensal <= orcamento.mediaGastos)
+                            onChange={e =>
+                              handleSubstituivelChange(
+                                e,
+                                i._id,
+                                i.mensal <= orcamento.mediaGastos
+                              )
                             }
                             id={i._id + i._id}
                             type="checkbox"
