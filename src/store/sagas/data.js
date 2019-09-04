@@ -28,7 +28,9 @@ export function* fetchDataRequest(action) {
     const { data: v5 } = yield call(api.get, 'api/v5');
     const { data: a30d } = yield call(api.get, 'api/a30d');
     const { data: crenca } = yield call(api.get, 'api/crenca');
-    local.crencas = crenca;
+    local.crencas = {
+      answers: crenca,
+    };
     local.a30d = a30d;
     local.v1 = v1;
     local.v5 = v5;
@@ -39,7 +41,7 @@ export function* fetchDataRequest(action) {
     yield put(V1Actions.fetchDataRequest(v1));
     yield put(V5Actions.fetchDataRequest(v5));
     yield put(A30dActions.fetchDataA30d(a30d));
-    yield put(CrencaActions.fetchCrenca(crenca));
+    yield put(CrencaActions.fetchCrenca(local.crencas.answers));
 
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
     yield put(DataActions.fetchDataSuccess());

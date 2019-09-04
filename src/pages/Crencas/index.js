@@ -6,7 +6,9 @@ import Quiz from './Quiz';
 import Answer from './Answer';
 import './index.css';
 
-const Crencas = ({ crencas }) => <BlankPage>{crencas.done ? <Answer /> : <Quiz />}</BlankPage>;
+const Crencas = ({ crencas }) => (
+  <BlankPage>{crencas.done ? <Answer /> : <Quiz />}</BlankPage>
+);
 
 Crencas.propTypes = {
   crencas: PropTypes.shape().isRequired,

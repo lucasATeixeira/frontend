@@ -58,7 +58,7 @@ export default function crencas(state = INITIAL_STATE, action) {
         loading: false,
         err: false,
         sucess: true,
-        ...action.payload.data,
+        answers: [...action.payload.data],
       };
     case Types.NEW_QUIZ:
       return {
