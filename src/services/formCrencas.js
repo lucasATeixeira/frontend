@@ -460,7 +460,7 @@ const formCrencas = [
   {
     cat: 'pertencimento',
     ress:
-      'Não preciso provar nada pra ninguém, pois sou aceito exatamente do jeio que sou pelas pessoas que importam',
+      'Não preciso provar nada pra ninguém, pois sou aceito exatamente do jeito que sou pelas pessoas que importam',
     score: 0,
     pergunta: 'Vou me provar ficando rico',
   },
@@ -523,7 +523,7 @@ const formCrencas = [
   {
     cat: 'pertencimento',
     ress:
-      'Meus amigos verdadeiros conhecem minha realidade e também em acompanham ',
+      'Meus amigos verdadeiros conhecem minha realidade e também me acompanham ',
     score: 0,
     pergunta: 'Preciso acompanhar o estilo de vida dos meus amigos e parentes',
   },

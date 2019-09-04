@@ -28,6 +28,7 @@ export function* fetchDataRequest(action) {
     const { data: v5 } = yield call(api.get, 'api/v5');
     const { data: a30d } = yield call(api.get, 'api/a30d');
     const { data: crenca } = yield call(api.get, 'api/crenca');
+    local.crencas = crenca;
     local.a30d = a30d;
     local.v1 = v1;
     local.v5 = v5;
