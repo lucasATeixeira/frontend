@@ -22,7 +22,20 @@ export default function Checkout({ history }) {
 
   const [cupom, setCupom] = useState('');
 
-  const originalAmount = 88800;
+  const query = new URLSearchParams(window.location.search);
+  let plan = query.get('plan');
+
+  if (!plan || plan < 1 || plan > 3) {
+    plan = 2;
+  }
+
+  const prices = {
+    1: 64800,
+    2: 88800,
+    3: 340800,
+  };
+
+  const originalAmount = prices[plan];
   let amount = originalAmount;
 
   useEffect(() => {
@@ -127,6 +140,7 @@ export default function Checkout({ history }) {
               amount,
               cupom: cupomName,
               payment_value: amount,
+              permissionLevel: plan,
             });
             history.push('/parabens');
             setLoading(false);
