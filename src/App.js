@@ -8,7 +8,7 @@ import 'moment/locale/pt-br';
 
 moment.locale('pt-br');
 
-function App() {
+function App() {  
   return (
     <>
       <Provider store={store}>

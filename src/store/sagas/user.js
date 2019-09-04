@@ -9,7 +9,9 @@ export function* authUser(action) {
     const { data } = yield call(api.post, 'api/session', { email, senha });
     const { token, user } = data;
     if (user.payment_status !== 'paid') {
-      throw { response: { data: { error: 'Estamos processando seu pagamento' } } };
+      throw {
+        response: { data: { error: 'Estamos processando seu pagamento' } },
+      };
     }
     if (user.userType !== 'cliente') {
       throw {

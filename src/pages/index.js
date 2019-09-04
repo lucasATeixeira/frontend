@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import Login from './Login';
@@ -23,33 +23,46 @@ import Laudos from './Laudos';
 import FreeMmd from './FreeMmd';
 import Parabens from './Parabens';
 
-const Pages = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route path="/" exact component={Login} />
-      <Route exact path="/esqueci_minha_senha" component={Forgot} />
-      <Route exact path="/reset_password" component={Reset} />
-      <Route exact path="/checkout" component={Checkout} />
-      <Route exact path="/mmd" component={FreeMmd} />
-      <Route exact path="/parabens" component={Parabens} />
-      <PrivateRoute exact path="/painel" component={Painel} />
-      <PrivateRoute exact path="/orcamento" component={Orcamento} />
-      <PrivateRoute exact path="/extrato" component={Extrato} />
-      <PrivateRoute exact path="/patrimonio" component={Patrimonio} />
-      <PrivateRoute exact path="/pq5+1" component={Pq5} />
-      <PrivateRoute exact path="/V1Ano" component={V1} />
-      <PrivateRoute exact path="/V5ANos" component={V5} />
-      <PrivateRoute exact path="/Ressignificacao" component={RessCren} />
-      <PrivateRoute exact path="/acoes30d" component={A30d} />
-      <PrivateRoute exact path="/acoes_atuar30d" component={Aatuar30d} />
-      <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
-      <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
-      <PrivateRoute exact path="/comportamento" component={Comportamento} />
-      <PrivateRoute exact path="/laudos" component={Laudos} />
-      {/* <PrivateRoute exact path="/crencas" component={Crencas} /> */}
-      <Route component={ErrorPage} />
-    </Switch>
-  </BrowserRouter>
-);
+const Pages = () => {
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const token = query.get('token');
+
+    if (token) {
+      localStorage.clear();
+      localStorage.setItem('@Ondazul: token', token);
+      window.location.reload();
+    }
+  }, []);
+
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact component={Login} />
+        <Route exact path="/esqueci_minha_senha" component={Forgot} />
+        <Route exact path="/reset_password" component={Reset} />
+        <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/mmd" component={FreeMmd} />
+        <Route exact path="/parabens" component={Parabens} />
+        <PrivateRoute exact path="/painel" component={Painel} />
+        <PrivateRoute exact path="/orcamento" component={Orcamento} />
+        <PrivateRoute exact path="/extrato" component={Extrato} />
+        <PrivateRoute exact path="/patrimonio" component={Patrimonio} />
+        <PrivateRoute exact path="/pq5+1" component={Pq5} />
+        <PrivateRoute exact path="/V1Ano" component={V1} />
+        <PrivateRoute exact path="/V5ANos" component={V5} />
+        <PrivateRoute exact path="/Ressignificacao" component={RessCren} />
+        <PrivateRoute exact path="/acoes30d" component={A30d} />
+        <PrivateRoute exact path="/acoes_atuar30d" component={Aatuar30d} />
+        <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
+        <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
+        <PrivateRoute exact path="/comportamento" component={Comportamento} />
+        <PrivateRoute exact path="/laudos" component={Laudos} />
+        {/* <PrivateRoute exact path="/crencas" component={Crencas} /> */}
+        <Route component={ErrorPage} />
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 export default Pages;
