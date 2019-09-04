@@ -22,7 +22,7 @@ export default function Checkout({ history }) {
 
   const [cupom, setCupom] = useState('');
 
-  const originalAmount = 75650; // 89000;
+  const originalAmount = 88800;
   let amount = originalAmount;
 
   useEffect(() => {

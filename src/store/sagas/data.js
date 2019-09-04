@@ -6,7 +6,7 @@ import { Creators as PatrimonioActions } from '../ducks/patrimonios';
 import { Creators as V1Actions } from '../ducks/v1';
 import { Creators as V5Actions } from '../ducks/v5';
 import { Creators as A30dActions } from '../ducks/a30d';
-import { Creators as CrencaActions } from '../ducks/crencas';
+// import { Creators as CrencaActions } from '../ducks/crencas';
 import api from '../../services/api';
 
 export function* fetchDataRequest(action) {

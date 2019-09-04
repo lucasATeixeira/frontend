@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 import PrivateRoute from './PrivateRoute';
 import Login from './Login';
 import Painel from './Painel';
@@ -24,16 +25,25 @@ import FreeMmd from './FreeMmd';
 import Parabens from './Parabens';
 
 const Pages = () => {
-  useEffect(() => {
+  async function checkAdmAccess() {
     const query = new URLSearchParams(window.location.search);
     const token = query.get('token');
 
     if (token) {
       localStorage.clear();
+      const { data: user } = await axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_API_URL ||
+          'http://localhost:4000/'}api/assistente-access`,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      localStorage.setItem('@Ondazul: user', JSON.stringify(user));
       localStorage.setItem('@Ondazul: token', token);
-      window.location.reload();
+      window.location.assign('/');
     }
-  }, []);
+  }
+
+  checkAdmAccess();
 
   return (
     <BrowserRouter>
