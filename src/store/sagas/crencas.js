@@ -7,13 +7,17 @@ export function* updateRequest(action) {
   try {
     const response = yield call(api.put, `api/crenca/${body._id}`, body);
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
-    local.crencas = {
-      ...local.crencas,
-      answers: local.crencas.answers.map(a => {
-        if (a._id !== response.data._id) return a;
-        return response.data;
-      }),
-    };
+    // local.crencas = {
+    //   ...local.crencas,
+    //   answers: local.crencas.answers.map(a => {
+    //     if (a._id !== response.data._id) return a;
+    //     return response.data;
+    //   }),
+    // };
+    local.crencas = local.crencas.map(a => {
+      if (a._id !== response.data._id) return a;
+      return response.data;
+    });
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));
     yield put(CrencaActions.updateSuccess(local.crencas));
   } catch (err) {
