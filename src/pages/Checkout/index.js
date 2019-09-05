@@ -30,7 +30,7 @@ export default function Checkout({ history }) {
   }
 
   const prices = {
-    1: 64800,
+    1: 100, //64800,
     2: 88800,
     3: 340800,
   };
