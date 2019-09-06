@@ -166,9 +166,6 @@ export default function Checkout({ history }) {
           paymentMethods: 'credit_card, boleto',
           maxInstallments: 12,
           headerText: 'Bem vindo',
-          boletoExpirationDate: `${moment()
-            .add(1, 'week')
-            .format('L')}`,
           // interestRate: 1.25,
           postbackUrl: `${process.env.REACT_APP_API_URL}api/notification`,
           customer: {
