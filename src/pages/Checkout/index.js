@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf, handleTelefone } from '../../hooks/inputHooks';
@@ -140,9 +141,10 @@ export default function Checkout({ history }) {
               amount,
               cupom: cupomName,
               payment_value: amount,
+              payment_method: data.payment_method,
               permissionLevel: plan,
             });
-            history.push('/parabens');
+            history.push(`/parabens?payment_method=${data.payment_method}`);
             setLoading(false);
           },
           error: err => {
@@ -161,9 +163,12 @@ export default function Checkout({ history }) {
           buttonClass: 'botao-pagamento',
           customerData: 'false',
           createToken: 'true',
-          paymentMethods: 'credit_card',
+          paymentMethods: 'credit_card, boleto',
           maxInstallments: 12,
           headerText: 'Bem vindo',
+          boletoExpirationDate: `${moment()
+            .add(1, 'week')
+            .format('L')}`,
           // interestRate: 1.25,
           postbackUrl: `${process.env.REACT_APP_API_URL}api/notification`,
           customer: {
