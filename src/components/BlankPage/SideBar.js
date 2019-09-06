@@ -10,7 +10,12 @@ function Sidebar({ user, setPage }) {
     nome = `${nome.split(' ')[0]} e ${user.nomeConjuge.split(' ')[0]}`;
   }
   return (
-    <div className="sidebar" data-color="green" data-background-color="black">
+    <div
+      className="sidebar"
+      data-color="green"
+      data-background-color="black"
+      id="sidebarMenu"
+    >
       <div className="logo">
         <a href="/painel" className="simple-text logo-mini">
           {''}
@@ -19,18 +24,19 @@ function Sidebar({ user, setPage }) {
           OndAzul
         </a>
       </div>
+      <div className="sidebar-wrapper">
+        <div className="user">
+          <div className="photo">{/* IMAGEM DO CLIENTE ATI */}</div>
 
-      <div className="user">
-        <div className="photo">{/* IMAGEM DO CLIENTE ATI */}</div>
-
-        <div className="user-info">
-          <a href="/painel" className="username">
-            <strong>{nome}</strong>
-          </a>
+          <div className="user-info">
+            <a href="/painel" className="username">
+              <strong>{nome}</strong>
+            </a>
+          </div>
         </div>
-      </div>
 
-      <SideBarContent setPage={setPage} />
+        <SideBarContent setPage={setPage} />
+      </div>
     </div>
   );
 }

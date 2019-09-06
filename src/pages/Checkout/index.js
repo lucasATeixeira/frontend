@@ -4,7 +4,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import api from '../../services/api';
 import Upper from './Upper';
 import { handleCpf, handleTelefone } from '../../hooks/inputHooks';
