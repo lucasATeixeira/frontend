@@ -14,9 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('ptBR', ptBR);
 
-const Content = ({
-  categorias, updateLancamentoRequest, success, err, l,
-}) => {
+const Content = ({ categorias, updateLancamentoRequest, success, err, l }) => {
   const [idCategoria, setIdCategoria] = useState('Categoria');
   const [idItem, setIdItem] = useState('Item');
   const [formaPagamento, setFormaPagamento] = useState('À Vista');
@@ -39,10 +37,11 @@ const Content = ({
 
   useEffect(() => {
     if (success) toast.success('Edição Realizado', { containerId: 'extrato' });
-    if (err) toast.error('Ocorreu um erro com a edição', { containerId: 'extrato' });
+    if (err)
+      toast.error('Ocorreu um erro com a edição', { containerId: 'extrato' });
   }, [success, err]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     if (idCategoria === 'CATEGORIA') {
@@ -57,7 +56,9 @@ const Content = ({
       return toast.error('Coloque uma descrição', { containerId: 'extrato' });
     }
     if (valor <= 0) {
-      return toast.error('Coloque um valor do Lançamento', { containerId: 'extrato' });
+      return toast.error('Coloque um valor do Lançamento', {
+        containerId: 'extrato',
+      });
     }
     if (vezes <= 0) {
       return toast.error('A quantidade de vezes deve ser superior a zero', {
@@ -119,7 +120,7 @@ const Content = ({
                     data-live-search="true"
                   >
                     <option>ITEM</option>
-                    {categorias.map((c) => {
+                    {categorias.map(c => {
                       if (!(c._id === idCategoria)) return null;
                       return c.itens.map(i => (
                         <option key={i._id} value={i._id}>
@@ -215,12 +216,19 @@ const Content = ({
             >
               Fechar
             </button>
-            <button type="submit" className="btn btn-primary btn-link btn-wd btn-lg">
+            <button
+              type="submit"
+              className="btn btn-primary btn-link btn-wd btn-lg"
+            >
               Editar
             </button>
           </div>
         </div>
-        <ToastContainer enableMultiContainer autoClose={2000} containerId="extrato" />
+        <ToastContainer
+          enableMultiContainer
+          autoClose={2000}
+          containerId="extrato"
+        />
       </form>
     </>
   );
@@ -244,9 +252,10 @@ const mapStateToProps = state => ({
   err: state.categorias.err,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CategoriasActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CategoriasActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Content);
