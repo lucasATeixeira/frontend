@@ -8,7 +8,6 @@ import listPlugin from '@fullcalendar/list';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import moment from 'moment';
 
-import api from '../../services/api';
 import { Creators } from '../../store/ducks/a30d';
 
 import '@fullcalendar/core/main.css';
@@ -33,6 +32,7 @@ export default function Calendario() {
         return {
           title,
           id,
+          className: 'd-none',
         };
       },
     });
