@@ -107,19 +107,9 @@ export default function SideBarContent({ setPage }) {
         idColapse="atuar"
         itens={[
           {
-            href: '/acoes_atuar30d',
+            href: '/atuar',
             mini: 'A30',
-            title: 'Ações 30 Dias',
-          },
-          {
-            href: '/acoes_atuar7d',
-            mini: 'A7',
-            title: 'Ações 7 Dias',
-          },
-          {
-            href: '/acoes_atuar1d',
-            mini: 'A1',
-            title: 'Ações 1 Dias',
+            title: 'Calendáio de ações',
           },
         ]}
         setPage={setPage}

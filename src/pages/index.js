@@ -13,9 +13,7 @@ import V1 from './V1';
 import V5 from './V5';
 import RessCren from './RessCren';
 import A30d from './A30d';
-import Aatuar30d from './Aatuar30d';
-import Aatuar7d from './Aatuar7d';
-import Aatuar1d from './Aatuar1d';
+import Atuar from './Atuar';
 import Forgot from './Forgot';
 import Reset from './Reset';
 import Checkout from './Checkout';
@@ -25,7 +23,7 @@ import Laudos from './Laudos';
 import FreeMmd from './FreeMmd';
 import Parabens from './Parabens';
 import Juros from './Juros';
-import Relatorio from './Relatorio'
+import Relatorio from './Relatorio';
 
 const Pages = () => {
   async function checkAdmAccess() {
@@ -68,12 +66,10 @@ const Pages = () => {
         <PrivateRoute exact path="/V5ANos" component={V5} />
         <PrivateRoute exact path="/Ressignificacao" component={RessCren} />
         <PrivateRoute exact path="/acoes30d" component={A30d} />
-        <PrivateRoute exact path="/acoes_atuar30d" component={Aatuar30d} />
-        <PrivateRoute exact path="/acoes_atuar7d" component={Aatuar7d} />
-        <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
+        <PrivateRoute exact path="/atuar" component={Atuar} />
         <PrivateRoute exact path="/comportamento" component={Comportamento} />
         <PrivateRoute exact path="/laudos" component={Laudos} />
-        <LancamentoRoute exact path='/relatorio' component={Relatorio} />
+        <LancamentoRoute exact path="/relatorio" component={Relatorio} />
         <Route component={ErrorPage} />
       </Switch>
     </BrowserRouter>
