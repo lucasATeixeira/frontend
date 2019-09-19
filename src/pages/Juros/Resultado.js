@@ -36,7 +36,7 @@ export default function Resultado({ dividas }) {
       </div>
 
       <div className="tempo">
-        <span className="title-tempo">Tempo até você sair das dívidas</span>
+        <span className="title-tempo">Quando você var sair das dívidas</span>
         <span className="result-tempo text-info">{lastDay}</span>
         <div className="grafico">
           <LineChart dividas={dividas} />

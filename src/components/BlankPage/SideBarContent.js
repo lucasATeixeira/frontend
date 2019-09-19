@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Item from './Item';
 import ItemLancamento from './ItemLancamento';
@@ -7,6 +8,7 @@ import ButtonPainel from './ButtonPainel';
 
 export default function SideBarContent({ setPage }) {
   const adm = localStorage.getItem('@Ondazul: adm');
+  const { lancamento } = useSelector(state => state.user.user);
 
   return (
     <ul className="nav">
@@ -19,12 +21,22 @@ export default function SideBarContent({ setPage }) {
         icon="assessment"
         setPage={setPage}
       />
-      <Item
-        icon="local_printshop"
-        title="Extrato"
-        href="/extrato"
-        setPage={setPage}
-      />
+      {lancamento && (
+        <Item
+          icon="local_printshop"
+          title="Extrato"
+          href="/extrato"
+          setPage={setPage}
+        />
+      )}
+      {lancamento && (
+        <Item
+          icon="trending_up"
+          title="Relatório"
+          href="/relatorio"
+          setPage={setPage}
+        />
+      )}
       <CollapsedItem
         setPage={setPage}
         title="Mapear"

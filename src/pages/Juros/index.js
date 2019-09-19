@@ -15,13 +15,11 @@ export default function Juros() {
   return (
     <Container>
       <Upper />
-      <div className="text">
+      <div className="resolution">
         <Text />
-      </div>
-      <div className="content">
         <Dividas dividas={dividas} setDividas={setDividas} />
-        <Resultado dividas={dividas} />
       </div>
+      <Resultado dividas={dividas} />
     </Container>
   );
 }

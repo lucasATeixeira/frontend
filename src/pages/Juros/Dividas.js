@@ -50,10 +50,10 @@ export default function Dividas({ dividas, setDividas }) {
         <table>
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>Valor da Parcela</th>
-              <th>Parcelas Restantes</th>
-              <th>Taxa Mensal</th>
+              <th width="40%">Nome</th>
+              <th width="30%">Valor da Parcela</th>
+              <th width="15%">Parcelas Restantes</th>
+              <th width="15%">Taxa Mensal</th>
             </tr>
           </thead>
           <tbody>

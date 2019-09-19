@@ -4,65 +4,45 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   font-weight: 400;
+  padding: calc(60px + 80px) 240px 0 240px;
 
-  div.text {
-    margin-top: calc(60px + 80px);
-    margin: calc(60px + 80px) 80px 50px 80px;
-
+  div.resolution {
     p {
       font-size: 18px;
       line-height: 1.5;
       color: rgb(118, 118, 118);
-      max-width: 900px;
+      max-width: 950px;
     }
   }
 
-  div.content {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
+  @media (max-width: 1750px) {
+    padding: calc(60px + 80px) 190px 0 190px;
+  }
+
+  @media (max-width: 1650px) {
+    padding: calc(60px + 80px) 130px 0 130px;
+  }
+
+  @media (max-width: 1550px) {
+    padding: calc(60px + 80px) 80px 0 80px;
   }
 
   @media (max-width: 1450px) {
-    div.content {
-      flex-direction: column-reverse;
-      align-items: center;
-    }
-  }
-`;
-
-export const UpperContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background: #fff;
-  height: 80px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
-  z-index: 1000;
-
-  span {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  img {
-    width: 200px;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 export const ResultadoContainer = styled.div`
   width: 600px;
-  /* max-height: 580px; */
-  margin: 0 30px 50px 30px;
+  max-height: 600px;
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
   padding: 10px 50px;
+  margin-left: 100px;
   color: rgb(118, 118, 118);
 
   @media (max-width: 1450px) {
@@ -116,11 +96,10 @@ export const ResultadoContainer = styled.div`
 export const DividasContainer = styled.div`
   flex: 1;
   max-width: 1000px;
-  margin: 0 30px;
 
   h3 {
-    margin-top: 0;
-    margin-bottom: 50px;
+    margin-top: 80px;
+    margin-bottom: 30px;
   }
 
   table {
@@ -167,5 +146,27 @@ export const DividasContainer = styled.div`
       font-weight: bold;
       font-size: 15.5px;
     }
+  }
+`;
+
+export const UpperContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  height: 80px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px;
+  z-index: 1000;
+
+  span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  img {
+    width: 200px;
   }
 `;

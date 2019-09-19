@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import PrivateRoute from './PrivateRoute';
+import LancamentoRoute from './LancamentoRoute';
 import Login from './Login';
 import Painel from './Painel';
 import Orcamento from './Orcamento';
@@ -23,7 +24,8 @@ import Comportamento from './Comportamento';
 import Laudos from './Laudos';
 import FreeMmd from './FreeMmd';
 import Parabens from './Parabens';
-import Juros from './Juros'
+import Juros from './Juros';
+import Relatorio from './Relatorio'
 
 const Pages = () => {
   async function checkAdmAccess() {
@@ -71,7 +73,7 @@ const Pages = () => {
         <PrivateRoute exact path="/acoes_atuar1d" component={Aatuar1d} />
         <PrivateRoute exact path="/comportamento" component={Comportamento} />
         <PrivateRoute exact path="/laudos" component={Laudos} />
-        {/* <PrivateRoute exact path="/crencas" component={Crencas} /> */}
+        <LancamentoRoute exact path='/relatorio' component={Relatorio} />
         <Route component={ErrorPage} />
       </Switch>
     </BrowserRouter>
