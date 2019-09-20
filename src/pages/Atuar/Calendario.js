@@ -1,6 +1,7 @@
 /* eslint-disable no-new */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -13,10 +14,10 @@ import { Creators } from '../../store/ducks/a30d';
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
 
-export default function Calendario() {
-  const calendarRef = React.createRef();
-
+export default function Calendario({ setModal, setSelectedEvent }) {
   const [events, setEvents] = useState([]);
+
+  const calendarRef = React.createRef();
 
   const actions = useSelector(state => state.a30d.a30d);
 
@@ -46,14 +47,30 @@ export default function Calendario() {
         id: a._id,
         title: a.acao,
         start: a.quando,
-        end: moment(a.quando)
-          .add('30', 'minutes')
-          .format(),
+        extendedProps: {
+          onde: a.onde,
+          quem: a.quem,
+          como: a.como,
+        },
       }))
     );
   }, [actions]);
 
-  function handleEventReceive(data) {
+  function handleEventClick(data) {
+    const { event } = data;
+    const { start: date, id, title } = event;
+    setSelectedEvent({
+      id,
+      date,
+      title,
+      onde: event.extendedProps.onde,
+      quem: event.extendedProps.quem,
+      como: event.extendedProps.como,
+    });
+    setModal(true);
+  }
+
+  function handleEventDrop(data) {
     const { event } = data;
     const { start: date, id } = event;
 
@@ -67,14 +84,16 @@ export default function Calendario() {
     );
   }
 
-  function handleEventDrop(data) {
+  function handleEventReceive(data) {
     const { event } = data;
     const { start: date, id } = event;
 
     dispatch(
       Creators.updateA30dRequest({
         body: {
-          quando: date,
+          quando: moment(date)
+            .add(8, 'hours')
+            .format(),
         },
         _id: id,
       })
@@ -93,14 +112,18 @@ export default function Calendario() {
       events={events}
       eventReceive={handleEventReceive}
       eventDrop={handleEventDrop}
-      eventClick={() => alert('Evento Clicado')}
-      timeZone="America/New_York"
+      eventClick={handleEventClick}
+      displayEventTime={false}
       header={{
         left: 'prev, next',
         center: 'title',
         right: 'dayGridMonth, listWeek, dayGridWeek',
       }}
-      // datesRender={({ view }) => handleDatesRender(view)}
     />
   );
 }
+
+Calendario.propTypes = {
+  setModal: PropTypes.func.isRequired,
+  setSelectedEvent: PropTypes.func.isRequired,
+};

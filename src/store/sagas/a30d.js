@@ -29,8 +29,12 @@ export function* removeA30dRequest(action) {
 export function* updateA30dRequest(action) {
   try {
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
-    const response = yield call(api.put, `api/a30d/${action.payload._id}`, action.payload.body);
-    local.a30d = local.a30d.map((a) => {
+    const response = yield call(
+      api.put,
+      `api/a30d/${action.payload._id}`,
+      action.payload.body
+    );
+    local.a30d = local.a30d.map(a => {
       if (a._id !== action.payload._id) return a;
       return response.data;
     });

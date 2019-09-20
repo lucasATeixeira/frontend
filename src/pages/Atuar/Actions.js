@@ -11,6 +11,7 @@ export default function Actions() {
   useEffect(() => {
     setNotEvents(actions.filter(action => !action.quando));
   }, [actions]);
+
   return (
     <div id="external-events">
       <h3>Ações</h3>
