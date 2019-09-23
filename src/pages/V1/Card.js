@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as V1Actions } from '../../store/ducks/v1';
 
-const Card = ({
-  content, removeV1Request, size, animation,
-}) => {
+const Card = ({ content, removeV1Request, size, animation }) => {
   const handleDelete = () => {
     removeV1Request(content);
   };
@@ -14,14 +12,20 @@ const Card = ({
     <>
       <div className={`col-md-${size}`}>
         <div className="card card-product">
-          <div className="card-header card-header-image" data-header-animation={animation}>
+          <div
+            className="card-header card-header-image"
+            data-header-animation={animation}
+          >
             <a href="#p">
               <img className="img" alt="Imagem sonho" src={content.image_url} />
             </a>
           </div>
           <div className="card-body">
             <div className="card-actions text-center">
-              <button type="button" className="btn btn-danger btn-link fix-broken-card">
+              <button
+                type="button"
+                className="btn btn-danger btn-link fix-broken-card"
+              >
                 <i className="material-icons">build</i> Fix Header!
               </button>
 
@@ -66,7 +70,7 @@ const Card = ({
 };
 
 Card.propTypes = {
-  size: PropTypes.number,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   content: PropTypes.shape().isRequired,
   removeV1Request: PropTypes.func.isRequired,
   animation: PropTypes.bool,
@@ -83,5 +87,5 @@ const mapDispatchToProps = dispatch => bindActionCreators(V1Actions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Card);
