@@ -15,7 +15,7 @@ export default function Modal({ setModal, setSelectedEvent, selectedEvent }) {
   const dispatch = useDispatch();
 
   function handleDelete() {
-    dispatch(Creators.removeA30dSuccess({ _id: selectedEvent.id }));
+    dispatch(Creators.removeA30dRequest({ _id: selectedEvent.id }));
     setSelectedEvent({});
     setModal(false);
   }

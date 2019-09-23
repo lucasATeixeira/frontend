@@ -11,7 +11,9 @@ export const Types = {
   UPDATE_A30D_SUCCESS: 'a30d/UPDATE_A30D_SUCCESS',
 };
 
-const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || { a30d: [] };
+const local = JSON.parse(localStorage.getItem('@Ondazul: data')) || {
+  a30d: [],
+};
 
 const INITIAL_STATE = {
   loading: false,
