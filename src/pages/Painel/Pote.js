@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function Pote({ barData, max }) {
   const barOptions = {
+    curvature: 1,
     legend: {
       display: false,
     },
@@ -27,7 +28,7 @@ export default function Pote({ barData, max }) {
     scales: {
       xAxes: [
         {
-          display: false,
+          // display: false,
           stacked: true,
         },
       ],

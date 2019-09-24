@@ -57,7 +57,7 @@ export default function Planejar() {
 
   useEffect(() => {
     setBarData({
-      labels: ['Orçado'],
+      labels: ['Estimado'],
       datasets: [
         {
           label: 'Recebimentos',
@@ -71,15 +71,25 @@ export default function Planejar() {
           label: 'Dívidas',
           data: [patrimonios.passivos.pmt],
           backgroundColor: 'rgb(218, 68, 83)',
-          borderColor: 'transparent',
-          borderWidth: 3,
+          borderColor: '#FFF',
+          borderWidth: {
+            top: 0,
+            bottom: 0,
+            left: 12,
+            right: 12,
+          },
         },
         {
           label: 'Gastos',
           data: [orcamento.gastosOrcados],
           backgroundColor: 'rgb(0, 87, 156)',
-          borderColor: 'transparent',
-          borderWidth: 3,
+          borderColor: '#FFF',
+          borderWidth: {
+            top: 0,
+            bottom: 0,
+            left: 12,
+            right: 12,
+          },
         },
       ],
     });
@@ -94,92 +104,97 @@ export default function Planejar() {
         <p className="category">Como sair das dívidas</p>
       </div>
       <div className="card-body">
-        <div style={{ marginBottom: '40px' }} className="row">
-          <div
-            className="col-md-7"
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <div className="table-responsive">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td className="text-grafit">
-                      <strong>Recebimentos</strong>
-                    </td>
-                    <td>
-                      {orcamento.recebimentosOrcados.toLocaleString('pt-br', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="text-info">
-                      <strong>Gastos</strong>
-                    </td>
-                    <td>
-                      {orcamento.gastosOrcados.toLocaleString('pt-br', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="text-danger">
-                      <strong>Dívidas</strong>
-                    </td>
-                    <td>
-                      {(
-                        orcamento.gastosRealizadosParcelados +
-                        patrimonios.passivos.pmt
-                      ).toLocaleString('pt-br', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+        {!!simulacao.simulacoes && !!simulacao.simulacoes.length && (
+          <>
+            <div style={{ marginBottom: '40px' }} className="row">
+              <div
+                className="col-md-7"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <div className="table-responsive">
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <td className="text-grafit">
+                          <strong>Recebimentos</strong>
+                        </td>
+                        <td>
+                          {orcamento.recebimentosOrcados.toLocaleString(
+                            'pt-br',
+                            {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="text-info">
+                          <strong>Gastos</strong>
+                        </td>
+                        <td>
+                          {orcamento.gastosOrcados.toLocaleString('pt-br', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="text-danger">
+                          <strong>Dívidas</strong>
+                        </td>
+                        <td>
+                          {(
+                            orcamento.gastosRealizadosParcelados +
+                            patrimonios.passivos.pmt
+                          ).toLocaleString('pt-br', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="col-md-5">
+                <Pote barData={barData} max={maxOrcado} />
+              </div>
             </div>
-          </div>
-          <div className="col-md-5">
-            <Pote barData={barData} max={maxOrcado} />
-          </div>
-        </div>
-        <Footer
-          red={
-            orcamento.recebimentosOrcados <
-            orcamento.gastosOrcados +
-              orcamento.gastosRealizadosParcelados +
-              patrimonios.passivos.pmt
-          }
-        >
-          <span className="left">
-            No{' '}
-            {orcamento.recebimentosOrcados <
-            orcamento.gastosOrcados +
-              orcamento.gastosRealizadosParcelados +
-              patrimonios.passivos.pmt
-              ? 'Vermelho'
-              : 'Azul'}
-            :
-          </span>
-          <span className="right">
-            {Math.abs(
-              orcamento.recebimentosOrcados -
+            <Footer
+              red={
+                orcamento.recebimentosOrcados <
                 orcamento.gastosOrcados +
-                orcamento.gastosRealizadosParcelados +
-                patrimonios.passivos.pmt
-            ).toLocaleString('pt-br', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
-          </span>
-        </Footer>
+                  orcamento.gastosRealizadosParcelados +
+                  patrimonios.passivos.pmt
+              }
+            >
+              <span className="left">
+                No{' '}
+                {orcamento.recebimentosOrcados <
+                orcamento.gastosOrcados +
+                  orcamento.gastosRealizadosParcelados +
+                  patrimonios.passivos.pmt
+                  ? 'Vermelho'
+                  : 'Azul'}
+                :
+              </span>
+              <span className="right">
+                {Math.abs(
+                  orcamento.recebimentosOrcados -
+                    (orcamento.gastosOrcados + patrimonios.passivos.pmt)
+                ).toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </span>
+            </Footer>
+          </>
+        )}
       </div>
     </div>
   );

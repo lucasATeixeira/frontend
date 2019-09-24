@@ -261,7 +261,6 @@ export function* submitSimulationRequest(action) {
     yield put(
       A30dActions.addA30dRequest({
         acao: createAction(response),
-        quando: moment().add('1', 'months'),
       })
     );
 
