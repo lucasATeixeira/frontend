@@ -42,6 +42,7 @@ export default function Mapear() {
           backgroundColor: 'rgb(218, 68, 83)',
           borderColor: 'transparent',
           borderWidth: 3,
+          // xAxisID: 'dividas',
         },
         {
           label: 'Gastos',
@@ -49,18 +50,19 @@ export default function Mapear() {
           backgroundColor: 'rgb(0, 87, 156)',
           borderColor: 'transparent',
           borderWidth: 3,
+          // xAxisID: 'gastos',
         },
       ],
     });
   }, [orcamento, patrimonios]);
 
   return (
-    <div className="card">
+    <div style={{ height: '91%' }} className="card">
       <div className="card-header">
         <h3 className="card-title">
           <strong>Mapear</strong>
         </h3>
-        <p className="category">Orçamento</p>
+        <p className="category">Seu orçamento</p>
       </div>
       <div className="card-body">
         <div style={{ marginBottom: '40px' }} className="row">

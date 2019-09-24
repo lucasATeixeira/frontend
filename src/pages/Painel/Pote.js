@@ -4,11 +4,6 @@ import PropTypes from 'prop-types';
 
 export default function Pote({ barData, max }) {
   const barOptions = {
-    layout: {
-      padding: {
-        // left: 100,
-      },
-    },
     legend: {
       display: false,
     },

@@ -13,6 +13,7 @@ export default function Almejar() {
         <h3 className="card-title">
           <strong>Almejar</strong>
         </h3>
+        <p className="category">Aonde você quer chegar</p>
       </div>
       <div className="card-body">
         <div

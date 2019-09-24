@@ -11,8 +11,11 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
         {
           label: 'Recebimentos',
           data: [
-            orcamento.recebimentosOrcados,
-            orcamento.recebimentosOrcados + simulacao.recebimentos,
+            orcamento.recebimentosOrcados +
+              orcamento.recebimentosRealizadosParcelados,
+            orcamento.recebimentosOrcados +
+              orcamento.recebimentosRealizadosParcelados +
+              simulacao.recebimentos,
           ],
           backgroundColor: 'transparent',
           borderColor: 'rgb(63, 76, 107)',
@@ -22,8 +25,10 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
         {
           label: 'Dívidas',
           data: [
-            patrimonios.passivos.pmt,
-            patrimonios.passivos.pmt + simulacao.pmt,
+            patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados,
+            patrimonios.passivos.pmt +
+              simulacao.pmt +
+              orcamento.gastosRealizadosParcelados,
           ],
           backgroundColor: 'rgb(218, 68, 83)',
           borderColor: 'transparent',

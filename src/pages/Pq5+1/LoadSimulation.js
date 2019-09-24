@@ -7,7 +7,11 @@ import { Container } from './style';
 
 const LoadSimulation = ({ fetchDataRequest }) => (
   <Container>
-    <button onClick={fetchDataRequest} className="btn btn-round pull-right btn-info" type="button">
+    <button
+      onClick={fetchDataRequest}
+      className="btn btn-round pull-right btn-info"
+      type="button"
+    >
       <strong>Carregar Simulação</strong>
     </button>
   </Container>
@@ -19,9 +23,10 @@ LoadSimulation.propTypes = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LoadSimulation);

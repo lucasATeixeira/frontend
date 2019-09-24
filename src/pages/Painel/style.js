@@ -1,5 +1,37 @@
 import styled from 'styled-components';
 
+export const ContainerAtuar = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  div.appointment {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #eee;
+    color: #999;
+    font-weight: bold;
+    padding: 13px;
+    border-radius: 10px;
+    width: 200px;
+    margin-bottom: 25px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+
+    h2 {
+      font-size: 25px;
+      max-width: 30ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    i {
+      margin-bottom: 10px;
+    }
+  }
+`;
+
 export const Footer = styled.div`
   position: absolute;
   display: flex;

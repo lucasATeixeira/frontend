@@ -8,13 +8,15 @@ import Bar from './Bar';
 import Card from './Card';
 import { Creators as SimulacaoActions } from '../../../store/ducks/simulacao';
 
-const Result = ({
-  simulacao, endResult, patrimonios, orcamento,
-}) => (
+const Result = ({ simulacao, endResult, patrimonios, orcamento }) => (
   <>
     <div className="row">
       <div className="col-md-12">
-        <button onClick={() => endResult()} className="btn btn-success" type="button">
+        <button
+          onClick={() => endResult()}
+          className="btn btn-success"
+          type="button"
+        >
           <i className="fa fa-arrow-left" />
           <strong> Voltar</strong>
         </button>
@@ -35,7 +37,11 @@ const Result = ({
               </div>
 
               <div className="card-body">
-                <Bar simulacao={simulacao} patrimonios={patrimonios} orcamento={orcamento} />
+                <Bar
+                  simulacao={simulacao}
+                  patrimonios={patrimonios}
+                  orcamento={orcamento}
+                />
               </div>
             </div>
           </div>
@@ -50,28 +56,42 @@ const Result = ({
                 style: 'currency',
                 currency: 'BRL',
               })}
-              info={simulacao.gastos < 0 ? 'Reduziu seus Gastos em' : 'Aumentou seus Gastos em'}
+              info={
+                simulacao.gastos < 0
+                  ? 'Reduziu seus Gastos em'
+                  : 'Aumentou seus Gastos em'
+              }
               materialIcon="shopping_cart"
               footer={[
                 {
                   materialIcon: 'attach_money',
-                  text: `Gastos Antes: ${orcamento.gastosOrcados.toLocaleString('pt-br', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}`,
+                  text: `Gastos Antes: ${orcamento.gastosOrcados.toLocaleString(
+                    'pt-br',
+                    {
+                      style: 'currency',
+                      currency: 'BRL',
+                    }
+                  )}`,
                 },
                 {
                   materialIcon: 'attach_money',
                   text: `Gastos Depois: ${(
                     orcamento.gastosOrcados + simulacao.gastos
-                  ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`,
+                  ).toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}`,
                 },
               ]}
             />
           </div>
           <div className="col-md-6">
             <Card
-              info={simulacao.pmt < 0 ? 'Reduziu as Parcelas em' : 'Aumentou as parcelas em'}
+              info={
+                simulacao.pmt < 0
+                  ? 'Reduziu as Parcelas em'
+                  : 'Aumentou as parcelas em'
+              }
               title={Math.abs(simulacao.pmt).toLocaleString('pt-br', {
                 style: 'currency',
                 currency: 'BRL',
@@ -83,16 +103,22 @@ const Result = ({
               footer={[
                 {
                   materialIcon: 'attach_money',
-                  text: `Parcelas Antes: ${patrimonios.passivos.pmt.toLocaleString('pt-br', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}`,
+                  text: `Parcelas Antes: ${patrimonios.passivos.pmt.toLocaleString(
+                    'pt-br',
+                    {
+                      style: 'currency',
+                      currency: 'BRL',
+                    }
+                  )}`,
                 },
                 {
                   materialIcon: 'attach_money',
                   text: `Parcelas Depois: ${(
                     patrimonios.passivos.pmt + simulacao.pmt
-                  ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`,
+                  ).toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}`,
                 },
               ]}
             />
@@ -118,17 +144,24 @@ const Result = ({
                   <strong className="pull-right">
                     Patrimônio Líquido Depois:{' '}
                     {(
-                      patrimonios.patrimonioLiquido
-                      - simulacao.passivos
-                      + simulacao.ativos
-                      + simulacao.saldo
-                    ).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                      patrimonios.patrimonioLiquido -
+                      simulacao.passivos +
+                      simulacao.ativos +
+                      simulacao.saldo
+                    ).toLocaleString('pt-br', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}
                   </strong>
                 </h4>
                 <br />
                 <div className="row">
                   <div className="col-md-6">
-                    <RealRadar width={100} height={50} options={{ maintainAspectRatio: false }} />
+                    <RealRadar
+                      width={100}
+                      height={50}
+                      options={{ maintainAspectRatio: false }}
+                    />
                   </div>
                   <div className="col-md-6">
                     <Radar
@@ -163,9 +196,10 @@ const mapStateToProps = state => ({
   orcamento: state.categorias,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Result);
