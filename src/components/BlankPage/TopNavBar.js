@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
+import SecoesAvulsas from './SecoesAvulsas';
 import { Creators as UserActions } from '../../store/ducks/user';
 import { Creators as DataActions } from '../../store/ducks/data';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -17,18 +18,26 @@ const style = {
 };
 
 const TopNavbar = ({
-  logout, history, page, categorias, fetchDataRequest, user,
+  logout,
+  history,
+  page,
+  categorias,
+  fetchDataRequest,
+  user,
 }) => {
   const [checked, setChecked] = useState(categorias.periodo > 1);
   const [start, setStart] = useState(new Date(categorias.start));
   const [end, setEnd] = useState(new Date(categorias.end));
-  const handleStart = (e) => {
+  const handleStart = e => {
     setStart(e);
     if (!checked) return fetchDataRequest(e, e);
     return fetchDataRequest(e, end);
   };
-  const handleEnd = (e) => {
-    if (e < start) return toast.error('Coloque uma data superior a do começo', { containerId: 'alerts' });
+  const handleEnd = e => {
+    if (e < start)
+      return toast.error('Coloque uma data superior a do começo', {
+        containerId: 'alerts',
+      });
     setEnd(e);
     return fetchDataRequest(start, e);
   };
@@ -85,18 +94,7 @@ const TopNavbar = ({
         <div className="collapse navbar-collapse justify-content-end">
           <ul className="navbar-nav">
             <li className="nav-item" style={{ marginRight: '50px' }}>
-              <a
-                href={`https://api.whatsapp.com/send?phone=5562981073718&text=Olá, me chamo ${
-                  user.nome
-                } e estou querendo contratar seções avulsas para o Ondazul!!`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ marginLeft: '14px' }}
-                type="button"
-                className="btn btn-info"
-              >
-                <strong>Seções Avulsas</strong>
-              </a>
+              <SecoesAvulsas />
             </li>
             {window.location.pathname !== '/pq5+1' ? (
               <>
@@ -135,7 +133,11 @@ const TopNavbar = ({
                       onChange={handleEnd}
                     />
                     {false && (
-                      <button style={style} onClick={handleMonthPick} type="button">
+                      <button
+                        style={style}
+                        onClick={handleMonthPick}
+                        type="button"
+                      >
                         <i className="fa fa-check-circle" />
                       </button>
                     )}
@@ -208,9 +210,10 @@ const mapStateToProps = state => ({
   user: state.user.user,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ ...UserActions, ...DataActions }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...UserActions, ...DataActions }, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TopNavbar);
