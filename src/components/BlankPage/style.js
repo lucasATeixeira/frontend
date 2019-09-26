@@ -21,7 +21,6 @@ export const ModalContainer = styled.div`
     align-items: center;
     position: relative;
     padding: 30px;
-    }
 
     input {
       margin: 30px 0 40px 0;
@@ -36,21 +35,19 @@ export const ModalContainer = styled.div`
       margin: 15px 0 30px 0;
 
       button.time {
-        background: #eee;
+        background: #fff;
+        border: 1px solid #d2d2d2;
         color: #999;
         padding: 15px 30px;
         margin: 10px;
-        border-radius: 10px;
-        border: none;
+        border-radius: 5px;
         outline: none;
         cursor: pointer;
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
       }
 
       button.active {
-        background: #1DE9B6;
-        color: #FFF;
-        transform: scale(1.15);
+        background: #d2d2d2;
+        color: #fff;
         font-weight: bold;
       }
     }
