@@ -85,7 +85,7 @@ export default function Modal({
           <h4 className="date-information">
             <strong>
               {moment(date).format('dddd, DD')} de {moment(date).format('MMMM')}{' '}
-              às {moment(selectedHour).format('HH')} horas
+              às {moment(selectedHour.value).format('HH')} horas
             </strong>
           </h4>
         )}
