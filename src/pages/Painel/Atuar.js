@@ -7,7 +7,13 @@ export default function Atuar() {
   const actions = useSelector(state =>
     state.a30d.a30d
       .filter(action => action.quando)
-      .filter(action => moment(action.quando) >= moment().startOf('day'))
+      .filter(
+        action =>
+          moment(action.quando) >=
+          moment()
+            .utc()
+            .startOf('day')
+      )
       .sort((a, b) => (moment(a.quando) > moment(b.quando) ? 1 : -1))
       .slice(0, 3)
   );

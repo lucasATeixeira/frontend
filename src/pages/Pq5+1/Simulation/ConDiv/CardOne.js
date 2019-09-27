@@ -78,8 +78,10 @@ const CardOne = ({ simulacao, saveSimulation }) => {
           carencia,
           necessario,
           parcelas,
-          data: moment(),
-          dataFinal: moment().add(parcelas - 1, 'month'),
+          data: moment().utc(),
+          dataFinal: moment()
+            .utc()
+            .add(parcelas - 1, 'month'),
           taxa,
           total: pmt * parcelas,
         },

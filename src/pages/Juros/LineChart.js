@@ -85,6 +85,7 @@ export default function LineChart({ dividas }) {
 
       calculatedData.push({
         index: moment()
+          .utc()
           .add(i, 'months')
           .format('MMM YY'),
         value: sumValue,
@@ -95,6 +96,7 @@ export default function LineChart({ dividas }) {
 
     calculatedData.push({
       index: moment()
+        .utc()
         .add(calculatedData.length + 1, 'months')
         .format('MMM YY'),
       value: 0,

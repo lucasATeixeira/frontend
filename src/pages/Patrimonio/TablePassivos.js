@@ -68,8 +68,9 @@ const TablePassivos = ({
       return toast.error('Inclua um valor à Vista válido', {
         containerId: 'alerts',
       });
-    const data = moment();
+    const data = moment().utc();
     const dataFinal = moment()
+      .utc()
       .add(pRestantes, 'months')
       .format();
     if (newPassivo) {

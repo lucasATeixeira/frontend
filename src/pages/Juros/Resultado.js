@@ -12,13 +12,16 @@ export default function Resultado({ dividas }) {
 
   const lastDay = useMemo(() => {
     if (!dividas.length) {
-      return moment().format('MMMM YYYY');
+      return moment()
+        .utc()
+        .format('MMMM YYYY');
     }
     const { parcelas: mounthCount } = dividas.sort(
       (a, b) => b.parcelas - a.parcelas
     )[0];
 
     return moment()
+      .utc()
       .add(Number(mounthCount) + 1, 'months')
       .format('MMMM YYYY');
   }, [dividas]);
