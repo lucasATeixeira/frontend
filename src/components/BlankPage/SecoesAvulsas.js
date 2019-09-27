@@ -62,7 +62,9 @@ export default function SecoesAvulsas() {
           setSelectedHour(null);
 
           const { data: hours } = await api.get(
-            `api/appointment/${moment(date).format()}`
+            `api/appointment/${moment(date)
+              .utc()
+              .format()}`
           );
 
           const availableHoursFetched = hours.filter(hour => hour.available);
@@ -93,9 +95,11 @@ export default function SecoesAvulsas() {
       customerData: 'false',
       createToken: 'true',
       paymentMethods: 'credit_card',
-      headerText: `Seção avulsa ${moment(date).format('dddd, DD')} de ${moment(
-        date
-      ).format('MMMM')}
+      headerText: `Seção avulsa ${moment(date)
+        .utc()
+        .format('dddd, DD')} de ${moment(date)
+        .utc()
+        .format('MMMM')}
       `,
       postbackUrl: `${process.env.REACT_APP_API_URL}api/appointment-notification`,
       customer: {

@@ -92,6 +92,7 @@ export default function Calendario({ setModal, setSelectedEvent }) {
       Creators.updateA30dRequest({
         body: {
           quando: moment(date)
+            .utc()
             .add(8, 'hours')
             .format(),
         },

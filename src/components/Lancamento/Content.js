@@ -65,6 +65,7 @@ const Content = ({ active, categorias, lancamentoRequest, success, err }) => {
       return toast.error('A quantidade de vezes deve ser superior a zero');
     }
     const dataFinal = moment(dataLancamento)
+      .utc()
       .add(Number(vezes) - 1, 'month')
       .format();
 

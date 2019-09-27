@@ -67,6 +67,7 @@ const Content = ({ categorias, updateLancamentoRequest, success, err, l }) => {
     }
 
     const dataFinal = moment(dataLancamento)
+      .utc()
       .add(Number(vezes) - 1, 'month')
       .format();
 

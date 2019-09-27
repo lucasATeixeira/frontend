@@ -21,7 +21,9 @@ export default function Modal({
     setSelectedHour(null);
 
     const { data: hours } = await api.get(
-      `api/appointment/${moment(selectedDate).format()}`
+      `api/appointment/${moment(selectedDate)
+        .utc()
+        .format()}`
     );
 
     const availableHoursFetched = hours.filter(hour => hour.available);
@@ -84,8 +86,14 @@ export default function Modal({
         {!!selectedHour && (
           <h4 className="date-information">
             <strong>
-              {moment(date).format('dddd, DD')} de {moment(date).format('MMMM')}{' '}
-              às {moment(selectedHour.value).format('HH')} horas
+              {moment(date)
+                .utc()
+                .format('dddd, DD')}{' '}
+              de {moment(date).format('MMMM')} às{' '}
+              {moment(selectedHour.value)
+                .utc()
+                .format('HH')}{' '}
+              horas
             </strong>
           </h4>
         )}

@@ -11,39 +11,31 @@ export function* updateLancamentoRequest(action) {
     const { data } = yield call(api.put, `api/lancamento/${body._id}`, body);
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
 
-    const start = moment(data.data).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const end = moment(data.dataFinal).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const middleStart = moment(local.categorias.start).isBetween(
-      data.data,
-      data.dataFinal
-    );
-    const middleEnd = moment(local.categorias.end).isBetween(
-      data.data,
-      data.dataFinal
-    );
+    const start = moment(data.data)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const end = moment(data.dataFinal)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const middleStart = moment(local.categorias.start)
+      .utc()
+      .isBetween(data.data, data.dataFinal);
+    const middleEnd = moment(local.categorias.end)
+      .utc()
+      .isBetween(data.data, data.dataFinal);
 
-    const startAdd = moment(data.data).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const endAdd = moment(data.dataFinal).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const middleStartAdd = moment(local.categorias.start).isBetween(
-      data.data,
-      data.dataFinal
-    );
-    const middleEndAdd = moment(local.categorias.end).isBetween(
-      data.data,
-      data.dataFinal
-    );
+    const startAdd = moment(data.data)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const endAdd = moment(data.dataFinal)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const middleStartAdd = moment(local.categorias.start)
+      .utc()
+      .isBetween(data.data, data.dataFinal);
+    const middleEndAdd = moment(local.categorias.end)
+      .utc()
+      .isBetween(data.data, data.dataFinal);
 
     data.mensal =
       data.formaPagamento === 'Parcelado'
@@ -254,22 +246,24 @@ export function* removeLancamentoRequest(action) {
   try {
     yield call(api.delete, `api/lancamento/${action.payload.lancamento._id}`);
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
-    const start = moment(action.payload.lancamento.data).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const end = moment(action.payload.lancamento.dataFinal).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const middleStart = moment(local.categorias.start).isBetween(
-      action.payload.lancamento.data,
-      action.payload.lancamento.dataFinal
-    );
-    const middleEnd = moment(local.categorias.end).isBetween(
-      action.payload.lancamento.data,
-      action.payload.lancamento.dataFinal
-    );
+    const start = moment(action.payload.lancamento.data)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const end = moment(action.payload.lancamento.dataFinal)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const middleStart = moment(local.categorias.start)
+      .utc()
+      .isBetween(
+        action.payload.lancamento.data,
+        action.payload.lancamento.dataFinal
+      );
+    const middleEnd = moment(local.categorias.end)
+      .utc()
+      .isBetween(
+        action.payload.lancamento.data,
+        action.payload.lancamento.dataFinal
+      );
     if (start || end || middleStart || middleEnd) {
       local.categorias = {
         ...local.categorias,
@@ -504,22 +498,18 @@ export function* lancamentoRequest(action) {
       action.payload.lancamento
     );
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
-    const start = moment(data.data).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const end = moment(data.dataFinal).isBetween(
-      local.categorias.start,
-      local.categorias.end
-    );
-    const middleStart = moment(local.categorias.start).isBetween(
-      data.data,
-      data.dataFinal
-    );
-    const middleEnd = moment(local.categorias.end).isBetween(
-      data.data,
-      data.dataFinal
-    );
+    const start = moment(data.data)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const end = moment(data.dataFinal)
+      .utc()
+      .isBetween(local.categorias.start, local.categorias.end);
+    const middleStart = moment(local.categorias.start)
+      .utc()
+      .isBetween(data.data, data.dataFinal);
+    const middleEnd = moment(local.categorias.end)
+      .utc()
+      .isBetween(data.data, data.dataFinal);
     data.mensal =
       data.formaPagamento === 'Parcelado'
         ? data.valor / data.vezes

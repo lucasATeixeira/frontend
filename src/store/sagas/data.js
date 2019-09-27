@@ -14,15 +14,19 @@ export function* fetchDataRequest(action) {
     const local = {};
     const { data: categorias } = yield call(
       api.get,
-      `api/categoria?start=${moment(action.payload.start).format(
-        'YYYY-MM-DD'
-      )}&end=${moment(action.payload.end).format('YYYY-MM-DD')}`
+      `api/categoria?start=${moment(action.payload.start)
+        .utc()
+        .format('YYYY-MM-DD')}&end=${moment(action.payload.end)
+        .utc()
+        .format('YYYY-MM-DD')}`
     );
     const { data: patrimonios } = yield call(
       api.get,
-      `api/patrimonio?start=${moment(action.payload.start).format(
-        'YYYY-MM-DD'
-      )}&end=${moment(action.payload.end).format('YYYY-MM-DD')}`
+      `api/patrimonio?start=${moment(action.payload.start)
+        .utc()
+        .format('YYYY-MM-DD')}&end=${moment(action.payload.end)
+        .utc()
+        .format('YYYY-MM-DD')}`
     );
     const { data: v1 } = yield call(api.get, 'api/v1');
     const { data: v5 } = yield call(api.get, 'api/v5');

@@ -9,12 +9,14 @@ export default function Atuar() {
       .filter(action => action.quando)
       .filter(
         action =>
-          moment(action.quando) >=
+          moment(action.quando).utc() >=
           moment()
             .utc()
             .startOf('day')
       )
-      .sort((a, b) => (moment(a.quando) > moment(b.quando) ? 1 : -1))
+      .sort((a, b) =>
+        moment(a.quando).utc() > moment(b.quando).utc() ? 1 : -1
+      )
       .slice(0, 3)
   );
 
@@ -33,8 +35,13 @@ export default function Atuar() {
               <i className="material-icons">calendar_today</i>
               <h2>{action.acao}</h2>
               <span className="data">
-                {moment(action.quando).format('D/MM')} -{' '}
-                {moment(action.quando).format('dddd')}
+                {moment(action.quando)
+                  .utc()
+                  .format('D/MM')}{' '}
+                -{' '}
+                {moment(action.quando)
+                  .utc()
+                  .format('dddd')}
               </span>
             </div>
           ))}

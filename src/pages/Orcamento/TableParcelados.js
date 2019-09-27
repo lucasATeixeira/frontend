@@ -108,10 +108,9 @@ const Table = ({
                         .map(l => {
                           const pAtualMap =
                             l.vezes -
-                            moment(l.dataFinal).diff(
-                              moment(categorias.start),
-                              'month'
-                            );
+                            moment(l.dataFinal)
+                              .utc()
+                              .diff(moment(categorias.start).utc(), 'month');
                           return (
                             <tr key={l._id}>
                               <td>{l.descricao}</td>
