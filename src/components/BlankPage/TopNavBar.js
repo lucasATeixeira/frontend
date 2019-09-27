@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import SecoesAvulsas from './SecoesAvulsas';
@@ -28,22 +29,34 @@ const TopNavbar = ({
   const [checked, setChecked] = useState(categorias.periodo > 1);
   const [start, setStart] = useState(new Date(categorias.start));
   const [end, setEnd] = useState(new Date(categorias.end));
+
   const handleStart = e => {
-    setStart(e);
-    if (!checked) return fetchDataRequest(e, e);
-    return fetchDataRequest(e, end);
+    const selectedDate = moment(e)
+      .utc()
+      .format();
+
+    setStart(new Date(selectedDate));
+    if (!checked) return fetchDataRequest(selectedDate, selectedDate);
+    return fetchDataRequest(selectedDate, end);
   };
+
   const handleEnd = e => {
-    if (e < start)
+    const selectedDate = moment(e)
+      .utc()
+      .format();
+
+    if (selectedDate < start)
       return toast.error('Coloque uma data superior a do começo', {
         containerId: 'alerts',
       });
-    setEnd(e);
-    return fetchDataRequest(start, e);
+    setEnd(new Date(selectedDate));
+    return fetchDataRequest(start, selectedDate);
   };
+
   const handleMonthPick = () => {
     fetchDataRequest(start, end);
   };
+
   const handleLogout = () => {
     localStorage.clear();
     logout();

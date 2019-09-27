@@ -1,5 +1,4 @@
 import { call, put } from 'redux-saga/effects';
-import moment from 'moment';
 import { Creators as SimulacaoActions } from '../ducks/simulacao';
 import { Creators as A30dActions } from '../ducks/a30d';
 import api from '../../services/api';

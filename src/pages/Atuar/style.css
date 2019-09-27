@@ -1,11 +1,6 @@
 .fc-event {
   margin: 0.5rem;
-  cursor: grab;
   font-size: 13px;
   font-weight: bold;
   padding-left: 10px;
-}
-
-.fc-event:active {
-  cursor: grabbing;
 }

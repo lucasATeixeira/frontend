@@ -6,7 +6,7 @@ import api from '../../services/api';
 import Modal from './ModalSecoesAvulsas';
 
 export default function SecoesAvulsas() {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(null);
   const [availableHours, setAvailableHours] = useState([]);

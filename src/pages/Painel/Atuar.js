@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import api from '../../services/api';
 import { ContainerAtuar } from './style';
 
 export default function Atuar() {
-  const actions = useSelector(state =>
+  const [actions, setActions] = useState([]);
+
+  const a30dActions = useSelector(state =>
     state.a30d.a30d
       .filter(action => action.quando)
       .filter(
@@ -14,11 +17,38 @@ export default function Atuar() {
             .utc()
             .startOf('day')
       )
-      .sort((a, b) =>
-        moment(a.quando).utc() > moment(b.quando).utc() ? 1 : -1
-      )
-      .slice(0, 3)
   );
+
+  useEffect(() => {
+    async function fetchActions() {
+      const { data: appointmentsFetched } = await api.get('api/appointment');
+
+      const appointments = appointmentsFetched
+        .filter(
+          action =>
+            moment(action.quando).utc() >=
+            moment()
+              .utc()
+              .startOf('day')
+        )
+        .map(a => ({
+          _id: a._id,
+          acao: 'Seção Avulsa',
+          quando: a.date,
+        }));
+
+      const array = appointments
+        .concat(a30dActions)
+        .sort((a, b) =>
+          moment(a.quando).utc() > moment(b.quando).utc() ? 1 : -1
+        )
+        .slice(0, 3);
+
+      setActions(array);
+    }
+
+    fetchActions();
+  }, [a30dActions]);
 
   return (
     <div className="card">

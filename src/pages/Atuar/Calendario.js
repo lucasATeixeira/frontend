@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 import moment from 'moment';
+import api from '../../services/api';
 
 import { Creators } from '../../store/ducks/a30d';
 
@@ -40,10 +41,26 @@ export default function Calendario({ setModal, setSelectedEvent }) {
   }, []);
 
   useEffect(() => {
-    const datedActions = actions.filter(action => action.quando);
+    let isSubscribed = true;
+    async function fetchAppointments() {
+      const { data: appointmentsFetched } = await api.get('api/appointment');
+      const datedActions = actions.filter(action => action.quando);
 
-    setEvents(
-      datedActions.map(a => ({
+      const appointments = appointmentsFetched.map(a => ({
+        id: a._id,
+        title: 'Seção avulsa',
+        editable: false,
+        backgroundColor: 'red',
+        color: 'white',
+        start: a.date,
+        extendedProps: {
+          onde: 'Online',
+          quem: 'Seu Assistente de Planejamento e Você',
+          como: 'Conversando e mostrando suas dúvidas',
+        },
+      }));
+
+      const datedActionsOrganized = datedActions.map(a => ({
         id: a._id,
         title: a.acao,
         start: a.quando,
@@ -52,8 +69,17 @@ export default function Calendario({ setModal, setSelectedEvent }) {
           quem: a.quem,
           como: a.como,
         },
-      }))
-    );
+      }));
+      if (isSubscribed) {
+        setEvents([...appointments, ...datedActionsOrganized]);
+      }
+    }
+
+    fetchAppointments();
+
+    return () => {
+      isSubscribed = false;
+    };
   }, [actions]);
 
   function handleEventClick(data) {
