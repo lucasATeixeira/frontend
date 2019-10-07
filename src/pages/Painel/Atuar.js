@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import moment from 'moment';
 import api from '../../services/api';
 import { ContainerAtuar } from './style';
@@ -7,26 +6,29 @@ import { ContainerAtuar } from './style';
 export default function Atuar() {
   const [actions, setActions] = useState([]);
 
-  const a30dActions = useSelector(state =>
-    state.a30d.a30d
-      .filter(action => action.quando)
-      .filter(
-        action =>
-          moment(action.quando).utc() >=
-          moment()
-            .utc()
-            .startOf('day')
-      )
-  );
-
   useEffect(() => {
     async function fetchActions() {
       const { data: appointmentsFetched } = await api.get('api/appointment');
+      const { data: a30dActionsFetched } = await api.get('api/a30d');
+
+      const a30dActions = a30dActionsFetched
+        .filter(action => action.quando)
+        .filter(
+          action =>
+            moment(action.quando)
+              .endOf('day')
+              .utc() >=
+            moment()
+              .utc()
+              .startOf('day')
+        );
 
       const appointments = appointmentsFetched
         .filter(
           action =>
-            moment(action.quando).utc() >=
+            moment(action.date)
+              .utc()
+              .endOf('day') >=
             moment()
               .utc()
               .startOf('day')
@@ -48,7 +50,7 @@ export default function Atuar() {
     }
 
     fetchActions();
-  }, [a30dActions]);
+  }, []);
 
   return (
     <div className="card">
