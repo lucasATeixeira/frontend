@@ -101,9 +101,16 @@ export default function Modal({ setModal, setSelectedEvent, selectedEvent }) {
             </tr>
           </tbody>
         </table>
-        <button onClick={handleDelete} className="btn btn-danger" type="button">
-          <strong>Excluir</strong>
-        </button>
+        {acao === 'Seção avulsa' ? null : (
+          <button
+            onClick={handleDelete}
+            className="btn btn-danger"
+            type="button"
+          >
+            <strong>Excluir</strong>
+          </button>
+        )}
+
         <button
           onClick={() => handleCloseModal()}
           type="button"
