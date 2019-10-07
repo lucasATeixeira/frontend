@@ -24,6 +24,7 @@ import FreeMmd from './FreeMmd';
 import Parabens from './Parabens';
 import Juros from './Juros';
 import Relatorio from './Relatorio';
+import LaudoFreeMmd from './LaudoFreeMmd';
 
 const Pages = () => {
   async function checkAdmAccess() {
@@ -57,6 +58,7 @@ const Pages = () => {
         <Route exact path="/mmd" component={FreeMmd} />
         <Route exact path="/parabens" component={Parabens} />
         <Route exact path="/juros" component={Juros} />
+        <Route exact path="/laudommd" component={LaudoFreeMmd} />
         <PrivateRoute exact path="/painel" component={Painel} />
         <PrivateRoute exact path="/orcamento" component={Orcamento} />
         <PrivateRoute exact path="/extrato" component={Extrato} />

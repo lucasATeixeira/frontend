@@ -17,11 +17,27 @@ export default function Option({ content, peso, mmd, name, setMmdState }) {
     const { quiz } = payload;
     try {
       const response = await api.put(`api/lead/${mmd.id}`, quiz);
+
       setMmdState(c => ({
         ...c,
         answers: [...c.answers, response.data],
-        done: true,
       }));
+
+      const [firstMmd] = [
+        {
+          score: payload.conjuntural,
+          cat: 'conjuntural',
+          title: 'Conjuntural',
+        },
+        { score: payload.estrutural, cat: 'estrutural', title: 'Estrutural' },
+        {
+          score: payload.oportunidade,
+          cat: 'oportunidade',
+          title: 'Oportunidade',
+        },
+      ].sort((a, b) => (a.score > b.score ? -1 : 1));
+
+      window.location.href = `/laudommd?mmd=${firstMmd.cat}`;
     } catch (err) {
       toast.error(err.response.data.error);
     }

@@ -29,6 +29,7 @@ export default function FreeMmd() {
     name: null,
     email: null,
   });
+
   return (
     <>
       <Upper />
@@ -45,29 +46,17 @@ export default function FreeMmd() {
         >
           <div className="container">
             <div className="card">
-              {mmdState.done ? (
-                <>
-                  <h2 style={{ marginTop: '50px' }} className="text-center">
-                    Tudo certo, {mmdState.name}!!
-                  </h2>
-                  <br />
-                  <h4 style={{ marginBottom: '50px' }} className="text-center">
-                    Enviamos o Laudo com sua resposta para {mmdState.email}
-                  </h4>
-                </>
-              ) : (
-                <>
-                  {!mmdState.doing && (
-                    <StartQuizOptions
-                      mmdState={mmdState}
-                      setMmdState={setMmdState}
-                    />
-                  )}
-                  {mmdState.doing && (
-                    <Quiz mmd={mmdState} setMmdState={setMmdState} />
-                  )}
-                </>
-              )}
+              <>
+                {!mmdState.doing && (
+                  <StartQuizOptions
+                    mmdState={mmdState}
+                    setMmdState={setMmdState}
+                  />
+                )}
+                {mmdState.doing && (
+                  <Quiz mmd={mmdState} setMmdState={setMmdState} />
+                )}
+              </>
             </div>
           </div>
         </div>
