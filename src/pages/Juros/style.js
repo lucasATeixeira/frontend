@@ -56,10 +56,12 @@ export const ResultadoContainer = styled.div`
   }
 
   @media (max-width: 650px) {
+    padding: 10px 30px;
     width: 450px;
   }
 
   @media (max-width: 500px) {
+    padding: 10px 30px;
     width: 350px;
   }
 
