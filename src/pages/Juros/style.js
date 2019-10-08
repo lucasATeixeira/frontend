@@ -33,6 +33,10 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  @media (max-width: 600px) {
+    padding: calc(60px + 80px) 35px 0 35px;
+  }
 `;
 
 export const ResultadoContainer = styled.div`
