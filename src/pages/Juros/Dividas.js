@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CurrencyInput from 'react-currency-input';
 import PropTypes from 'prop-types';
+import Modal from './Modal';
 import { DividasContainer } from './style';
 
 export default function Dividas({ dividas, setDividas }) {
@@ -9,6 +10,18 @@ export default function Dividas({ dividas, setDividas }) {
   const [pmt, setPmt] = useState(0);
   const [parcelas, setParcelas] = useState(0);
   const [taxa, setTaxa] = useState(0);
+  const [modal, setModal] = useState(false);
+
+  function handleNewDivida() {
+    const width = window.innerWidth;
+
+    if (width < 800) {
+      setModal(true);
+      return;
+    }
+
+    setNewDivida(true);
+  }
 
   function handleDelete(divida) {
     const updatedDividas = dividas.filter(d => d !== divida);
@@ -41,10 +54,25 @@ export default function Dividas({ dividas, setDividas }) {
     setParcelas(0);
     setTaxa(0);
     setNewDivida(false);
+    setModal(false);
   }
 
   return (
     <DividasContainer>
+      {modal && (
+        <Modal
+          setModal={setModal}
+          name={name}
+          setName={setName}
+          pmt={pmt}
+          setPmt={setPmt}
+          parcelas={parcelas}
+          setParcelas={setParcelas}
+          taxa={taxa}
+          setTaxa={setTaxa}
+          handleSubmit={handleSubmit}
+        />
+      )}
       <h3 className="text-info">Insira suas dívidas</h3>
       <form onSubmit={handleSubmit}>
         <table>
@@ -140,7 +168,7 @@ export default function Dividas({ dividas, setDividas }) {
           </div>
         ) : (
           <button
-            onClick={() => setNewDivida(true)}
+            onClick={handleNewDivida}
             className="btn btn-info btn-round btn-fab"
             type="button"
           >
