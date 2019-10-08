@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function UpperNavbar() {
   return (
@@ -6,9 +7,9 @@ export default function UpperNavbar() {
       <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
         <div className="container">
           <div className="navbar-wrapper">
-            <a className="navbar-brand" href="/">
-              REAL Cultura Financeira
-            </a>
+            <Link className="navbar-brand" to="/mmd">
+              ONDAZUL
+            </Link>
           </div>
 
           <button

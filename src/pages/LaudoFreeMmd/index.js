@@ -35,7 +35,7 @@ export default function LaudoFreeMmd() {
   const laudo = laudos[mmd];
 
   return laudo ? (
-    <LoginPage>
+    <LoginPage logoHref="/mmd">
       <div className="container">
         <div className="card">
           <Container>

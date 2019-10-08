@@ -7,9 +7,9 @@ export default function UpperNavbar() {
       <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
         <div className="container">
           <div className="navbar-wrapper">
-            <a className="navbar-brand" href="/">
-              REAL Cultura Financeira
-            </a>
+            <Link className="navbar-brand" to="/">
+              ONDAZUL
+            </Link>
           </div>
 
           <button

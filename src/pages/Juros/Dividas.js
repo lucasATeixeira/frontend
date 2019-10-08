@@ -132,10 +132,7 @@ export default function Dividas({ dividas, setDividas }) {
 
         {newDivida ? (
           <div>
-            <button
-              className="btn btn-lg btn-info btn-round btn-fab"
-              type="submit"
-            >
+            <button className="btn btn-info btn-round btn-fab" type="submit">
               <strong>
                 <i className="material-icons">add</i>
               </strong>
@@ -144,7 +141,7 @@ export default function Dividas({ dividas, setDividas }) {
         ) : (
           <button
             onClick={() => setNewDivida(true)}
-            className="btn btn-lg btn-info btn-round btn-fab"
+            className="btn btn-info btn-round btn-fab"
             type="button"
           >
             <strong>

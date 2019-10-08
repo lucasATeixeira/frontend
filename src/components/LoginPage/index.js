@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function LoginPage({ children, upperContent }) {
+export default function LoginPage({ children, upperContent, logoHref }) {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
         <div className="container">
           <div className="navbar-wrapper">
-            <a className="navbar-brand" href="/">
-              REAL Cultura Financeira
-            </a>
+            <Link className="navbar-brand" to={logoHref}>
+              ONDAZUL
+            </Link>
           </div>
 
           <button
@@ -61,8 +61,10 @@ export default function LoginPage({ children, upperContent }) {
 LoginPage.propTypes = {
   children: PropTypes.node.isRequired,
   upperContent: PropTypes.arrayOf(PropTypes.shape()),
+  logoHref: PropTypes.string,
 };
 
 LoginPage.defaultProps = {
   upperContent: [],
+  logoHref: '/',
 };

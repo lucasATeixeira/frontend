@@ -46,6 +46,7 @@ export const ResultadoContainer = styled.div`
   color: rgb(118, 118, 118);
 
   @media (max-width: 1450px) {
+    margin: 0;
     margin-top: 50px;
     margin-bottom: 70px;
   }
@@ -145,6 +146,16 @@ export const DividasContainer = styled.div`
       padding-right: 40px;
       font-weight: bold;
       font-size: 15.5px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    th {
+      font-size: 16px;
+    }
+
+    td {
+      font-size: 13px;
     }
   }
 `;

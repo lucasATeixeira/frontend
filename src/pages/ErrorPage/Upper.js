@@ -8,7 +8,7 @@ export default function UpperNavbar() {
         <div className="container">
           <div className="navbar-wrapper">
             <a className="navbar-brand" href="/">
-              REAL Cultura Financeira
+              ONDAZUL
             </a>
           </div>
 
