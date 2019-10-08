@@ -5,6 +5,7 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   font-weight: 400;
   padding: calc(60px + 80px) 240px 0 240px;
 
@@ -41,7 +42,6 @@ export const Container = styled.div`
 
 export const ResultadoContainer = styled.div`
   width: 600px;
-  max-height: 600px;
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
