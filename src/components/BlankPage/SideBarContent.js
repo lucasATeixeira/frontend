@@ -109,7 +109,7 @@ export default function SideBarContent({ setPage }) {
           {
             href: '/atuar',
             mini: 'A30',
-            title: 'Calendáio de ações',
+            title: 'Calendário de ações',
           },
         ]}
         setPage={setPage}
