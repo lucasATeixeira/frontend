@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import DividasCard from './DividasCard';
 import OndazulCard from './OndazulContainer';
@@ -15,8 +15,12 @@ export default function RespostaJuros() {
   return dividas ? (
     <Container>
       <Upper />
-      <DividasCard dividas={dividas} />
-      <OndazulCard />
+      <div className="cards">
+        <DividasCard dividas={dividas} />
+        <OndazulCard />
+      </div>
+
+      <Link to="/checkout?plan=2">Comprar Ondazul</Link>
     </Container>
   ) : (
     <Redirect to="/juros" />

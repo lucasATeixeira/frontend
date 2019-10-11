@@ -2,21 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
   font-weight: 400;
   padding: calc(60px + 80px) 240px 0 240px;
-
-  div.resolution {
-    p {
-      font-size: 18px;
-      line-height: 1.5;
-      color: rgb(118, 118, 118);
-      max-width: 950px;
-    }
-  }
 
   @media (max-width: 1750px) {
     padding: calc(60px + 80px) 190px 0 190px;
@@ -30,13 +19,45 @@ export const Container = styled.div`
     padding: calc(60px + 80px) 80px 0 80px;
   }
 
-  @media (max-width: 1450px) {
-    flex-direction: column;
-    align-items: center;
-  }
-
   @media (max-width: 600px) {
     padding: calc(60px + 80px) 35px 0 35px;
+  }
+
+  div.cards {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+
+    @media (max-width: 1450px) {
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  div.resolution {
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: rgb(118, 118, 118);
+      max-width: 950px;
+    }
+  }
+
+  a {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 50px;
+    margin: 100px 0;
+    background: #00dbff;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 5px;
   }
 `;
 
@@ -66,21 +87,29 @@ export const CardContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
-  max-width: 500px;
+  max-width: 450px;
+  height: 100%;
   background: #fff;
   border-radius: 7px;
   box-shadow: 0 1px 4px 0 rgba(192, 208, 230, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.3);
   padding: 35px;
+  margin-right: 50px;
+
+  @media (max-width: 1450px) {
+    margin: 0;
+    margin-bottom: 50px;
+  }
 
   h2 {
     font-weight: bold;
     color: #777;
     margin: 0;
+    text-align: center;
+    line-height: 40px;
   }
 
   table {
-    width: 50%;
+    width: 60%;
     margin: 40px 0;
     align-self: center;
 
@@ -95,11 +124,11 @@ export const CardContainer = styled.div`
     }
 
     td.red {
-      color: red;
+      color: #ff1468;
     }
 
     td.blue {
-      color: blue;
+      color: #00dbff;
     }
   }
 
@@ -132,13 +161,13 @@ export const CardContainer = styled.div`
     border-bottom-right-radius: 7px;
     border-bottom-left-radius: 7px;
     font-size: 25px;
+  }
 
-    footer.red {
-      background: red;
-    }
+  footer.red {
+    background: #ff1468;
+  }
 
-    footer.blue {
-      background: blue;
-    }
+  footer.blue {
+    background: #00dbff;
   }
 `;

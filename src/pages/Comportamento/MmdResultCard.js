@@ -66,7 +66,6 @@ export default function MmdResultCard({ mmd }) {
     // tooltips: {
     //   callbacks: {
     //     label(data, data2) {
-    //       console.log(data, data2);
     //       return data;
     //     },
     //   },
