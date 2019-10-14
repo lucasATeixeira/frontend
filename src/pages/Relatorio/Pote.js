@@ -100,7 +100,7 @@ const Pote = ({ orcamento, patrimonios }) => {
 
   useEffect(() => {
     setBarData({
-      labels: ['Orçado', 'Realizado'],
+      labels: ['Estimado', 'Realizado'],
       datasets: [
         {
           label: 'Recebimentos',
@@ -139,7 +139,7 @@ const Pote = ({ orcamento, patrimonios }) => {
   useEffect(() => {
     if (gastosData) {
       setBarData({
-        labels: ['Orçado'],
+        labels: ['Estimado'],
         datasets: [
           {
             label: 'Recebimentos',
@@ -186,7 +186,7 @@ const Pote = ({ orcamento, patrimonios }) => {
       });
     } else {
       setBarData({
-        labels: ['Orçado', 'Realizado'],
+        labels: ['Estimado', 'Realizado'],
         datasets: [
           {
             label: 'Recebimentos',

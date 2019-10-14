@@ -20,21 +20,25 @@ const TableAtivos = ({
   const [newAtivo, setNewAtivo] = useState(false);
   const [edit, setEdit] = useState('');
 
-  const handleDelete = (patrimonio) => {
-    if (!window.confirm('Tem certeza que deseja excluir este patrimônio?')) return;
+  const handleDelete = patrimonio => {
+    if (!window.confirm('Tem certeza que deseja excluir este patrimônio?'))
+      return;
     removePatrimonioRequest(patrimonio);
   };
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     if (e.keyCode !== 27) return;
     setNewAtivo(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (tipo === 'Escolha o tipo') return toast.error('Escolha um tipo', { containerId: 'alerts' });
-    if (!nomeAtivo) return toast.error('Adicione um nome', { containerId: 'alerts' });
-    if (valor <= 0) return toast.error('Adicione um valor Válido', { containerId: 'alerts' });
+    if (tipo === 'Escolha o tipo')
+      return toast.error('Escolha um tipo', { containerId: 'alerts' });
+    if (!nomeAtivo)
+      return toast.error('Adicione um nome', { containerId: 'alerts' });
+    if (valor <= 0)
+      return toast.error('Adicione um valor Válido', { containerId: 'alerts' });
     if (newAtivo) {
       setNewAtivo(false);
       setNomeAtivo('');
@@ -158,16 +162,30 @@ const TableAtivos = ({
                                 {classificacao === 'patrimonial' ? (
                                   <>
                                     <option value="moradia">Moradia</option>
-                                    <option value="transporte">Transporte</option>
-                                    <option value="bens nao utilizados">Bens Não Utilizados</option>
-                                    <option value="outros bens">Outros Bens</option>
+                                    <option value="transporte">
+                                      Transporte
+                                    </option>
+                                    <option value="bens nao utilizados">
+                                      Bens Não Utilizados
+                                    </option>
+                                    <option value="outros bens">
+                                      Outros Bens
+                                    </option>
                                   </>
                                 ) : (
                                   <>
                                     <option value="cdb">Poupança / CDB</option>
                                     <option value="tesouro">Tesouro</option>
                                     <option value="ações">Ações</option>
-                                    <option value="outros ativos">Outros Ativos</option>
+                                    <option value="Previdência Privada">
+                                      Previdência privada
+                                    </option>
+                                    <option value="Título de Capitalização">
+                                      Título de Capitalização
+                                    </option>
+                                    <option value="outros ativos">
+                                      Outros Ativos
+                                    </option>
                                   </>
                                 )}
                               </select>
@@ -189,8 +207,13 @@ const TableAtivos = ({
                           </td>
                           <td className="text-center">
                             <div>
-                              <button type="submit" className="btn btn-success btn-sm">
-                                <i className="material-icons">add_circle_outline</i>
+                              <button
+                                type="submit"
+                                className="btn btn-success btn-sm"
+                              >
+                                <i className="material-icons">
+                                  add_circle_outline
+                                </i>
                                 <strong>Adicionar</strong>
                               </button>
                             </div>
@@ -229,7 +252,9 @@ const TableAtivos = ({
                               <>
                                 <option value="moradia">Moradia</option>
                                 <option value="transporte">Transporte</option>
-                                <option value="bens nao utilizados">Bens Não Utilizados</option>
+                                <option value="bens nao utilizados">
+                                  Bens Não Utilizados
+                                </option>
                                 <option value="outros bens">Outros Bens</option>
                               </>
                             ) : (
@@ -237,7 +262,15 @@ const TableAtivos = ({
                                 <option value="cdb">Poupança / CDB</option>
                                 <option value="tesouro">Tesouro</option>
                                 <option value="ações">Ações</option>
-                                <option value="outros ativos">Outros Ativos</option>
+                                <option value="Previdência Privada">
+                                  Previdência privada
+                                </option>
+                                <option value="Título de Capitalização">
+                                  Título de Capitalização
+                                </option>
+                                <option value="outros ativos">
+                                  Outros Ativos
+                                </option>
                               </>
                             )}
                           </select>
@@ -258,7 +291,10 @@ const TableAtivos = ({
                         </span>
                       </td>
                       <td className="text-center">
-                        <button type="submit" className="btn btn-success btn-sm">
+                        <button
+                          type="submit"
+                          className="btn btn-success btn-sm"
+                        >
                           <i className="material-icons">add_circle_outline</i>
                           <strong>Adicionar</strong>
                         </button>
@@ -278,7 +314,8 @@ const TableAtivos = ({
               className="btn btn-success btn-sm"
             >
               <strong>
-                <i className="material-icons">add_circle_outline</i> Adicionar Ativo
+                <i className="material-icons">add_circle_outline</i> Adicionar
+                Ativo
               </strong>
             </button>
           </div>
@@ -302,9 +339,10 @@ TableAtivos.defaultProps = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators(PatrimoniosActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PatrimoniosActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TableAtivos);

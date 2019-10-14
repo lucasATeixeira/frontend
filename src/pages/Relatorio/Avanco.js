@@ -11,7 +11,7 @@ const Avanco = ({ orcamento }) => (
     </div>
     <div className="card-body">
       <div className="text-center">
-        <b>Avanço: Realizado / Orçado</b>
+        <b>Avanço: Realizado / Estimado</b>
       </div>
       {orcamento.categorias
         .filter(a => a.tipo === 'gasto')

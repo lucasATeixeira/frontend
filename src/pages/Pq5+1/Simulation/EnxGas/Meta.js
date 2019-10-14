@@ -9,13 +9,22 @@ const Meta = ({ orcamento, simulacao, pmt }) => {
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
-    const metaValue = orcamento.gastosOrcados + pmt - orcamento.recebimentosOrcados;
+    const metaValue =
+      orcamento.gastosOrcados +
+      orcamento.gastosRealizadosParcelados +
+      pmt -
+      orcamento.recebimentosOrcados;
+
     const enxugadoValue = currentSimulation.enxugar
       .map(e => (e.orcado - e.valorEnxugado) / e.recorrencia)
       .reduce((total, next) => total + next, 0);
+
     const percentValue = Math.round((enxugadoValue * 100) / metaValue);
+
     setMeta(metaValue < 0 ? 0 : metaValue);
+
     setEnxugado(enxugadoValue);
+
     setPercent(percentValue > 100 ? 100 : percentValue < 0 ? 0 : percentValue);
   }, [orcamento, pmt, currentSimulation]);
 
@@ -30,17 +39,25 @@ const Meta = ({ orcamento, simulacao, pmt }) => {
         <div className="progress-container">
           <span className="progress-badge">
             <strong>
-              {enxugado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+              {enxugado.toLocaleString('pt-br', {
+                style: 'currency',
+                currency: 'BRL',
+              })}
             </strong>
           </span>
           <span className="progress-badge pull-right">
             {meta !== 0
-              ? meta.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+              ? meta.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })
               : 'Seu orçamento não necessita de ajustes'}
           </span>
           <div className="progress">
             <div
-              className={`progress-bar progress-bar-${meta === 0 ? 'grafit' : 'info'}`}
+              className={`progress-bar progress-bar-${
+                meta === 0 ? 'grafit' : 'info'
+              }`}
               role="progressbar"
               style={{ width: meta === 0 ? '100%' : `${percent}%` }}
             />

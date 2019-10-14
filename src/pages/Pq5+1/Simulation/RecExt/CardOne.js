@@ -113,7 +113,7 @@ const CardOne = ({ simulacao, categorias, saveSimulation }) => {
                   <thead>
                     <tr>
                       <th>Nome</th>
-                      <th>Orçado</th>
+                      <th>Estimado</th>
                       <th>Recorrência</th>
                       <th className="text-right">Ações</th>
                     </tr>

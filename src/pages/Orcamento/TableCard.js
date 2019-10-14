@@ -21,15 +21,16 @@ const TableCard = ({
   const handleDelete = () => {
     if (
       !window.confirm(
-        'Esta categoria pode conter itens e lancamnentos atrelados a ela, tem certeza que deseja excluir?',
+        'Esta categoria pode conter itens e lançamentos atrelados a ela, tem certeza que deseja excluir?'
       )
-    ) return;
+    )
+      return;
     removeCategoriaRequest(
       categoria._id,
       categoria.orcado,
       categoria.realizado,
       categoria.tipo,
-      categoria.realizadoParcelado,
+      categoria.realizadoParcelado
     );
   };
   return (
@@ -82,9 +83,10 @@ TableCard.defaultProps = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators(CategoriasActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CategoriasActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TableCard);

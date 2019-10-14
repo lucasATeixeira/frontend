@@ -6,7 +6,7 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
     <div className="card-header card-header-text card-header-grafit">
       <div className="card-text">
         <h4 className="card-title">
-          <strong>Orçado / Realizado</strong>
+          <strong>Estimado / Realizado</strong>
         </h4>
       </div>
     </div>
@@ -17,7 +17,7 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
             <table className="table">
               <thead className="text-black">
                 <tr>
-                  <th>Orçado</th>
+                  <th>Estimado</th>
                   <th>Realizado</th>
                 </tr>
               </thead>
@@ -36,8 +36,8 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                     <strong className="text-grafit">Recebimentos</strong>
                     <div className="pull-right">
                       {(
-                        orcamento.recebimentosRealizados
-                        + orcamento.recebimentosRealizadosParcelados
+                        orcamento.recebimentosRealizados +
+                        orcamento.recebimentosRealizadosParcelados
                       ).toLocaleString('pt-br', {
                         style: 'currency',
                         currency: 'BRL',
@@ -79,7 +79,8 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                     <strong className="text-danger">Dívidas</strong>
                     <div className="pull-right">
                       {(
-                        patrimonios.passivos.pmt + orcamento.gastosRealizadosParcelados
+                        patrimonios.passivos.pmt +
+                        orcamento.gastosRealizadosParcelados
                       ).toLocaleString('pt-br', {
                         style: 'currency',
                         currency: 'BRL',
@@ -92,9 +93,9 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                     <strong className="text-grafit">Balanço</strong>
                     <div className="pull-right">
                       {(
-                        orcamento.recebimentosOrcados
-                        - orcamento.gastosOrcados
-                        - patrimonios.passivos.pmt
+                        orcamento.recebimentosOrcados -
+                        orcamento.gastosOrcados -
+                        patrimonios.passivos.pmt
                       ).toLocaleString('pt-br', {
                         style: 'currency',
                         currency: 'BRL',
@@ -105,11 +106,11 @@ const Detalhamento = ({ orcamento, patrimonios }) => (
                     <strong className="text-grafit">Balanço</strong>
                     <div className="pull-right">
                       {(
-                        orcamento.recebimentosRealizados
-                        + orcamento.recebimentosRealizadosParcelados
-                        - orcamento.gastosRealizados
-                        - orcamento.gastosRealizadosParcelados
-                        - patrimonios.passivos.pmt
+                        orcamento.recebimentosRealizados +
+                        orcamento.recebimentosRealizadosParcelados -
+                        orcamento.gastosRealizados -
+                        orcamento.gastosRealizadosParcelados -
+                        patrimonios.passivos.pmt
                       ).toLocaleString('pt-br', {
                         style: 'currency',
                         currency: 'BRL',

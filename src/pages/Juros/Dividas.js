@@ -96,7 +96,7 @@ export default function Dividas({ dividas, setDividas }) {
                 </td>
                 <td>{divida.parcelas}</td>
                 <td>
-                  {divida.taxa}%
+                  {divida.taxa}% a.m
                   <button onClick={() => handleDelete(divida)} type="button">
                     <i className="material-icons">close</i>
                   </button>

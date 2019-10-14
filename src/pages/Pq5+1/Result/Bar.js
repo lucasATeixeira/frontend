@@ -6,7 +6,7 @@ const BarChart = ({ orcamento, simulacao, patrimonios }) => {
   const [barData, setBarData] = useState({});
   useEffect(() => {
     setBarData({
-      labels: ['Orçado', 'Simulado'],
+      labels: ['Estimado', 'Simulado'],
       datasets: [
         {
           label: 'Recebimentos',

@@ -8,24 +8,29 @@ import { Creators as SimulacaoActions } from '../../../../store/ducks/simulacao'
 import Meta from './Meta';
 
 const Two = ({
-  listData, saveSimulation, simulacao, submitSimulationRequest,
+  listData,
+  saveSimulation,
+  simulacao,
+  submitSimulationRequest,
 }) => {
   const { currentSimulation } = simulacao;
 
-  const [list, setList] = useState(listData.map(l => ({ ...l, valorEnxugado: l.orcado })));
+  const [list, setList] = useState(
+    listData.map(l => ({ ...l, valorEnxugado: l.orcado }))
+  );
   const [input, setInput] = useState('');
   const [inputValue, setInputValue] = useState(0);
 
   const handleSubmit = (e, item) => {
     e.preventDefault();
     setList(
-      list.map((l) => {
+      list.map(l => {
         if (l._id !== item._id) return l;
         return {
           ...l,
           valorEnxugado: inputValue,
         };
-      }),
+      })
     );
     setInput('');
 
@@ -33,13 +38,15 @@ const Two = ({
       if (item.orcado === inputValue) {
         saveSimulation({
           ...currentSimulation,
-          enxugar: currentSimulation.enxugar.filter(enxugar => enxugar._id !== item._id),
+          enxugar: currentSimulation.enxugar.filter(
+            enxugar => enxugar._id !== item._id
+          ),
         });
         return;
       }
       saveSimulation({
         ...currentSimulation,
-        enxugar: currentSimulation.enxugar.map((enxugar) => {
+        enxugar: currentSimulation.enxugar.map(enxugar => {
           if (enxugar._id !== item._id) return enxugar;
           return {
             ...enxugar,
@@ -142,11 +149,18 @@ const Two = ({
                                     <span className="bmd-form-group">
                                       <form onSubmit={e => handleSubmit(e, l)}>
                                         <button
-                                          style={{ position: 'absolute', right: '10px' }}
+                                          style={{
+                                            position: 'absolute',
+                                            right: '10px',
+                                          }}
                                           type="submit"
                                           className="btn btn-success btn-round btn-sm btn-just-icon"
                                         >
-                                          <i className="material-icons" role="button" tabIndex="0">
+                                          <i
+                                            className="material-icons"
+                                            role="button"
+                                            tabIndex="0"
+                                          >
                                             done
                                           </i>
                                         </button>
@@ -157,7 +171,9 @@ const Two = ({
                                           precision="2"
                                           prefix="R$"
                                           value={inputValue}
-                                          onChangeEvent={(e, mv, fv) => setInputValue(fv)}
+                                          onChangeEvent={(e, mv, fv) =>
+                                            setInputValue(fv)
+                                          }
                                         />
                                       </form>
                                     </span>
@@ -172,9 +188,12 @@ const Two = ({
                                     <button
                                       onClick={() => {
                                         if (input !== '') {
-                                          return toast.error('Salve a última Edição', {
-                                            containerId: 'alerts',
-                                          });
+                                          return toast.error(
+                                            'Salve a última Edição',
+                                            {
+                                              containerId: 'alerts',
+                                            }
+                                          );
                                         }
                                         setInput(l._id);
                                         return setInputValue(l.valorEnxugado);
@@ -203,7 +222,10 @@ const Two = ({
                 <div className="col-md-12">
                   <button
                     onClick={() => {
-                      if (input !== '') return toast.error('Salve A Ultima Edição', { containerId: 'alerts' });
+                      if (input !== '')
+                        return toast.error('Salve A Ultima Edição', {
+                          containerId: 'alerts',
+                        });
                       return submitSimulationRequest(currentSimulation);
                     }}
                     className="btn btn-round pull-right btn-info"
@@ -232,9 +254,10 @@ const mapStateToProps = state => ({
   simulacao: state.simulacao,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(SimulacaoActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(SimulacaoActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Two);

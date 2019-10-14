@@ -19,15 +19,46 @@ const Orcamento = ({ categorias, patrimonios }) => {
       rEvent: 0,
       rComp: 0,
     };
-    categorias.categorias.forEach(cat => cat.itens.forEach((i) => {
-      c.gFlex += i.tipo === 'gasto' ? (i.classificacao === 'Flexível' ? i.mensal : 0) : 0;
-      c.gEvent += i.tipo === 'gasto' ? (i.classificacao === 'Eventual' ? i.mensal : 0) : 0;
-      c.gComp += i.tipo === 'gasto' ? (i.classificacao === 'Comprometido' ? i.mensal : 0) : 0;
-      c.rFlex += i.tipo === 'recebimento' ? (i.classificacao === 'Flexível' ? i.mensal : 0) : 0;
-      c.rEvent += i.tipo === 'recebimento' ? (i.classificacao === 'Eventual' ? i.mensal : 0) : 0;
-      c.rComp
-          += i.tipo === 'recebimento' ? (i.classificacao === 'Comprometido' ? i.mensal : 0) : 0;
-    }));
+    categorias.categorias.forEach(cat =>
+      cat.itens.forEach(i => {
+        c.gFlex +=
+          i.tipo === 'gasto'
+            ? i.classificacao === 'Flexível'
+              ? i.mensal
+              : 0
+            : 0;
+        c.gEvent +=
+          i.tipo === 'gasto'
+            ? i.classificacao === 'Eventual'
+              ? i.mensal
+              : 0
+            : 0;
+        c.gComp +=
+          i.tipo === 'gasto'
+            ? i.classificacao === 'Comprometido'
+              ? i.mensal
+              : 0
+            : 0;
+        c.rFlex +=
+          i.tipo === 'recebimento'
+            ? i.classificacao === 'Flexível'
+              ? i.mensal
+              : 0
+            : 0;
+        c.rEvent +=
+          i.tipo === 'recebimento'
+            ? i.classificacao === 'Eventual'
+              ? i.mensal
+              : 0
+            : 0;
+        c.rComp +=
+          i.tipo === 'recebimento'
+            ? i.classificacao === 'Comprometido'
+              ? i.mensal
+              : 0
+            : 0;
+      })
+    );
     return c;
   }, [categorias]);
 
@@ -38,30 +69,48 @@ const Orcamento = ({ categorias, patrimonios }) => {
         <p>Mais detalhes</p>
         <p>
           Soma dos Flexíveis:{' '}
-          {calculo.gFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+          {calculo.gFlex.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </p>
         <p>
           Soma dos Comprometidos:{' '}
-          {calculo.gComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+          {calculo.gComp.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </p>
         <p>
           Soma dos Eventuais:{' '}
-          {calculo.gEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+          {calculo.gEvent.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </p>
       </ReactTooltip>
       <ReactTooltip id="recebimento" place="right" type="dark" effect="float">
         <p>Mais detalhes</p>
         <p>
           Soma dos Flexíveis:{' '}
-          {calculo.rFlex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+          {calculo.rFlex.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </p>
         <p>
           Soma dos Comprometidos:{' '}
-          {calculo.rComp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+          {calculo.rComp.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </p>
         <p>
           Soma dos Eventuais:{' '}
-          {calculo.rEvent.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+          {calculo.rEvent.toLocaleString('pt-br', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </p>
       </ReactTooltip>
       <div className="row">
@@ -77,16 +126,20 @@ const Orcamento = ({ categorias, patrimonios }) => {
             info="Recebimentos"
             materialIcon=""
             color="grafit"
-            footerText={(
+            footerText={
               <>
-                <strong className=" text-grafiti" data-for="recebimento" data-tip>
+                <strong
+                  className=" text-grafiti"
+                  data-for="recebimento"
+                  data-tip
+                >
                   Detalhes
                 </strong>
                 <button type="button" className="btn btn-grafit btn-sm">
-                  Recebimentos Orçados
+                  Recebimentos Estimados
                 </button>
               </>
-)}
+            }
           />
         </div>
         <div className="col-md-4">
@@ -101,16 +154,16 @@ const Orcamento = ({ categorias, patrimonios }) => {
             faIcon="fa-shopping-cart"
             materialIcon=""
             info="Gastos"
-            footerText={(
+            footerText={
               <>
                 <strong className=" text-info" data-for="gasto" data-tip>
                   Detalhes
                 </strong>
                 <button type="button" className="btn btn-info btn-sm">
-                  Gastos Orçados
+                  Gastos Estimados
                 </button>
               </>
-)}
+            }
           />
         </div>
         <div className="col-md-4">
@@ -128,9 +181,12 @@ const Orcamento = ({ categorias, patrimonios }) => {
             materialIcon="file_copy"
             info="Parcelamentos"
             color="danger"
-            footerText={(
+            footerText={
               <>
-                <strong className=" text-danger" data-tip="Aqui estão todas suas dívidas">
+                <strong
+                  className=" text-danger"
+                  data-tip="Aqui estão todas suas dívidas"
+                >
                   Detalhes
                 </strong>
 
@@ -138,26 +194,32 @@ const Orcamento = ({ categorias, patrimonios }) => {
                   Dívidas Orçadas
                 </button>
               </>
-)}
+            }
           />
         </div>
       </div>
 
       {active === 1 && (
         <Content
-          categorias={categorias.categorias.filter(categoria => categoria.tipo === 'recebimento')}
+          categorias={categorias.categorias.filter(
+            categoria => categoria.tipo === 'recebimento'
+          )}
           color="grafit"
           materialIcon="attach_money"
         />
       )}
       {active === 2 && (
         <Content
-          categorias={categorias.categorias.filter(categoria => categoria.tipo === 'gasto')}
+          categorias={categorias.categorias.filter(
+            categoria => categoria.tipo === 'gasto'
+          )}
           color="info"
           materialIcon="shopping_cart"
         />
       )}
-      {active === 3 && <ContentDividas color="danger" materialIcon="file_copy" />}
+      {active === 3 && (
+        <ContentDividas color="danger" materialIcon="file_copy" />
+      )}
     </BlankPage>
   );
 };
@@ -168,7 +230,7 @@ Orcamento.propTypes = {
     categorias: PropTypes.arrayOf(
       PropTypes.shape({
         tipo: PropTypes.string,
-      }),
+      })
     ),
     err: PropTypes.bool,
     gastosOrcados: PropTypes.number,

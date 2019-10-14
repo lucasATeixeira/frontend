@@ -24,10 +24,20 @@ const Table = ({
   const [classificacao, setClassificacao] = useState('Flexível');
   const [edit, setEdit] = useState('');
 
-  const handleDelete = (item, mensal, realizado, tipo, realizadoParcelado, classificacaoItem) => {
+  const handleDelete = (
+    item,
+    mensal,
+    realizado,
+    tipo,
+    realizadoParcelado,
+    classificacaoItem
+  ) => {
     if (
-      !window.confirm('Este item pode conter lançamentos feitos, tem certeza que deseja excluir?')
-    ) return;
+      !window.confirm(
+        'Este item pode conter lançamentos feitos, tem certeza que deseja excluir?'
+      )
+    )
+      return;
     removeItemRequest(
       item,
       mensal,
@@ -35,19 +45,23 @@ const Table = ({
       tipo,
       idCategoria,
       realizadoParcelado,
-      classificacaoItem,
+      classificacaoItem
     );
   };
 
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     if (e.keyCode !== 27) return;
     setNewItem(false);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (newItem) {
-      if (!nome) return toast.error('Preencha o nome', { containerId: 'alerts' });
-      if (recorrencia <= 0) return toast.error('Recorrência deve ser maior que zero', { containerId: 'alerts' });
+      if (!nome)
+        return toast.error('Preencha o nome', { containerId: 'alerts' });
+      if (recorrencia <= 0)
+        return toast.error('Recorrência deve ser maior que zero', {
+          containerId: 'alerts',
+        });
       addItemRequest({
         tipo: color === 'info' ? 'gasto' : 'recebimento',
         nome,
@@ -58,8 +72,12 @@ const Table = ({
       });
     }
     if (edit) {
-      if (!nome) return toast.error('Preencha o nome', { containerId: 'alerts' });
-      if (recorrencia <= 0) return toast.error('Recorrência deve ser maior que zero', { containerId: 'alerts' });
+      if (!nome)
+        return toast.error('Preencha o nome', { containerId: 'alerts' });
+      if (recorrencia <= 0)
+        return toast.error('Recorrência deve ser maior que zero', {
+          containerId: 'alerts',
+        });
       updateItemRequest({
         _id: edit,
         nome,
@@ -81,7 +99,7 @@ const Table = ({
                 <tr>
                   <th>Nome</th>
                   <th>Classificação</th>
-                  <th className="text-right">Orçado</th>
+                  <th className="text-right">Estimado</th>
                   <th>Recorrência</th>
                   <th className="text-right">Valor Período</th>
                   <th className="text-right">Ações</th>
@@ -95,7 +113,10 @@ const Table = ({
                         <td>{i.nome}</td>
                         <td>{i.classificacao}</td>
                         <td className="text-right">
-                          {i.orcado.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+                          {i.orcado.toLocaleString('pt-br', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
                         </td>
                         <td>{i.recorrencia}</td>
                         <td className="text-right">
@@ -124,23 +145,25 @@ const Table = ({
                             className="btn btn-danger btn-link btn-just-icon btn-sm"
                           >
                             <i
-                              onClick={() => handleDelete(
-                                i._id,
-                                i.mensal,
-                                i.realizado,
-                                i.tipo,
-                                i.realizadoParcelado,
-                                i.classificacao,
-                              )
+                              onClick={() =>
+                                handleDelete(
+                                  i._id,
+                                  i.mensal,
+                                  i.realizado,
+                                  i.tipo,
+                                  i.realizadoParcelado,
+                                  i.classificacao
+                                )
                               }
-                              onKeyPress={() => handleDelete(
-                                i._id,
-                                i.mensal,
-                                i.realizado,
-                                i.tipo,
-                                i.realizadoParcelado,
-                                i.classificacao,
-                              )
+                              onKeyPress={() =>
+                                handleDelete(
+                                  i._id,
+                                  i.mensal,
+                                  i.realizado,
+                                  i.tipo,
+                                  i.realizadoParcelado,
+                                  i.classificacao
+                                )
                               }
                               className="material-icons"
                               role="button"
@@ -208,19 +231,30 @@ const Table = ({
                           {valor === 0
                             ? '--'
                             : classificacao === 'Eventual'
-                              ? ((valor * periodo) / recorrencia).toLocaleString('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              })
-                              : (valor * periodo * recorrencia).toLocaleString('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              })}
+                            ? ((valor * periodo) / recorrencia).toLocaleString(
+                                'pt-br',
+                                {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                }
+                              )
+                            : (valor * periodo * recorrencia).toLocaleString(
+                                'pt-br',
+                                {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                }
+                              )}
                         </td>
                         <td className="text-center">
                           <div>
-                            <button type="submit" className={`btn btn-${color} btn-sm`}>
-                              <i className="material-icons">add_circle_outline</i>
+                            <button
+                              type="submit"
+                              className={`btn btn-${color} btn-sm`}
+                            >
+                              <i className="material-icons">
+                                add_circle_outline
+                              </i>
                               <strong>Editar</strong>
                             </button>
                           </div>
@@ -285,17 +319,26 @@ const Table = ({
                       {valor === 0
                         ? '--'
                         : classificacao === 'Eventual'
-                          ? ((valor * periodo) / recorrencia).toLocaleString('pt-br', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          })
-                          : (valor * periodo * recorrencia).toLocaleString('pt-br', {
-                            style: 'currency',
-                            currency: 'BRL',
-                          })}
+                        ? ((valor * periodo) / recorrencia).toLocaleString(
+                            'pt-br',
+                            {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }
+                          )
+                        : (valor * periodo * recorrencia).toLocaleString(
+                            'pt-br',
+                            {
+                              style: 'currency',
+                              currency: 'BRL',
+                            }
+                          )}
                     </td>
                     <td className="text-center">
-                      <button type="submit" className={`btn btn-${color} btn-sm`}>
+                      <button
+                        type="submit"
+                        className={`btn btn-${color} btn-sm`}
+                      >
                         <i className="material-icons">add_circle_outline</i>
                         <strong>Adicionar</strong>
                       </button>
@@ -347,9 +390,10 @@ const mapStateToProps = state => ({
   periodo: state.categorias.periodo,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(CategoriaActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CategoriaActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Table);
