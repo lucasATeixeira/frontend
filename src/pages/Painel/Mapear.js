@@ -19,6 +19,38 @@ export default function Mapear() {
     [orcamento, patrimonios]
   );
 
+  const itens = useMemo(
+    () =>
+      orcamento.categorias
+        .reduce((total, next) => total.concat(next.itens), [])
+        .filter(item => item.tipo === 'gasto'),
+    [orcamento.categorias]
+  );
+
+  const gastosComprometidos = useMemo(
+    () =>
+      itens
+        .filter(item => item.classificacao === 'Comprometido')
+        .reduce((total, next) => total + next.mensal, 0),
+    [itens]
+  );
+
+  const gastosFlexiveis = useMemo(
+    () =>
+      itens
+        .filter(item => item.classificacao === 'Flexível')
+        .reduce((total, next) => total + next.mensal, 0),
+    [itens]
+  );
+
+  const gastosEventuais = useMemo(
+    () =>
+      itens
+        .filter(item => item.classificacao === 'Eventual')
+        .reduce((total, next) => total + next.mensal, 0),
+    [itens]
+  );
+
   useEffect(() => {
     setBarData({
       labels: ['Estimado'],
@@ -50,8 +82,8 @@ export default function Mapear() {
           // xAxisID: 'dividas',
         },
         {
-          label: 'Gastos',
-          data: [orcamento.gastosOrcados],
+          label: 'Comprometidos',
+          data: [gastosComprometidos],
           backgroundColor: 'rgb(0, 87, 156)',
           borderColor: '#FFF',
           borderWidth: {
@@ -60,8 +92,44 @@ export default function Mapear() {
             left: 12,
             right: 12,
           },
-          // xAxisID: 'gastos',
         },
+        {
+          label: 'Flexíveis',
+          data: [gastosFlexiveis],
+          backgroundColor: 'rgba(0, 87, 156, 0.5)',
+          borderColor: '#FFF',
+          borderWidth: {
+            top: 0,
+            bottom: 0,
+            left: 12,
+            right: 12,
+          },
+        },
+        {
+          label: 'Eventuais',
+          data: [gastosEventuais],
+          backgroundColor: 'rgba(0, 87, 156, 0.2)',
+          borderColor: '#FFF',
+          borderWidth: {
+            top: 0,
+            bottom: 0,
+            left: 12,
+            right: 12,
+          },
+        },
+        // {
+        //   label: 'Gastos',
+        //   data: [orcamento.gastosOrcados],
+        //   backgroundColor: 'rgb(0, 87, 156)',
+        //   borderColor: '#FFF',
+        //   borderWidth: {
+        //     top: 0,
+        //     bottom: 0,
+        //     left: 12,
+        //     right: 12,
+        //   },
+        // xAxisID: 'gastos',
+        // },
       ],
     });
   }, [orcamento, patrimonios]);

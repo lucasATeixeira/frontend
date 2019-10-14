@@ -12,32 +12,34 @@ const EnxGas = ({ orcamento }) => {
     orcamento.categorias
       .filter(c => c.tipo === 'gasto' && c.nome !== 'DIVERSOS')
       .map(c =>
-        c.itens.map(i => ({
-          ...i,
-          quadrante: 3,
-          nomeCategoria: c.nome,
-          orcadoLocale: i.orcado.toLocaleString('pt-br', {
-            style: 'currency',
-            currency: 'BRL',
-          }),
-          mensalLocale: i.mensal.toLocaleString('pt-br', {
-            style: 'currency',
-            currency: 'BRL',
-          }),
-          prioridadeValue: false,
-          substituivelValue: false,
-          media: (
-            <div className="text-center">
-              <i
-                className={` text-${
-                  i.mensal <= orcamento.mediaGastos ? 'success' : 'danger'
-                } fa fa-arrow-${
-                  i.mensal <= orcamento.mediaGastos ? 'down' : 'up'
-                }`}
-              />
-            </div>
-          ),
-        }))
+        c.itens
+          .filter(i => i.mensal)
+          .map(i => ({
+            ...i,
+            quadrante: 3,
+            nomeCategoria: c.nome,
+            orcadoLocale: i.orcado.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }),
+            mensalLocale: i.mensal.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
+            }),
+            prioridadeValue: false,
+            substituivelValue: false,
+            media: (
+              <div className="text-center">
+                <i
+                  className={` text-${
+                    i.mensal <= orcamento.mediaGastos ? 'success' : 'danger'
+                  } fa fa-arrow-${
+                    i.mensal <= orcamento.mediaGastos ? 'down' : 'up'
+                  }`}
+                />
+              </div>
+            ),
+          }))
       )
       .flat()
   );
