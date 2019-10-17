@@ -56,10 +56,10 @@ const TablePassivos = ({
       return toast.error('Inclua um valor de parcelas restantes válido', {
         containerId: 'alerts',
       });
-    if (pmt < 0)
-      return toast.error('Inclua um valor de PMT válido', {
-        containerId: 'alerts',
-      });
+    // if (pmt < 0)
+    //   return toast.error('Inclua um valor de PMT válido', {
+    //     containerId: 'alerts',
+    //   });
     if (taxa < 0)
       return toast.error('Inclua um valor da taxa válido', {
         containerId: 'alerts',
@@ -198,7 +198,7 @@ const TablePassivos = ({
                                   'pt-br'
                                 )
                               : 0}
-                            %
+                            % a.m
                           </td>
                           <td className="td-actions text-right">
                             <button

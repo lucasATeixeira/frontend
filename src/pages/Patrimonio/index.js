@@ -62,10 +62,13 @@ const Patrimonio = ({ patrimonios }) => {
             patrimonios.passivos.total,
             patrimonios.passivos.total,
           ],
-          label: `Passivos: ${patrimonios.passivos.total.toLocaleString('pt-br', {
-            style: 'currency',
-            currency: 'BRL',
-          })}`,
+          label: `Passivos: ${patrimonios.passivos.total.toLocaleString(
+            'pt-br',
+            {
+              style: 'currency',
+              currency: 'BRL',
+            }
+          )}`,
         },
       ].sort((a, b) => (a.data[0] > b.data[0] ? 1 : -1)),
     });
@@ -82,7 +85,9 @@ const Patrimonio = ({ patrimonios }) => {
             >
               <TableAtivos
                 classificacao="patrimonial"
-                list={patrimonios.ativos.list.filter(a => a.classificacao === 'patrimonial')}
+                list={patrimonios.ativos.list.filter(
+                  a => a.classificacao === 'patrimonial'
+                )}
               />
             </HeaderText>
           </div>
@@ -94,7 +99,9 @@ const Patrimonio = ({ patrimonios }) => {
             >
               <TableAtivos
                 classificacao="financeiro"
-                list={patrimonios.ativos.list.filter(a => a.classificacao === 'financeiro')}
+                list={patrimonios.ativos.list.filter(
+                  a => a.classificacao === 'financeiro'
+                )}
               />
             </HeaderText>
           </div>
@@ -112,7 +119,9 @@ const Patrimonio = ({ patrimonios }) => {
             >
               <TablePassivos
                 classificacao="patrimonial"
-                list={patrimonios.passivos.list.filter(a => a.classificacao === 'patrimonial')}
+                list={patrimonios.passivos.list.filter(
+                  a => a.classificacao === 'patrimonial'
+                )}
               />
             </HeaderText>
           </div>
@@ -130,7 +139,9 @@ const Patrimonio = ({ patrimonios }) => {
             >
               <TablePassivos
                 classificacao="financeiro"
-                list={patrimonios.passivos.list.filter(a => a.classificacao === 'financeiro')}
+                list={patrimonios.passivos.list.filter(
+                  a => a.classificacao === 'financeiro'
+                )}
               />
             </HeaderText>
           </div>
@@ -175,7 +186,11 @@ const Patrimonio = ({ patrimonios }) => {
             </HeaderText>
           </div>
           <div className="col-md-6">
-            <HeaderText showTotal={false} color="grafit" title="Ativos e Passivos">
+            <HeaderText
+              showTotal={false}
+              color="grafit"
+              title="Ativos e Passivos"
+            >
               <Bar
                 redraw
                 data={barData}

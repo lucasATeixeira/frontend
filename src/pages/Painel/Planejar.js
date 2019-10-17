@@ -69,7 +69,9 @@ export default function Planejar() {
         },
         {
           label: 'Dívidas',
-          data: [patrimonios.passivos.pmt],
+          data: [
+            orcamento.gastosRealizadosParcelados + patrimonios.passivos.pmt,
+          ],
           backgroundColor: 'rgb(218, 68, 83)',
           borderColor: '#FFF',
           borderWidth: {
