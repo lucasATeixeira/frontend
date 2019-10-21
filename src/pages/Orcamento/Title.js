@@ -7,8 +7,9 @@ import { Creators as CategoriaActions } from '../../store/ducks/categorias';
 const Title = ({ categoria, pencil, updateCategoriaRequest }) => {
   const [editTitle, setEditTitle] = useState(false);
   const [valueEditTitle, setValueEditTitle] = useState(categoria.nome);
+  // const { classificacao } = categoria;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     updateCategoriaRequest({
       ...categoria,
@@ -19,6 +20,26 @@ const Title = ({ categoria, pencil, updateCategoriaRequest }) => {
 
   return (
     <>
+      {categoria.tipo === 'gasto' && (
+        <button
+          style={{
+            border: 'none',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: '35%',
+            margin: '10px',
+            cursor: 'pointer',
+            outline: 'none',
+            background: '#1DE9B6',
+            color: '#FFF',
+          }}
+          type="button"
+          className="play-button"
+        >
+          <i className="material-icons">play_arrow</i>
+        </button>
+      )}
       {editTitle && (
         <>
           <form onSubmit={handleSubmit}>
@@ -41,7 +62,11 @@ const Title = ({ categoria, pencil, updateCategoriaRequest }) => {
             {pencil && (
               <button
                 type="button"
-                style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
                 onClick={() => setEditTitle(true)}
               >
                 <i className="fa fa-pencil small" />
@@ -67,9 +92,10 @@ Title.defaultProps = {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators(CategoriaActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CategoriaActions, dispatch);
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Title);

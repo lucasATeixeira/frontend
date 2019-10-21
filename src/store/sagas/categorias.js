@@ -337,9 +337,18 @@ export function* addCategoriaRequest(action) {
       'api/categoria',
       action.payload.categoria
     );
+
     data.realizado = 0;
     data.realizadoParcelado = 0;
     data.orcado = 0;
+
+    data.itens = data.itens.map(item => ({
+      ...item,
+      mensal: 0,
+      realizado: 0,
+      realizadoParcelado: 0,
+    }));
+
     const local = JSON.parse(localStorage.getItem('@Ondazul: data'));
     local.categorias.categorias.push(data);
     localStorage.setItem('@Ondazul: data', JSON.stringify(local));

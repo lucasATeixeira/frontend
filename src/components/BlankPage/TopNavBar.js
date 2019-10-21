@@ -73,7 +73,7 @@ const TopNavbar = ({
       <div className="container-fluid">
         <div className="navbar-wrapper">
           <div className="navbar-minimize">
-            <button
+            {/* <button
               type="button"
               // id="minimizeSidebar"
               className="btn btn-just-icon btn-white btn-fab btn-round"
@@ -84,7 +84,7 @@ const TopNavbar = ({
               <i className="material-icons design_bullet-list-67 visible-on-sidebar-mini">
                 view_list
               </i>
-            </button>
+            </button> */}
           </div>
           <a className="navbar-brand" href="/painel">
             {page}

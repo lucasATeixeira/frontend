@@ -61,7 +61,11 @@ export default function Atuar() {
         <p className="category">Seus próximpos passos</p>
       </div>
       <div className="card-body">
-        <ContainerAtuar>
+        <ContainerAtuar
+          onClick={() => {
+            window.location.href = '/atuar';
+          }}
+        >
           {actions.map(action => (
             <div key={action._id} className="appointment">
               <i className="material-icons">calendar_today</i>

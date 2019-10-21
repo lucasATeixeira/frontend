@@ -9,14 +9,20 @@ export const ContainerAtuar = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #eee;
-    color: #999;
+    background: #00b4db;
+    color: #fff;
     font-weight: bold;
     padding: 13px;
     border-radius: 10px;
     width: 200px;
     margin-bottom: 25px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+
+    cursor: pointer;
+
+    &:hover {
+      background: rgb(29, 233, 182);
+    }
 
     h2 {
       font-size: 25px;

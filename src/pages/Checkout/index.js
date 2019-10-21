@@ -250,9 +250,17 @@ export default function Checkout({ history }) {
                           {(originalAmount / 12 / 100).toLocaleString('pt-br', {
                             style: 'currency',
                             currency: 'BRL',
-                          })}
+                          })}{' '}
                         </strong>
                       </h4>
+                      <p className="card-description text-center">
+                        ou{' '}
+                        {(originalAmount / 100).toLocaleString('pt-br', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}{' '}
+                        no boleto
+                      </p>
                       <p className="card-description text-center">
                         <strong>INFORME SEUS DADOS</strong>
                       </p>
