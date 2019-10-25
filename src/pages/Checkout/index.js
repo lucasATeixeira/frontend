@@ -32,8 +32,8 @@ export default function Checkout({ history }) {
 
   const prices = {
     1: 56400,
-    2: 56400,
-    3: 56400,
+    2: 68400,
+    3: 236400,
   };
 
   const originalAmount = prices[plan];
