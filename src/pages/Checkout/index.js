@@ -26,11 +26,12 @@ export default function Checkout({ history }) {
   const query = new URLSearchParams(window.location.search);
   let plan = query.get('plan');
 
-  if (!plan || plan < 1 || plan > 3) {
+  if (!plan || plan < 0 || plan > 3) {
     plan = 2;
   }
 
   const prices = {
+    0: 32400,
     1: 56400,
     2: 68400,
     3: 236400,
