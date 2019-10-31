@@ -21,6 +21,8 @@ export default function Checkout({ history }) {
   const [neighborhood, setNeighborhood] = useState('');
   const [street, setStreet] = useState('');
 
+  const [manual, setManual] = useState(false);
+
   const [cupom, setCupom] = useState('');
 
   const query = new URLSearchParams(window.location.search);
@@ -50,12 +52,23 @@ export default function Checkout({ history }) {
   async function handleBlur() {
     try {
       const { data } = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+      if (data.erro) {
+        toast.warn(
+          'Não foi possível retornar os dados do CEP, preencha manualmente os dados de Estado, Cidade, Bairro e Rua',
+          {
+            containerId: 'checkout',
+          }
+        );
+        setManual(true);
+        return;
+      }
       setState(data.uf);
       setCity(data.localidade);
       setNeighborhood(data.bairro);
-      return setStreet(data.logradouro);
+      setStreet(data.logradouro);
+      setManual(true);
     } catch (err) {
-      return toast.error('CEP não encontrado, insira um CEP Válido', {
+      toast.error('CEP não encontrado, insira um CEP Válido', {
         containerId: 'checkout',
       });
     }
@@ -98,7 +111,15 @@ export default function Checkout({ history }) {
       ''
     );
 
-    if (!nome || !cpf || !email || !telefone || !cep) {
+    if (
+      !nome ||
+      !cpf ||
+      !email ||
+      !telefone ||
+      !cep ||
+      !street ||
+      !neighborhood
+    ) {
       toast.error('Preencha todos os campos', {
         containerId: 'checkout',
       });
@@ -221,7 +242,7 @@ export default function Checkout({ history }) {
       <ToastContainer
         enableMultiContainer
         containerId="checkout"
-        autoClose={2000}
+        autoClose={10000}
       />
       <Upper />
       <div className="wrapper wrapper-full-page">
@@ -320,6 +341,23 @@ export default function Checkout({ history }) {
                               />
                             </div>
                           </span>
+
+                          <span className="bmd-form-group">
+                            <div className="input-group">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                  <i className="material-icons">email</i>
+                                </span>
+                              </div>
+                              <br />
+                              <input
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                className="form-control"
+                                placeholder="Email..."
+                              />
+                            </div>
+                          </span>
                           <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
@@ -339,22 +377,84 @@ export default function Checkout({ history }) {
                               />
                             </div>
                           </span>
-                          <span className="bmd-form-group">
-                            <div className="input-group">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">
-                                  <i className="material-icons">email</i>
-                                </span>
-                              </div>
-                              <br />
-                              <input
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                className="form-control"
-                                placeholder="Email..."
-                              />
-                            </div>
-                          </span>
+                          {manual && (
+                            <>
+                              <span className="bmd-form-group">
+                                <div className="input-group">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="material-icons">
+                                        location_city
+                                      </i>
+                                    </span>
+                                  </div>
+                                  <br />
+                                  <input
+                                    value={state}
+                                    onChange={e => setState(e.target.value)}
+                                    className="form-control"
+                                    placeholder="Estado..."
+                                  />
+                                </div>
+                              </span>
+                              <span className="bmd-form-group">
+                                <div className="input-group">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="material-icons">
+                                        location_city
+                                      </i>
+                                    </span>
+                                  </div>
+                                  <br />
+                                  <input
+                                    value={city}
+                                    onChange={e => setCity(e.target.value)}
+                                    className="form-control"
+                                    placeholder="Cidade..."
+                                  />
+                                </div>
+                              </span>
+                              <span className="bmd-form-group">
+                                <div className="input-group">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="material-icons">
+                                        location_city
+                                      </i>
+                                    </span>
+                                  </div>
+                                  <br />
+                                  <input
+                                    value={neighborhood}
+                                    onChange={e =>
+                                      setNeighborhood(e.target.value)
+                                    }
+                                    className="form-control"
+                                    placeholder="Bairro..."
+                                  />
+                                </div>
+                              </span>
+                              <span className="bmd-form-group">
+                                <div className="input-group">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="material-icons">
+                                        location_city
+                                      </i>
+                                    </span>
+                                  </div>
+                                  <br />
+                                  <input
+                                    value={street}
+                                    onChange={e => setStreet(e.target.value)}
+                                    className="form-control"
+                                    placeholder="Rua..."
+                                  />
+                                </div>
+                              </span>
+                            </>
+                          )}
 
                           {/* <span className="bmd-form-group">
                             <div className="input-group">
