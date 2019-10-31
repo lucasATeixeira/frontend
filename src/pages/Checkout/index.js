@@ -33,7 +33,7 @@ export default function Checkout({ history }) {
   }
 
   const prices = {
-    0: 32400,
+    0: 44400,
     1: 56400,
     2: 68400,
     3: 236400,
@@ -283,9 +283,9 @@ export default function Checkout({ history }) {
                         })}{' '}
                         no boleto
                       </p>
-                      <p className="card-description text-center">
+                      {/* <p className="card-description text-center">
                         <strong>INFORME SEUS DADOS</strong>
-                      </p>
+                      </p> */}
                       <div className="card-footer justify-content-center" />
 
                       <div className="row">
