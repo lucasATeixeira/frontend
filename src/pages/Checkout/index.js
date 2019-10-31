@@ -376,8 +376,8 @@ export default function Checkout({ history }) {
                                 maxLength={6}
                               />
                             </div>
-                          </span>
-                        </div> */}
+                          </span> */}
+                        </div>
                       </div>
                     </div>
 
