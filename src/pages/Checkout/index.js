@@ -356,7 +356,7 @@ export default function Checkout({ history }) {
                             </div>
                           </span>
 
-                          <span className="bmd-form-group">
+                          {/* <span className="bmd-form-group">
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
@@ -377,7 +377,7 @@ export default function Checkout({ history }) {
                               />
                             </div>
                           </span>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
 
